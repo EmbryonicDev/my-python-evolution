@@ -1,7 +1,6 @@
 def same_chars(text, index1, index2):
     if index1 < len(text) - 1 and index2 < len(text) - 1:
-        if text[index1] == text[index2]:
-            return True
+        return text[index1] == text[index2]
     return False
 
 
