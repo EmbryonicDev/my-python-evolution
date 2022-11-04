@@ -1,5 +1,7 @@
-# Write your solution here
-# You can test your function by calling it within the following block
+def mean(list):
+    return float(sum(list)  / len(list))
+
+# test code
 if __name__ == "__main__":
     my_list = [3, 6, -4]
     result = mean(my_list)
