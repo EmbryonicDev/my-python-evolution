@@ -1,11 +1,9 @@
 def most_common_character(string):
-  highest_count = ''
+  highest_count = 'string[0]'
   
-  for i in range(len(string)):
-    if highest_count == '':
-      highest_count = string[i]
-    elif string.count(string[i]) > string.count(highest_count):
-      highest_count = string[i]
+  for letter in string:
+    if string.count(letter) > string.count(highest_count):
+      highest_count = letter
     
   return highest_count
     
