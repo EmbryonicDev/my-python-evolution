@@ -178,3 +178,7 @@ checksum = 'f9f7cc09e2657e8f222371f620d9dfbb'
 [exercises.part05-07_sudoku_grid]
 id = 151823
 checksum = '667bfcafa21b221fbc167499fdd02da2'
+
+[exercises.part05-08_items_multiplied_by_two]
+id = 151817
+checksum = '2d2384800c0d59428ce7d1a25deb7162'
