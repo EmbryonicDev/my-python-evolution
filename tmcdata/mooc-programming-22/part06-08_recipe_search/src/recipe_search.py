@@ -34,6 +34,17 @@ def search_by_time(filename: str, prep_time: int):
             recipe_with_time.append(list_value)
     return recipe_with_time
 
+
+def search_by_ingredient(filename: str, ingredient: str):
+    recipes = get_recipes(filename)
+    found_recipes = []
+    for recipe in recipes:
+        if ingredient in recipe[2:]:
+            list_value = f"{recipe[0]}, preparation time {recipe[1]} min"
+            found_recipes.append(list_value)
+    return found_recipes
+
+
 if __name__ == "__main__":
     # part 1
     print('Part 1')
@@ -44,5 +55,11 @@ if __name__ == "__main__":
     # part 2
     print('Part 2')
     found_recipes = search_by_time("recipes1.txt", 20)
+    for recipe in found_recipes:
+        print(recipe)
+
+    # part 3
+    print('Part 3')
+    found_recipes = search_by_ingredient("recipes1.txt", "eggs")
     for recipe in found_recipes:
         print(recipe)
