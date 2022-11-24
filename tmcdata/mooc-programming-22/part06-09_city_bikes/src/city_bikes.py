@@ -1,23 +1,14 @@
 import math
 
 
-def read_file(filename: str):
-    file_list = []
+def get_station_data(filename: str):
+    stations = {}
     with open(filename) as file:
         for line in file:
-            line = line.strip()
             parts = line.split(';')
             if parts[0] != 'Longitude':
-                file_list.append(parts)
-    return file_list
-
-
-def get_station_data(filename: str):
-    data = read_file(filename)
-    station_data = {}
-    for station in data:
-        station_data[station[3]] = float(station[0]), float(station[1])
-    return station_data
+                stations[parts[3]] = (float(parts[0]), float(parts[1]))
+    return stations
 
 
 def distance(stations: dict, station1: str, station2: str):
