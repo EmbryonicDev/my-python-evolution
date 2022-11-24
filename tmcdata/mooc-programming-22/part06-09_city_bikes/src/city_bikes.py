@@ -27,6 +27,17 @@ def distance(stations: dict, station1: str, station2: str):
     return distance_km
 
 
+def greatest_distance(stations: dict):
+    d = -9999999
+    for station1 in stations:
+        for station2 in stations:
+            check_distance = distance(stations, station1, station2)
+            if check_distance > d:
+                d = check_distance
+                result = station1, station2, d
+    return result
+
+
 if __name__ == "__main__":
     # part 1
     stations = get_station_data('stations1.csv')
@@ -34,3 +45,7 @@ if __name__ == "__main__":
     print(d)
     d = distance(stations, "Viiskulma", "Kaivopuisto")
     print(d)
+
+    # part 2
+    station1, station2, greatest = greatest_distance(stations)
+    print(station1, station2, greatest)
