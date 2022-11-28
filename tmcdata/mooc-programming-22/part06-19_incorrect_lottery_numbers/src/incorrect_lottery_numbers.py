@@ -1,63 +1,27 @@
-def validate_week(week_num: str):
-    error = False
-    try:
-        week_num = int(week_num)
-    except ValueError:
-        error = True
-    return error
-
-
-def validate_if_number(numbers: list):
-    error = False
-    # remove duplicates
-    numbers = set(numbers)
-
-    if len(numbers) != 7:
-        error = True
-    else:
-        for num in numbers:
-            try:
-                num = int(num)
-                if int(num) < 1 or int(num) > 39:
-                    error = True
-            except ValueError:
-                error = True
-    return error
-
-
-def write_numbers(numbers: dict):
-    with open('correct_numbers.csv', 'w') as file:
-        for week_num, nums in numbers.items():
-
-            file.write(f"week {week_num};")
-            for i in range(0, len(nums)):
-                if i != len(nums) - 1:
-                    file.write(f"{nums[i]},")
-                else:
-                    file.write(f"{nums[i]}\n")
-
-
 def filter_incorrect():
-    numbers_dict = {}
-    with open('lottery_numbers.csv') as file:
-        for line in file:
-            line = line.strip()
-            parts = line.split(';')
-
-            week_num_parts = parts[0].split(' ')
-            week_num = week_num_parts[1]
-            if validate_week(week_num):
-                week_num = 'invalid week'
-
-            numbers = parts[1].split(',')
-            if validate_if_number(numbers):
-                numbers = 'invalid numbers'
-
-            if (week_num != 'invalid week' and
-                    numbers != 'invalid numbers'):
-                numbers_dict[week_num] = numbers
-
-            write_numbers(numbers_dict)
+    with open('lottery_numbers.csv') as input_file, open('correct_numbers.csv', 'w') as result_file:
+        for line in input_file:
+            error = False
+            parts = line.strip().split(';')
+            week = parts[0].split(' ')
+            try:
+                int(week[1])
+            except:
+                error = True
+            number_list = parts[1].split(',')
+            for number in number_list:
+                try:
+                    int(number)
+                    if int(number) < 1 or int(number) > 39:
+                        error = True
+                except:
+                    error = True
+            # check for duplicate numbers
+            if len(number_list) != 7 or len(set(number_list)) != 7:
+                error = True
+            # write to file if no error
+            if not error:
+                result_file.write(line)
 
 
 if __name__ == '__main__':
