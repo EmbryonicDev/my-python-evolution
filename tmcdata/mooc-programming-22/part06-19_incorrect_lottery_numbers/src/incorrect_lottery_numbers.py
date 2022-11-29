@@ -9,6 +9,7 @@ def filter_incorrect():
             except:
                 error = True
             number_list = parts[1].split(',')
+            breakpoint()
             for number in number_list:
                 try:
                     int(number)
