@@ -20,7 +20,7 @@ def cheaters():
             end_time = datetime.strptime(line[3], "%H:%M")
             students_submissions.append({'name': name, 'end_time': end_time})
 
-    # get max time & cheaters
+    # check times to get cheaters
     for student in students:
         max_time = student['start_time']
         for submission in students_submissions:
