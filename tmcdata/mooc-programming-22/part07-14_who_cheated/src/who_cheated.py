@@ -22,7 +22,6 @@ def cheaters():
 
     # check times to get cheaters
     for student in students:
-        max_time = student['start_time']
         for submission in students_submissions:
             if (submission['name'] == student['name']) and submission['end_time'] - student['start_time'] > timedelta(hours=3):
                 if student['name'] not in cheaters_list:
