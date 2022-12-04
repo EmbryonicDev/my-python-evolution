@@ -42,7 +42,6 @@ def final_points():
     sum_points = 0
     for key, value in student['final_points'].items():
       sum_points += value
-    filtered_points[student['name']] = sum_points
     final_points[student['name']] = sum_points
     
   return final_points
