@@ -1,4 +1,5 @@
 from string import ascii_uppercase
+import sys
 
 
 def get_variables():
@@ -8,27 +9,87 @@ def get_variables():
     return my_variable
 
 
+def calculate(command: str, variable: int, value: int):
+    if command == "ADD":
+        return variable + value
+    elif command == "SUB":
+        return variable - value
+    elif command == 'MUL':
+        return variable * value
+
+
+def get_locations(instructions: list):
+    locations = {}
+    for instruction in instructions:
+        parts = instruction.split(' ')
+        if len(parts) < 2 and parts[0] != 'END':
+            locations[parts[0]] = instructions.index(instruction)
+    return locations
+
+
+def check_condition(value1, value2, operator):
+    if operator == '==':
+        return value1 == value2
+    elif operator == '!=':
+        return value1 != value2
+    elif operator == '<':
+        return value1 < value2
+    elif operator == '<=':
+        return value1 <= value2
+    elif operator == '>':
+        return value1 > value2
+    elif operator == '>=':
+        return value1 >= value2
+
+
 def run(instructions: list):
     results = []
     my_variables = get_variables()
+    calc_commands = ['ADD', 'SUB', 'MUL']
+    locations = get_locations(instructions)
+    first_loop = True
 
-    for instruction in instructions:
-        parts = instruction.split(' ')
-        command = parts[0]
-        if command == 'PRINT':
-            results.append(my_variables[parts[1]])
-        elif command == 'MOV':
-            my_variables[parts[1]] = int(parts[2])
-        elif command == 'ADD':
-            my_variables[parts[1]] += my_variables[parts[2]]
+    def get_value(value):
+        return int(value) if value not in ascii_uppercase else my_variables[value]
 
-        elif instruction == 'END':
-            break
+    def run_loop(instruction_set: list):
+        for instruction in instruction_set:
+            parts = instruction.split(' ')
+            command = parts[0]
+            if command == 'PRINT':
+                print_value = get_value(parts[1])
+                results.append(print_value)
+            elif command == 'MOV':
+                mov_value = get_value(parts[2])
+                my_variables[parts[1]] = mov_value
+            elif command in calc_commands:
+                value = get_value(parts[2])
+                my_variables[parts[1]] = calculate(
+                    command, my_variables[parts[1]], value)
+            elif command == 'IF':
+                value1 = get_value(parts[1])
+                value2 = get_value(parts[3])
+                operator = parts[2]
+                jump_location = locations[f"{parts[5]}:"]
+                if check_condition(value1, value2, operator):
+                    run_loop(instructions[jump_location:])
+                    break
+            elif command == 'JUMP':
+                jump_location = locations[f"{parts[1]}:"]
+                run_loop(instructions[jump_location:])
+                break
+            elif instruction == 'END':
+                break
+
+    if first_loop:
+        run_loop(instructions)
+        first_loop = False
 
     return results
 
 
 if __name__ == '__main__':
+    sys.setrecursionlimit(10000)
     # part 1
     program1 = []
     program1.append("MOV A 1")
@@ -39,3 +100,91 @@ if __name__ == '__main__':
     program1.append("PRINT A")
     program1.append("END")
     print(run(program1))
+
+    # part 2
+    program2 = []
+    program2.append("MOV A 1")
+    program2.append("MOV B 10")
+    program2.append("begin:")
+    program2.append("IF A >= B JUMP quit")
+    program2.append("PRINT A")
+    program2.append("PRINT B")
+    program2.append("ADD A 1")
+    program2.append("SUB B 1")
+    program2.append("JUMP begin")
+    program2.append("quit:")
+    program2.append("END")
+    result = run(program2)
+    print(result)
+
+    # part 3
+    program3 = []
+    program3.append("MOV A 1")
+    program3.append("MOV B 1")
+    program3.append("begin:")
+    program3.append("PRINT A")
+    program3.append("ADD B 1")
+    program3.append("MUL A B")
+    program3.append("IF B <= 10 JUMP begin")
+    program3.append("END")
+    result = run(program3)
+    print(result)
+
+    # part 4
+    program4 = []
+    program4.append("MOV N 50")
+    program4.append("PRINT 2")
+    program4.append("MOV A 3")
+    program4.append("begin:")
+    program4.append("MOV B 2")
+    program4.append("MOV Z 0")
+    program4.append("test:")
+    program4.append("MOV C B")
+    program4.append("new:")
+    program4.append("IF C == A JUMP error")
+    program4.append("IF C > A JUMP over")
+    program4.append("ADD C B")
+    program4.append("JUMP new")
+    program4.append("error:")
+    program4.append("MOV Z 1")
+    program4.append("JUMP over2")
+    program4.append("over:")
+    program4.append("ADD B 1")
+    program4.append("IF B < A JUMP test")
+    program4.append("over2:")
+    program4.append("IF Z == 1 JUMP over3")
+    program4.append("PRINT A")
+    program4.append("over3:")
+    program4.append("ADD A 1")
+    program4.append("IF A <= N JUMP begin")
+    result = run(program4)
+    print(result)
+
+    test_program = [
+        'MOV N 100',
+        'PRINT 2',
+        'MOV A 3',
+        'start:',
+        'MOV B 2',
+        'MOV Z 0',
+        'test:',
+        'MOV C B',
+        'new:',
+        'IF C == A JUMP virhe',
+        'IF C > A JUMP pass_by',
+        'ADD C B',
+        'JUMP new',
+        'virhe:',
+        'MOV Z 1',
+        'JUMP pass_by2',
+        'pass_by:',
+        'ADD B 1',
+        'IF B < A JUMP test',
+        'pass_by2:',
+        'IF Z == 1 JUMP pass_by3',
+        'PRINT A',
+        'pass_by3:',
+        'ADD A 1',
+        'IF A <= N JUMP start']
+    result = run(test_program)
+    print(result)
