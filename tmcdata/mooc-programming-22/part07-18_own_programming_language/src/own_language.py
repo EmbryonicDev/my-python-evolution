@@ -1,5 +1,4 @@
 from string import ascii_uppercase
-import sys
 
 
 def get_variables():
@@ -47,49 +46,44 @@ def run(instructions: list):
     my_variables = get_variables()
     calc_commands = ['ADD', 'SUB', 'MUL']
     locations = get_locations(instructions)
-    first_loop = True
 
     def get_value(value):
         return int(value) if value not in ascii_uppercase else my_variables[value]
 
-    def run_loop(instruction_set: list):
-        for instruction in instruction_set:
-            parts = instruction.split(' ')
-            command = parts[0]
-            if command == 'PRINT':
-                print_value = get_value(parts[1])
-                results.append(print_value)
-            elif command == 'MOV':
-                mov_value = get_value(parts[2])
-                my_variables[parts[1]] = mov_value
-            elif command in calc_commands:
-                value = get_value(parts[2])
-                my_variables[parts[1]] = calculate(
-                    command, my_variables[parts[1]], value)
-            elif command == 'IF':
-                value1 = get_value(parts[1])
-                value2 = get_value(parts[3])
-                operator = parts[2]
-                jump_location = locations[f"{parts[5]}:"]
-                if check_condition(value1, value2, operator):
-                    run_loop(instructions[jump_location:])
-                    break
-            elif command == 'JUMP':
-                jump_location = locations[f"{parts[1]}:"]
-                run_loop(instructions[jump_location:])
-                break
-            elif instruction == 'END':
-                break
-
-    if first_loop:
-        run_loop(instructions)
-        first_loop = False
+    index = 0
+    while index < len(instructions):
+        parts = instructions[index].split(' ')
+        command = parts[0]
+        if command == 'PRINT':
+            print_value = get_value(parts[1])
+            results.append(print_value)
+            index += 1
+        elif command == 'MOV':
+            mov_value = get_value(parts[2])
+            my_variables[parts[1]] = mov_value
+            index += 1
+        elif command in calc_commands:
+            value = get_value(parts[2])
+            my_variables[parts[1]] = calculate(
+                command, my_variables[parts[1]], value)
+            index += 1
+        elif command == 'IF':
+            value1 = get_value(parts[1])
+            value2 = get_value(parts[3])
+            operator = parts[2]
+            jump_location = locations[f"{parts[5]}:"]
+            index = jump_location if check_condition(
+                value1, value2, operator) else index + 1
+        elif command == 'JUMP':
+            jump_location = locations[f"{parts[1]}:"]
+            index = jump_location
+        else:
+            index += 1
 
     return results
 
 
 if __name__ == '__main__':
-    sys.setrecursionlimit(10000)
     # part 1
     program1 = []
     program1.append("MOV A 1")
