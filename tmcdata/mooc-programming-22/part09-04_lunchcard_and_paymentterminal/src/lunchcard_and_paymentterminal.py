@@ -8,9 +8,13 @@ class LunchCard:
         self.balance += amount
 
     def subtract_from_balance(self, amount: float):
-        pass
         # The amount should be subtracted from the balance only if there is enough money on the card
         # If the payment is successful, the method returns True, and otherwise it returns False
+        payment_possible = amount < self.balance
+        if payment_possible:
+            self.balance -= amount
+        return payment_possible
+
 
 class PaymentTerminal:
     def __init__(self):
@@ -27,7 +31,7 @@ class PaymentTerminal:
         # the lunch is not sold, and the entire sum is returned.
         pass
 
-   def eat_special(self, payment: float):
+    def eat_special(self, payment: float):
         # A special lunch costs 4.30 euros.
         # Increase the value of the funds at the terminal by the price of the lunch,
         # increase the number of specials sold, and return the appropriate change.
@@ -49,3 +53,15 @@ class PaymentTerminal:
 
     def deposit_money_on_card(self, card: LunchCard, amount: float):
         pass
+
+
+if __name__ == "__main__":
+    print('\nPart 1')
+    card = LunchCard(10)
+    print("Balance", card.balance)
+    result = card.subtract_from_balance(8)
+    print("Payment successful:", result)
+    print("Balance", card.balance)
+    result = card.subtract_from_balance(4)
+    print("Payment successful:", result)
+    print("Balance", card.balance)
