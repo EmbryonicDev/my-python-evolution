@@ -10,7 +10,7 @@ class LunchCard:
     def subtract_from_balance(self, amount: float):
         # The amount should be subtracted from the balance only if there is enough money on the card
         # If the payment is successful, the method returns True, and otherwise it returns False
-        payment_possible = amount < self.balance
+        payment_possible = amount <= self.balance
         if payment_possible:
             self.balance -= amount
         return payment_possible
@@ -55,13 +55,23 @@ class PaymentTerminal:
         # A regular lunch costs 2.50 euros.
         # If there is enough money on the card, subtract the price of the lunch from the balance
         # and return True. If not, return False.
-        pass
+        cost = 2.5
+        payment_possible = card.balance >= cost
+        if payment_possible:
+            self.lunches += 1
+            card.balance -= cost
+        return payment_possible
 
     def eat_special_lunchcard(self, card: LunchCard):
         # A special lunch costs 4.30 euros.
         # If there is enough money on the card, subtract the price of the lunch from the balance
         # and return True. If not, return False.
-        pass
+        cost = 4.3
+        payment_possible = card.balance >= cost
+        if payment_possible:
+            self.lunches += 1
+            card.balance -= cost
+        return payment_possible
 
     def deposit_money_on_card(self, card: LunchCard, amount: float):
         pass
@@ -80,16 +90,27 @@ if __name__ == "__main__":
 
     print('\nPart 2')
     exactum = PaymentTerminal()
-
     change = exactum.eat_lunch(10)
     print("The change returned was", change)
-
     change = exactum.eat_lunch(5)
     print("The change returned was", change)
-
     change = exactum.eat_special(4.3)
     print("The change returned was", change)
+    print("Funds available at the terminal:", exactum.funds)
+    print("Regular lunches sold:", exactum.lunches)
+    print("Special lunches sold:", exactum.specials)
 
+    print('\nPart 3')
+    exactum = PaymentTerminal()
+    change = exactum.eat_lunch(10)
+    print("The change returned was", change)
+    card = LunchCard(7)
+    result = exactum.eat_special_lunchcard(card)
+    print("Payment successful:", result)
+    result = exactum.eat_special_lunchcard(card)
+    print("Payment successful:", result)
+    result = exactum.eat_lunch_lunchcard(card)
+    print("Payment successful:", result)
     print("Funds available at the terminal:", exactum.funds)
     print("Regular lunches sold:", exactum.lunches)
     print("Special lunches sold:", exactum.specials)
