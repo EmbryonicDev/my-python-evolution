@@ -69,12 +69,13 @@ class PaymentTerminal:
         cost = 4.3
         payment_possible = card.balance >= cost
         if payment_possible:
-            self.lunches += 1
+            self.specials += 1
             card.balance -= cost
         return payment_possible
 
     def deposit_money_on_card(self, card: LunchCard, amount: float):
-        pass
+        card.balance += amount
+        self.funds += amount
 
 
 if __name__ == "__main__":
@@ -111,6 +112,21 @@ if __name__ == "__main__":
     print("Payment successful:", result)
     result = exactum.eat_lunch_lunchcard(card)
     print("Payment successful:", result)
+    print("Funds available at the terminal:", exactum.funds)
+    print("Regular lunches sold:", exactum.lunches)
+    print("Special lunches sold:", exactum.specials)
+
+    print('\nPart 4')
+    exactum = PaymentTerminal()
+    card = LunchCard(2)
+    print(f"Card balance is {card.balance} euros")
+    result = exactum.eat_special_lunchcard(card)
+    print("Payment successful:", result)
+    exactum.deposit_money_on_card(card, 100)
+    print(f"Card balance is {card.balance} euros")
+    result = exactum.eat_special_lunchcard(card)
+    print("Payment successful:", result)
+    print(f"Card balance is {card.balance} euros")
     print("Funds available at the terminal:", exactum.funds)
     print("Regular lunches sold:", exactum.lunches)
     print("Special lunches sold:", exactum.specials)
