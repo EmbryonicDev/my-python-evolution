@@ -29,7 +29,13 @@ class PaymentTerminal:
         # increase the number of lunches sold, and return the appropriate change.
         # If the payment passed as an argument is not large enough to cover the price,
         # the lunch is not sold, and the entire sum is returned.
-        pass
+        cost = 2.5
+        change = payment
+        if payment >= cost:
+            self.funds += cost
+            self.lunches += 1
+            change -= cost
+        return change
 
     def eat_special(self, payment: float):
         # A special lunch costs 4.30 euros.
@@ -37,7 +43,13 @@ class PaymentTerminal:
         # increase the number of specials sold, and return the appropriate change.
         # If the payment passed as an argument is not large enough to cover the price,
         # the lunch is not sold, and the entire sum is returned.
-        pass
+        cost = 4.3
+        change = payment
+        if payment >= cost:
+            self.funds += cost
+            self.specials += 1
+            change -= cost
+        return change
 
     def eat_lunch_lunchcard(self, card: LunchCard):
         # A regular lunch costs 2.50 euros.
@@ -65,3 +77,19 @@ if __name__ == "__main__":
     result = card.subtract_from_balance(4)
     print("Payment successful:", result)
     print("Balance", card.balance)
+
+    print('\nPart 2')
+    exactum = PaymentTerminal()
+
+    change = exactum.eat_lunch(10)
+    print("The change returned was", change)
+
+    change = exactum.eat_lunch(5)
+    print("The change returned was", change)
+
+    change = exactum.eat_special(4.3)
+    print("The change returned was", change)
+
+    print("Funds available at the terminal:", exactum.funds)
+    print("Regular lunches sold:", exactum.lunches)
+    print("Special lunches sold:", exactum.specials)
