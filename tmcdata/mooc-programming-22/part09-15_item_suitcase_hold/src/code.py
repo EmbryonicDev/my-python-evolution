@@ -32,6 +32,17 @@ class Suitcase:
         for item in self.__all_items:
             print(item)
 
+    def heaviest_item(self):
+        heaviest = None
+        if len(self.__all_items) > 0:
+            for item in self.__all_items:
+                if heaviest == None:
+                    heaviest = item
+                else:
+                    if item.weight() >= heaviest.weight():
+                        heaviest = item
+        return heaviest
+
     def __str__(self):
         return f"{len(self.__all_items)} {'item' if len(self.__all_items) == 1 else 'items'} ({self.weight()} kg)"
 
@@ -69,13 +80,22 @@ if __name__ == '__main__':
     book = Item("ABC Book", 2)
     phone = Item("Nokia 3210", 1)
     brick = Item("Brick", 4)
-
     suitcase = Suitcase(10)
     suitcase.add_item(book)
     suitcase.add_item(phone)
     suitcase.add_item(brick)
-
     print("The suitcase contains the following items:")
     suitcase.print_items()
     combined_weight = suitcase.weight()
     print(f"Combined weight: {combined_weight} kg")
+
+    print('\nPart 5')
+    book = Item("ABC Book", 2)
+    phone = Item("Nokia 3210", 1)
+    brick = Item("Brick", 4)
+    suitcase = Suitcase(10)
+    suitcase.add_item(book)
+    suitcase.add_item(phone)
+    suitcase.add_item(brick)
+    heaviest = suitcase.heaviest_item()
+    print(f"The heaviest item: {heaviest}")
