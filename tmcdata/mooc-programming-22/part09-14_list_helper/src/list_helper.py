@@ -3,7 +3,7 @@ class ListHelper:
         self.__numbers = numbers
 
     @classmethod
-    def greatest_frequency(self, my_list: list):
+    def greatest_frequency(cls, my_list: list):
         winner = ''
         highest_count = 0
         counter = 0
@@ -18,7 +18,7 @@ class ListHelper:
         return winner
 
     @classmethod
-    def doubles(self, my_list: list):
+    def doubles(cls, my_list: list):
         numbers_copy = my_list[:]
         unique_nums = []
         for i in range(len(my_list)):
