@@ -16,16 +16,24 @@ class Item:
 class Suitcase:
     def __init__(self, max_weight: int):
         self.__max_weight = max_weight
-        self.__total_weight = 0
         self.__all_items = []
 
     def add_item(self, item: Item):
-        if item.weight() < (self.__max_weight - self.__total_weight):
+        if item.weight() < (self.__max_weight - self.weight()):
             self.__all_items.append(item)
-            self.__total_weight += item.weight()
+
+    def weight(self):
+        weight = 0
+        for item in self.__all_items:
+            weight += item.weight()
+        return weight
+
+    def print_items(self):
+        for item in self.__all_items:
+            print(item)
 
     def __str__(self):
-        return f"{len(self.__all_items)} {'item' if len(self.__all_items) == 1 else 'items'} ({self.__total_weight} kg)"
+        return f"{len(self.__all_items)} {'item' if len(self.__all_items) == 1 else 'items'} ({self.weight()} kg)"
 
 
 class CargoHold:
@@ -56,3 +64,18 @@ if __name__ == '__main__':
     print(suitcase)
     suitcase.add_item(brick)
     print(suitcase)
+
+    print('\nPart 4')
+    book = Item("ABC Book", 2)
+    phone = Item("Nokia 3210", 1)
+    brick = Item("Brick", 4)
+
+    suitcase = Suitcase(10)
+    suitcase.add_item(book)
+    suitcase.add_item(phone)
+    suitcase.add_item(brick)
+
+    print("The suitcase contains the following items:")
+    suitcase.print_items()
+    combined_weight = suitcase.weight()
+    print(f"Combined weight: {combined_weight} kg")
