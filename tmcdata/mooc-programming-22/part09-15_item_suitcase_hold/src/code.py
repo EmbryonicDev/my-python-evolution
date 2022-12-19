@@ -34,13 +34,12 @@ class Suitcase:
 
     def heaviest_item(self):
         heaviest = None
-        if len(self.__all_items) > 0:
-            for item in self.__all_items:
-                if heaviest == None:
+        for item in self.__all_items:
+            if heaviest == None:
+                heaviest = item
+            else:
+                if item.weight() >= heaviest.weight():
                     heaviest = item
-                else:
-                    if item.weight() >= heaviest.weight():
-                        heaviest = item
         return heaviest
 
     def __str__(self):
