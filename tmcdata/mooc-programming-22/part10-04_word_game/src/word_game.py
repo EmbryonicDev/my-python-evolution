@@ -69,7 +69,7 @@ class RockPaperScissors(WordGame):
     def __init__(self, rounds):
         super().__init__(rounds)
 
-    def get_wins(self, player_word: str, opponent_word: str):
+    def __get_wins(self, player_word: str, opponent_word: str):
         winners = (('rock', 'scissors'), ('paper', 'rock'),
                    ('scissors', 'paper'))
         wins = 0
@@ -86,8 +86,8 @@ class RockPaperScissors(WordGame):
         elif player1_word not in choices and player2_word not in choices:
             return
 
-        p1_wins = self.get_wins(player1_word, player2_word)
-        p2_wins = self.get_wins(player2_word, player1_word)
+        p1_wins = self.__get_wins(player1_word, player2_word)
+        p2_wins = self.__get_wins(player2_word, player1_word)
         if p1_wins > p2_wins:
             return 1
         elif p2_wins > p1_wins:
