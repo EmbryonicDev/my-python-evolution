@@ -48,7 +48,30 @@ class Suitcase:
 
 
 class CargoHold:
-    pass
+    def __init__(self, max_weight: int, cargo_hold=None):
+        self.__max_weight = max_weight
+        # self.__cargo_hold = []
+        if cargo_hold is None:
+            self.__cargo_hold = []
+        else:
+            self.__cargo_hold = cargo_hold
+
+    def add_suitcase(self, suitcase: Suitcase):
+        if suitcase.weight() < self.__max_weight - self.weight():
+            self.__cargo_hold.append(suitcase)
+
+    def weight(self):
+        weight = 0
+        for item in self.__cargo_hold:
+            weight += item.weight()
+        return weight
+
+    def __str__(self):
+        count = len(self.__cargo_hold)
+        space = self.__max_weight
+        if count > 0:
+            space = self.__max_weight - self.weight()
+        return f"{count} {'suitcase' if count == 1 else 'suitcases'}, space for {space} kg"
 
 
 if __name__ == '__main__':
@@ -77,9 +100,6 @@ if __name__ == '__main__':
     print(suitcase)
 
     print('\nPart 4')
-    book = Item("ABC Book", 2)
-    phone = Item("Nokia 3210", 1)
-    brick = Item("Brick", 4)
     suitcase = Suitcase(10)
     suitcase.add_item(book)
     suitcase.add_item(phone)
@@ -90,12 +110,18 @@ if __name__ == '__main__':
     print(f"Combined weight: {combined_weight} kg")
 
     print('\nPart 5')
-    book = Item("ABC Book", 2)
-    phone = Item("Nokia 3210", 1)
-    brick = Item("Brick", 4)
-    suitcase = Suitcase(10)
-    suitcase.add_item(book)
-    suitcase.add_item(phone)
-    suitcase.add_item(brick)
     heaviest = suitcase.heaviest_item()
     print(f"The heaviest item: {heaviest}")
+
+    print('\nPart 6')
+    cargo_hold = CargoHold(1000)
+    print(cargo_hold)
+    adas_suitcase = Suitcase(10)
+    adas_suitcase.add_item(book)
+    adas_suitcase.add_item(phone)
+    peters_suitcase = Suitcase(10)
+    peters_suitcase.add_item(brick)
+    cargo_hold.add_suitcase(adas_suitcase)
+    print(cargo_hold)
+    cargo_hold.add_suitcase(peters_suitcase)
+    print(cargo_hold)
