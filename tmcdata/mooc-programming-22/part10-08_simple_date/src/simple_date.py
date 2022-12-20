@@ -4,45 +4,36 @@ class SimpleDate:
         self.__month = month
         self.__year = year
 
-    def get_date(self):
-        return int(f"{self.__year}{self.__month:02d}{self.__day:02d}")
+    def __value(self):
+        # convert date to total days
+        return (self.__year * 360) + (self.__month * 30) + self.__day
+
+    def __to_date(self, days: int):
+        # convert days to date
+        months = days // 30
+        years = months // 12
+        days -= months * 30
+        months -= years * 12
+        return SimpleDate(days, months, years)
 
     def __lt__(self, another):
-        return self.get_date() < another.get_date()
+        return self.__value() < another.__value()
 
     def __gt__(self, another):
-        return self.get_date() > another.get_date()
+        return self.__value() > another.__value()
 
     def __eq__(self, another):
-        return self.get_date() == another.get_date()
+        return self.__value() == another.__value()
 
     def __ne__(self, another):
-        return self.get_date() != another.get_date()
+        return self.__value() != another.__value()
 
-    def __add__(self, days: int):
-        newDate = SimpleDate(self.__day, self.__month, self.__year)
-        days_to_add = days
+    def __add__(self, days_to_add: int):
+        return self.__to_date(self.__value() + days_to_add)
 
-        while days_to_add > 0:
-            if days_to_add >= 360:
-                newDate.__year += 1
-                days_to_add -= 360
-            elif days_to_add >= 30:
-                if newDate.__month == 12:
-                    newDate.__year += 1
-                    newDate.__month = 0
-                else:
-                    newDate.__month += 1
-                    days_to_add -= 30
-            else:
-                if newDate.__day == 30:
-                    newDate.__month += 1
-                    newDate.__day = 0
-                else:
-                    newDate.__day += 1
-                    days_to_add -= 1
-
-        return newDate
+    def __sub__(self, another):
+        amount = self.__value() - another.__value()
+        return amount if amount > 0 else amount * -1
 
     def __str__(self):
         return f"{self.__day}.{self.__month}.{self.__year}"
@@ -68,3 +59,11 @@ if __name__ == '__main__':
     print(d2)
     print(d3)
     print(d4)
+
+    print('\nPart 3')
+    d1 = SimpleDate(4, 10, 2020)
+    d2 = SimpleDate(2, 11, 2020)
+    d3 = SimpleDate(28, 12, 1985)
+    print(d2-d1)
+    print(d1-d2)
+    print(d1-d3)
