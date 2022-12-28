@@ -1,5 +1,3 @@
-
-# Write your solution here:
 class Person:
     def __init__(self, name: str):
         self.__name = name
@@ -21,66 +19,25 @@ class Person:
     def name(self):
         return self.__name
 
-    # def __iter__(self):
-    #     self.n = 0
-    #     return self
-
-    # def __next__(self):
-    #     if self.n < len(self.__numbers):
-    #         # Select the current item from the list within the object
-    #         number = self.__numbers[self.n]
-    #         # increase the counter (i.e. iteration variable) by one
-    #         self.n += 1
-    #         # return the current item
-    #         return number
-    #     else:
-    #         # All numbers have been traversed
-    #         raise StopIteration
-
 
 class PhoneBook:
     def __init__(self):
         self.__persons = {}
 
     def add_number(self, name: str, number: str):
-        newPerson = Person(name)
-        if newPerson not in self.__persons:
-            newPerson.add_number(number)
-            self.__persons[newPerson] = newPerson
-        else:
-            for person in self.__persons:
-                if person.name == name:
-                    person.add_number(number)
+        if name not in self.__persons:
+            self.__persons[name] = Person(name)
+        self.__persons[name].add_number(number)
 
     def add_address(self, name: str, address: str):
-        newPerson = Person(name)
-        if newPerson not in self.__persons:
-            newPerson.add_address(address)
-            self.__persons[newPerson] = newPerson
-        else:
-            for person in self.__persons:
-                if person.name == name:
-                    person.add_address(address)
+        if name not in self.__persons:
+            self.__persons[name] = Person(name)
+        self.__persons[name].add_address(address)
 
     def get_entry(self, name: str):
-        # found = False
-        address = None
-        number = None
-        for person in self.__persons:
-            if person.name() == name:
-                if person.address() != None:
-                    address = person.address()
-                if len(person.numbers()) > 0:
-                    number = person.numbers()[0]
-
-        if number == None:
-            print('number unknown')
-        else:
-            print(number)
-        if address == None:
-            print('address unknown')
-        else:
-            print(address)
+        if name not in self.__persons:
+            return None
+        return self.__persons[name]
 
     def all_entries(self):
         return self.__persons
@@ -109,14 +66,20 @@ class PhoneBookApplication:
 
     def search(self):
         name = input("name: ")
-        self.__phonebook.get_entry(name)
-
-        # if numbers == None:
-        #     print("number unknown")
-        #     return
-
-        # # for number in numbers:
-        # print(number)
+        numbers = ['number unknown']
+        address = 'address unknown'
+        person = self.__phonebook.get_entry(name)
+        if person == None:
+            print(numbers[0])
+            print(address)
+            return
+        if len(person.numbers()) > 0:
+            numbers = person.numbers()
+        for num in numbers:
+            print(num)
+        if person.address() != None:
+            address = person.address()
+        print(address)
 
     def execute(self):
         self.help()
@@ -139,19 +102,19 @@ class PhoneBookApplication:
 application = PhoneBookApplication()
 application.execute()
 
-# if __name__ == '__main__':
-#     print('\nPart 1')
-#     person = Person("Eric")
-#     print(person.name())
-#     print(person.numbers())
-#     print(person.address())
-#     person.add_number("040-123456")
-#     person.add_address("Mannerheimintie 10 Helsinki")
-#     print(person.numbers())
-#     print(person.address())
+if __name__ == '__main__':
+    print('\nPart 1')
+    person = Person("Eric")
+    print(person.name())
+    print(person.numbers())
+    print(person.address())
+    person.add_number("040-123456")
+    person.add_address("Mannerheimintie 10 Helsinki")
+    print(person.numbers())
+    print(person.address())
 
-#     print('\nPart 2')
-#     phonebook = PhoneBook()
-#     phonebook.add_number("Eric", "02-123456")
-#     print(phonebook.get_entry("Eric"))
-#     print(phonebook.get_entry("Emily"))
+    print('\nPart 2')
+    phonebook = PhoneBook()
+    phonebook.add_number("Eric", "02-123456")
+    print(phonebook.get_entry("Eric"))
+    print(phonebook.get_entry("Emily"))
