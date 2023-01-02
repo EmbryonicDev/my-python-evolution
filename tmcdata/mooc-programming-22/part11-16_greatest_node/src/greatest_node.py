@@ -7,27 +7,21 @@ class Node:
         self.left_child = left_child
         self.right_child = right_child
 
-    def update_value(self, new_value: int):
-        self.value = new_value
-
 
 def greatest_node(root: Node):
-    high_num = root.value
+    value = root.value
 
-    if root.left_child is not None:
-        if root.left_child.value > high_num:
-            high_num = greatest_node(root.left_child)
-        else:
-            root.left_child.update_value(high_num)
-            high_num = greatest_node(root.left_child)
-    if root.right_child is not None:
-        if root.right_child.value > high_num:
-            high_num = greatest_node(root.right_child)
-        else:
-            root.right_child.update_value(high_num)
-            high_num = greatest_node(root.right_child)
+    if root.left_child:
+        left_value = greatest_node(root.left_child)
+    else:
+        left_value = value
 
-    return high_num
+    if root.right_child:
+        right_value = greatest_node(root.right_child)
+    else:
+        right_value = value
+
+    return max(value, left_value, right_value)
 
 
 if __name__ == '__main__':
