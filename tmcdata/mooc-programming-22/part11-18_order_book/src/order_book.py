@@ -21,6 +21,26 @@ class Task:
         return f"{shared_text} {ending}"
 
 
+class OrderBook:
+    def __init__(self):
+        self.orders = []
+
+    def add_order(self, description: str, programmer: str, workload: int):
+        new_task = Task(description, programmer, workload)
+        self.orders.append(new_task)
+
+    def all_orders(self):
+        return self.orders
+
+    def get_names(self):
+        names = [task.programmer for task in self.orders]
+        names = list(set(names))
+        return sorted(names)
+
+    def programmers(self):
+        return self.get_names()
+
+
 if __name__ == '__main__':
     print('\nPart 1:')
     t1 = Task("program hello world", "Eric", 3)
@@ -35,3 +55,16 @@ if __name__ == '__main__':
     print(t2)
     print(t3)
 
+    print('\nPart 2:')
+    orders = OrderBook()
+    orders.add_order("program webstore", "Adele", 10)
+    orders.add_order("program mobile app for workload accounting", "Eric", 25)
+    orders.add_order("program app for practising mathematics", "Adele", 100)
+
+    for order in orders.all_orders():
+        print(order)
+
+    print()
+
+    for programmer in orders.programmers():
+        print(programmer)
