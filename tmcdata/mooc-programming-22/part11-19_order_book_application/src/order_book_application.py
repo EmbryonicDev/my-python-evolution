@@ -81,9 +81,9 @@ class App:
         print('6 status of programmer')
 
     def add_order(self):
+        description = input('description: ')
+        programmer_workload = input('programmer and workload estimate: ')
         try:
-            description = input('description: ')
-            programmer_workload = input('programmer and workload estimate: ')
             programmer = programmer_workload.split(' ')[0]
             workload = programmer_workload.split(' ')[1]
             self.collection.add_order(description, programmer, int(workload))
