@@ -33,9 +33,7 @@ class OrderBook:
         return self.orders
 
     def programmers(self):
-        names = [task.programmer for task in self.orders]
-        names = list(set(names))
-        return sorted(names)
+        return sorted(list(set([task.programmer for task in self.orders])))
 
     def mark_finished(self, id: int):
         id_found = False
