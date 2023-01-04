@@ -80,33 +80,14 @@ class App:
         print('5 programmers')
         print('6 status of programmer')
 
-    @classmethod
-    def is_integer(cls, string: str):
-        for letter in string:
-            if letter not in '1234567890':
-                return False
-            return True
-
     def add_order(self):
         try:
-        description = input('description: ')
-        programmer_workload = input('programmer and workload estimate: ')
-
-        # print error if no space found in programmer_workload
-        if ' ' not in programmer_workload:
-            print(App.error)
-            return
-
-        programmer = programmer_workload.split(' ')[0]
-        workload = programmer_workload.split(' ')[1]
-
-        if not self.is_integer(workload) or len(workload) < 1:
-            print(App.error)
-            return
-
-        # execute if no errors were found
-        self.collection.add_order(description, programmer, int(workload))
-        print('added!')
+            description = input('description: ')
+            programmer_workload = input('programmer and workload estimate: ')
+            programmer = programmer_workload.split(' ')[0]
+            workload = programmer_workload.split(' ')[1]
+            self.collection.add_order(description, programmer, int(workload))
+            print('added!')
         except:
             print(App.error)
 
