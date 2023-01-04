@@ -64,4 +64,48 @@ class OrderBook:
         return len(finished_tasks), len(unfinished_tasks), finished_hours, unfinished_hours
 
 
-if __name__ == '__main__':
+class App:
+    def __init__(self):
+        self.collection = OrderBook()
+
+    def help(self):
+        print('commands:')
+        print('0 exit')
+        print('1 add order')
+        print('2 list finished tasks')
+        print('3 list unfinished tasks')
+        print('4 mark task as finished')
+        print('5 programmers')
+        print('6 status of programmer')
+
+    def add_order(self):
+        description = input('description: ')
+        programmer_workload = input('programmer and workload estimate: ')
+        programmer = programmer_workload.split(' ')[0]
+        workload = programmer_workload.split(' ')[1]
+        self.collection.add_order(description, programmer, workload)
+        print('added!')
+
+    def finished_orders(self):
+        fo = self.collection.finished_orders()
+        if len(fo) > 0:
+            for order in fo:
+                print(order)
+            return
+        print('no finished task')
+    def execute(self):
+        self.help()
+        while True:
+            print('')
+            command = int(input('command: '))
+            if command == 0:
+                break
+            if command == 1:
+                self.add_order()
+            if command == 2:
+                self.finished_orders()
+
+
+app = App()
+app.execute()
+# if __name__ == '__main__':
