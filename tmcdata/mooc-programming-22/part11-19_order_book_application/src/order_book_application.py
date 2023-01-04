@@ -65,6 +65,8 @@ class OrderBook:
 
 
 class App:
+    error = 'erroneous input'
+
     def __init__(self):
         self.collection = OrderBook()
 
@@ -81,9 +83,26 @@ class App:
     def add_order(self):
         description = input('description: ')
         programmer_workload = input('programmer and workload estimate: ')
+
+        # print error if no space found in programmer_workload
+        if ' ' not in programmer_workload:
+            print(App.error)
+            return
+
         programmer = programmer_workload.split(' ')[0]
         workload = programmer_workload.split(' ')[1]
-        self.collection.add_order(description, programmer, workload)
+
+        # print error if workload can't be converted to a integer
+        if len(workload) < 1:
+            print(App.error)
+            return
+
+        for letter in workload:
+            if letter not in '0123456789':
+                print(App.error)
+                return
+
+        self.collection.add_order(description, programmer, int(workload))
         print('added!')
 
     def finished_orders(self):
@@ -111,6 +130,12 @@ class App:
         for programmer in self.collection.programmers():
             print(programmer)
 
+    def status_of_programmer(self):
+        programmer = input('programmer: ')
+        status = self.collection.status_of_programmer(programmer)
+        print(
+            f"tasks: finished {status[0]} not finished {status[1]}, hours: done {status[2]} scheduled {status[3]}")
+
     def execute(self):
         self.help()
         while True:
@@ -128,6 +153,8 @@ class App:
                 self.mark_finished()
             if command == 5:
                 self.programmers()
+            if command == 6:
+                self.status_of_programmer()
 
 
 app = App()
