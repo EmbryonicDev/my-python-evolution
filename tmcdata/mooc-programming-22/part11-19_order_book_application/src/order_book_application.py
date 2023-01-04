@@ -88,6 +88,7 @@ class App:
             return True
 
     def add_order(self):
+        try:
         description = input('description: ')
         programmer_workload = input('programmer and workload estimate: ')
 
@@ -106,6 +107,8 @@ class App:
         # execute if no errors were found
         self.collection.add_order(description, programmer, int(workload))
         print('added!')
+        except:
+            print(App.error)
 
     def finished_orders(self):
         fo = self.collection.finished_orders()
@@ -136,17 +139,13 @@ class App:
             print(programmer)
 
     def status_of_programmer(self):
-        programmer = input('programmer: ')
-
-        # print error if programmer not in collection
-        if programmer not in self.collection.programmers():
+        try:
+            programmer = input('programmer: ')
+            status = self.collection.status_of_programmer(programmer)
+            print(
+                f"tasks: finished {status[0]} not finished {status[1]}, hours: done {status[2]} scheduled {status[3]}")
+        except:
             print(App.error)
-            return
-
-        # execute if no errors were found
-        status = self.collection.status_of_programmer(programmer)
-        print(
-            f"tasks: finished {status[0]} not finished {status[1]}, hours: done {status[2]} scheduled {status[3]}")
 
     def execute(self):
         self.help()
