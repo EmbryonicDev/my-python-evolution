@@ -36,13 +36,11 @@ class OrderBook:
         return sorted(list(set([task.programmer for task in self.orders])))
 
     def mark_finished(self, id: int):
-        id_found = False
         for task in self.orders:
             if task.id == id:
                 task.mark_finished()
-                id_found = True
-        if not id_found:
-            raise ValueError("No Such ID found!")
+                return
+        raise ValueError("No Such ID found!")
 
     def finished_orders(self):
         return [task for task in self.orders if task.complete]
