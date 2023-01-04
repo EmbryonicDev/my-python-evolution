@@ -80,6 +80,13 @@ class App:
         print('5 programmers')
         print('6 status of programmer')
 
+    @classmethod
+    def is_integer(cls, string: str):
+        for letter in string:
+            if letter not in '1234567890':
+                return False
+            return True
+
     def add_order(self):
         description = input('description: ')
         programmer_workload = input('programmer and workload estimate: ')
@@ -92,16 +99,11 @@ class App:
         programmer = programmer_workload.split(' ')[0]
         workload = programmer_workload.split(' ')[1]
 
-        # print error if workload can't be converted to a integer
-        if len(workload) < 1:
+        if not self.is_integer(workload) or len(workload) < 1:
             print(App.error)
             return
 
-        for letter in workload:
-            if letter not in '0123456789':
-                print(App.error)
-                return
-
+        # execute if no errors were found
         self.collection.add_order(description, programmer, int(workload))
         print('added!')
 
@@ -111,7 +113,7 @@ class App:
             for order in fo:
                 print(order)
             return
-        print('no finished task')
+        print('no finished tasks')
 
     def unfinished_orders(self):
         ufo = self.collection.unfinished_orders()
@@ -122,9 +124,12 @@ class App:
         print('no unfinished task')
 
     def mark_finished(self):
-        id = int(input('id: '))
-        self.collection.mark_finished(id)
-        print('marked as finished')
+        try:
+            id = input('id: ')
+            self.collection.mark_finished(int(id))
+            print('marked as finished')
+        except:
+            print(App.error)
 
     def programmers(self):
         for programmer in self.collection.programmers():
@@ -132,6 +137,13 @@ class App:
 
     def status_of_programmer(self):
         programmer = input('programmer: ')
+
+        # print error if programmer not in collection
+        if programmer not in self.collection.programmers():
+            print(App.error)
+            return
+
+        # execute if no errors were found
         status = self.collection.status_of_programmer(programmer)
         print(
             f"tasks: finished {status[0]} not finished {status[1]}, hours: done {status[2]} scheduled {status[3]}")
@@ -140,23 +152,24 @@ class App:
         self.help()
         while True:
             print('')
-            command = int(input('command: '))
-            if command == 0:
+            command = input('command: ')
+            if command == '0':
                 break
-            if command == 1:
+            elif command == '1':
                 self.add_order()
-            if command == 2:
+            elif command == '2':
                 self.finished_orders()
-            if command == 3:
+            elif command == '3':
                 self.unfinished_orders()
-            if command == 4:
+            elif command == '4':
                 self.mark_finished()
-            if command == 5:
+            elif command == '5':
                 self.programmers()
-            if command == 6:
+            elif command == '6':
                 self.status_of_programmer()
+            else:
+                print(App.error)
 
 
 app = App()
 app.execute()
-# if __name__ == '__main__':
