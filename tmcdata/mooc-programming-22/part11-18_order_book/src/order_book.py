@@ -50,6 +50,12 @@ class OrderBook:
         if not id_found:
             raise ValueError("No Such ID found!")
 
+    def finished_orders(self):
+        return [task for task in self.orders if task.complete]
+
+    def unfinished_orders(self):
+        return [task for task in self.orders if not task.complete]
+
 
 if __name__ == '__main__':
     # print('\nPart 1:')
