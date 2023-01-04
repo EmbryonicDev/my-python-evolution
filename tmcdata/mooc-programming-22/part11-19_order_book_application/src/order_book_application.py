@@ -102,6 +102,15 @@ class App:
             return
         print('no unfinished task')
 
+    def mark_finished(self):
+        id = int(input('id: '))
+        self.collection.mark_finished(id)
+        print('marked as finished')
+
+    def programmers(self):
+        for programmer in self.collection.programmers():
+            print(programmer)
+
     def execute(self):
         self.help()
         while True:
@@ -115,6 +124,10 @@ class App:
                 self.finished_orders()
             if command == 3:
                 self.unfinished_orders()
+            if command == 4:
+                self.mark_finished()
+            if command == 5:
+                self.programmers()
 
 
 app = App()
