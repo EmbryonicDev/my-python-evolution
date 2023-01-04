@@ -53,26 +53,18 @@ class OrderBook:
         return [task for task in self.orders if not task.complete]
 
     def status_of_programmer(self, programmer: str):
-        finished_tasks = 0
-        finished_hours = 0
-        unfinished_tasks = 0
-        unfinished_hours = 0
-        programmer_found = False
-
-        for task in self.orders:
-            if task.programmer == programmer:
-                programmer_found = True
-                if task.complete:
-                    finished_tasks += 1
-                    finished_hours += task.workload
-                else:
-                    unfinished_tasks += 1
-                    unfinished_hours += task.workload
-
-        if not programmer_found:
+        if programmer not in self.programmers():
             raise ValueError("No Such ID found!")
 
-        return finished_tasks, unfinished_tasks, finished_hours, unfinished_hours
+        finished_tasks = [
+            t for t in self.orders if programmer == t.programmer and t.complete]
+        finished_hours = sum(t.workload for t in finished_tasks)
+
+        unfinished_tasks = [
+            t for t in self.orders if programmer == t.programmer and not t.complete]
+        unfinished_hours = sum(t.workload for t in unfinished_tasks)
+
+        return len(finished_tasks), len(unfinished_tasks), finished_hours, unfinished_hours
 
 
 if __name__ == '__main__':
