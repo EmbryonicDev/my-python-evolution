@@ -26,8 +26,7 @@ class OrderBook:
         self.orders = []
 
     def add_order(self, description: str, programmer: str, workload: int):
-        new_task = Task(description, programmer, workload)
-        self.orders.append(new_task)
+        self.orders.append(Task(description, programmer, workload))
 
     def all_orders(self):
         return self.orders
