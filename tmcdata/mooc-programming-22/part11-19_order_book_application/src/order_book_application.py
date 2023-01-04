@@ -93,6 +93,15 @@ class App:
                 print(order)
             return
         print('no finished task')
+
+    def unfinished_orders(self):
+        ufo = self.collection.unfinished_orders()
+        if len(ufo) > 0:
+            for order in ufo:
+                print(order)
+            return
+        print('no unfinished task')
+
     def execute(self):
         self.help()
         while True:
@@ -104,6 +113,8 @@ class App:
                 self.add_order()
             if command == 2:
                 self.finished_orders()
+            if command == 3:
+                self.unfinished_orders()
 
 
 app = App()
