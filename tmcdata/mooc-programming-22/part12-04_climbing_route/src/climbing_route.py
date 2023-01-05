@@ -8,15 +8,15 @@ class ClimbingRoute:
         return f"{self.name}, length {self.length} metres, grade {self.grade}"
 
 
-def sort_by_length(items: list):
-    def order_by_longest_length(item: dict):
-        return item.length
-    return sorted(items, key=order_by_longest_length, reverse=True)
+def sort_by_length(routes: list):
+    def order_by_longest_length(route: dict):
+        return route.length
+    return sorted(routes, key=order_by_longest_length, reverse=True)
 
 
 def sort_by_difficulty(routes: list):
     def order_by_most_difficult(route: dict):
-        return route.grade
+        return route.grade, route.length
     return sorted(routes, key=order_by_most_difficult, reverse=True)
 
 
@@ -37,4 +37,12 @@ if __name__ == '__main__':
     r4 = ClimbingRoute("Small steps", 12, "6A+")
     routes = [r1, r2, r3, r4]
     for route in sort_by_difficulty(routes):
+        print(route)
+
+    print('\nFrom Test:')
+    r1 = ClimbingRoute("Small steps", 13, "6A+")
+    r2 = ClimbingRoute("Edge", 38, "6A+")
+    r3 = ClimbingRoute("Bukowski", 9, "6A+")
+    reply = sort_by_difficulty([r1, r2, r3])
+    for route in reply:
         print(route)
