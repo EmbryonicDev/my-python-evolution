@@ -9,17 +9,17 @@ class CourseAttempt:
 
 
 def accepted(attempts: list):
-    return list(filter(lambda x: x.grade > 1, attempts))
+    return filter(lambda x: x.grade > 1, attempts)
 
 
 def attempts_with_grade(attempts: list, grade: int):
-    return (list(filter(lambda x: x.grade == grade, attempts)))
+    return list(filter(lambda x: x.grade == grade, attempts))
 
 
 def passed_students(attempts: list, course: str):
-    courses = list(filter(lambda x: x.course_name ==
-                   course and x.grade > 0, attempts))
-    return sorted(list(map(lambda x: x.student_name, courses)))
+    courses = filter(lambda x: x.course_name ==
+                     course and x.grade > 0, attempts)
+    return sorted(map(lambda x: x.student_name, courses))
 
 
 if __name__ == '__main__':
@@ -44,6 +44,5 @@ if __name__ == '__main__':
     s2 = CourseAttempt("Olivia C. Objective", "Introduction to AI", 5)
     s3 = CourseAttempt("Peter Python", "Introduction to AI", 0)
     s4 = CourseAttempt("Jack Java", "Introduction to AI", 3)
-
     for attempt in passed_students([s1, s2, s3, s4], "Introduction to AI"):
         print(attempt)
