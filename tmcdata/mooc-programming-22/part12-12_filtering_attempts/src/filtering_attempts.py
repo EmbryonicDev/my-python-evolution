@@ -17,11 +17,9 @@ def attempts_with_grade(attempts: list, grade: int):
 
 
 def passed_students(attempts: list, course: str):
-    def match_grade_and_course(attempt):
-        if attempt.course_name == course and attempt.grade > 0:
-            return attempt.student_name
-    the_list = list(filter(match_grade_and_course, attempts))
-    return sorted(list(map(lambda t: t.student_name, the_list)))
+    courses = list(filter(lambda x: x.course_name ==
+                   course and x.grade > 0, attempts))
+    return sorted(list(map(lambda x: x.student_name, courses)))
 
 
 if __name__ == '__main__':
