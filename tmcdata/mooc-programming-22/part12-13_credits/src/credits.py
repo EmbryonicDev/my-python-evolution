@@ -20,6 +20,11 @@ def sum_of_passed_credits(attempts: list):
     return reduce(lambda acc, curr: acc + curr.credits, courses, 0)
 
 
+def average(attempts: list):
+    courses = list(filter(lambda x: x.grade > 0, attempts))
+    return reduce(lambda acc, curr: acc + curr.grade, courses, 0) / len(courses)
+
+
 if __name__ == '__main__':
     print('\nPart 1 - ')
     s1 = CourseAttempt("Introduction to Programming", 5, 5)
@@ -34,3 +39,10 @@ if __name__ == '__main__':
     s3 = CourseAttempt("Data Structures and Algorithms", 3, 10)
     credit_sum = sum_of_passed_credits([s1, s2, s3])
     print(credit_sum)
+
+    print('\nPart 3 - ')
+    s1 = CourseAttempt("Introduction to Programming", 5, 5)
+    s2 = CourseAttempt("Advanced Course in Programming", 0, 4)
+    s3 = CourseAttempt("Data Structures and Algorithms", 3, 10)
+    ag = average([s1, s2, s3])
+    print(ag)
