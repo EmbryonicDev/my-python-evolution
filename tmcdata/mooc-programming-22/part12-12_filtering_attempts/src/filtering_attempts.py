@@ -9,11 +9,7 @@ class CourseAttempt:
 
 
 def accepted(attempts: list):
-    def at_least_one(attempt):
-        if attempt.grade > 1:
-            return attempt.grade
-
-    return list(filter(at_least_one, attempts))
+    return list(filter(lambda x: x.grade > 1, attempts))
 
 
 def attempts_with_grade(attempts: list, grade: int):
