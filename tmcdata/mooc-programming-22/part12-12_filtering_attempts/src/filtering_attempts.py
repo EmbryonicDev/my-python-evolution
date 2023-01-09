@@ -13,10 +13,7 @@ def accepted(attempts: list):
 
 
 def attempts_with_grade(attempts: list, grade: int):
-    def match_grade(attempt):
-        if attempt.grade == grade:
-            return attempt
-    return list(filter(match_grade, attempts))
+    return (list(filter(lambda x: x.grade == grade, attempts)))
 
 
 def passed_students(attempts: list, course: str):
