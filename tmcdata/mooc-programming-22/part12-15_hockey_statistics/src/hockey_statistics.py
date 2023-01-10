@@ -29,6 +29,11 @@ commands:
                 print(
                     f"\n{player['name']:21}{player['nationality']:>3}{player['goals']:>4} + {player['assists']:>2} = {(player['goals'] + player['assists']):>3}")
 
+    def get_teams(self):
+        teams = sorted(set([player['team'] for player in self.players]))
+        for team in teams:
+            print(team)
+
     def execute(self):
         file_name = input('file name: ')
         self.players = fileReader(file_name)
@@ -40,6 +45,8 @@ commands:
                 break
             elif command == '1':
                 self.get_player()
+            elif command == '2':
+                self.get_teams()
 
 
 test = PlayersApp()
