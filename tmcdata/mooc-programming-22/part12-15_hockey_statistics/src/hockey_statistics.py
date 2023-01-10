@@ -40,6 +40,18 @@ commands:
         for country in countries:
             print(country)
 
+    def get_team_players(self):
+        team = input('team: ')
+        print()
+        players = list(filter(lambda x: x['team'] == team, self.players))
+
+        def get_points(player: dict):
+            return (player['goals'] + player['assists'])
+
+        players = sorted(players, key=get_points, reverse=True)
+        for player in players:
+            print(self.print_player(player))
+
     def execute(self):
         file_name = input('file name: ')
         self.players = fileReader(file_name)
@@ -55,6 +67,8 @@ commands:
                 self.get_teams()
             elif command == '3':
                 self.get_countries()
+            elif command == '4':
+                self.get_team_players()
 
 
 test = PlayersApp()
