@@ -24,7 +24,7 @@ commands:
 7 most goals''')
 
     def print_player(self, player: dict):
-        return f"{player['name']:21}{player['nationality']:>3}{player['goals']:>4} + {player['assists']:>2} = {(player['goals'] + player['assists']):>3}"
+        return f"{player['name']:21}{player['team']:>3}{player['goals']:>4} + {player['assists']:>2} = {(player['goals'] + player['assists']):>3}"
 
     def get_player(self):
         name = input('name: ')
