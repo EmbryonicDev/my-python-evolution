@@ -23,7 +23,8 @@ commands:
 6 most points
 7 most goals''')
 
-    def print_player(self, player: dict):
+    @classmethod
+    def print_player(cls, player: dict):
         return f"{player['name']:21}{player['team']:>3}{player['goals']:>4} + {player['assists']:>2} = {(player['goals'] + player['assists']):>3}"
 
     @classmethod
