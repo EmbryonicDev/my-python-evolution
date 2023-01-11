@@ -64,11 +64,15 @@ commands:
         for player in players:
             print(self.print_player(player))
 
-    def get_most_points(self):
+    def get_most_points(self, points_or_goals: str):
         user_prompt = input('how many: ')
         print()
-        players = sorted(
-            self.players, key=lambda i: (self.get_points(i), i['goals']), reverse=True)
+        if points_or_goals == 'p':
+            players = sorted(
+                self.players, key=lambda i: (self.get_points(i), i['goals']), reverse=True)
+        elif points_or_goals == 'g':
+            players = sorted(
+                self.players, key=lambda i: (i['goals'], -i['games']), reverse=True)
 
         for p in range(0, int(user_prompt)):
             print(self.print_player(players[p]))
@@ -93,7 +97,9 @@ commands:
             elif command == '5':
                 self.get_players('c')
             elif command == '6':
-                self.get_most_points()
+                self.get_most_points('p')
+            elif command == '7':
+                self.get_most_points('g')
 
 
 test = PlayersApp()
