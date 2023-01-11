@@ -64,6 +64,15 @@ commands:
         for player in players:
             print(self.print_player(player))
 
+    def get_most_points(self):
+        user_prompt = input('how many: ')
+        print()
+        players = sorted(
+            self.players, key=lambda i: (self.get_points(i), i['goals']), reverse=True)
+
+        for p in range(0, int(user_prompt)):
+            print(self.print_player(players[p]))
+
     def execute(self):
         file_name = input('file name: ')
         self.players = fileReader(file_name)
@@ -83,6 +92,8 @@ commands:
                 self.get_players('t')
             elif command == '5':
                 self.get_players('c')
+            elif command == '6':
+                self.get_most_points()
 
 
 test = PlayersApp()
