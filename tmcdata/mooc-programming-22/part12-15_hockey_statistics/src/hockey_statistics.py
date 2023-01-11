@@ -26,6 +26,10 @@ commands:
     def print_player(self, player: dict):
         return f"{player['name']:21}{player['team']:>3}{player['goals']:>4} + {player['assists']:>2} = {(player['goals'] + player['assists']):>3}"
 
+    @classmethod
+    def get_points(cls, player: dict):
+        return (player['goals'] + player['assists'])
+
     def get_player(self):
         name = input('name: ')
         print()
@@ -55,10 +59,7 @@ commands:
         players = list(
             filter(lambda x: x[user_prompt] == search_term, self.players))
 
-        def get_points(player: dict):
-            return (player['goals'] + player['assists'])
-
-        players = sorted(players, key=get_points, reverse=True)
+        players = sorted(players, key=self.get_points, reverse=True)
         for player in players:
             print(self.print_player(player))
 
