@@ -43,10 +43,16 @@ commands:
         for country in countries:
             print(country)
 
-    def get_team_players(self):
-        team = input('team: ')
+    def get_players(self, team_or_country: str):
+        if team_or_country == 't':
+            user_prompt = 'team'
+        elif team_or_country == 'c':
+            user_prompt = 'nationality'
+
+        search_term = input(f"{user_prompt}: ")
         print()
-        players = list(filter(lambda x: x['team'] == team, self.players))
+        players = list(
+            filter(lambda x: x[user_prompt] == search_term, self.players))
 
         def get_points(player: dict):
             return (player['goals'] + player['assists'])
@@ -71,7 +77,9 @@ commands:
             elif command == '3':
                 self.get_countries()
             elif command == '4':
-                self.get_team_players()
+                self.get_players('t')
+            elif command == '5':
+                self.get_players('c')
 
 
 test = PlayersApp()
