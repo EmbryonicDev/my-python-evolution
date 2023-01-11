@@ -22,12 +22,15 @@ commands:
 6 most points
 7 most goals''')
 
+    def print_player(self, player: dict):
+        return f"{player['name']:21}{player['nationality']:>3}{player['goals']:>4} + {player['assists']:>2} = {(player['goals'] + player['assists']):>3}"
+
     def get_player(self):
         name = input('name: ')
+        print()
         for player in self.players:
             if player['name'] == name:
-                print(
-                    f"\n{player['name']:21}{player['nationality']:>3}{player['goals']:>4} + {player['assists']:>2} = {(player['goals'] + player['assists']):>3}")
+                print(self.print_player(player))
 
     def get_teams(self):
         teams = sorted(set([player['team'] for player in self.players]))
