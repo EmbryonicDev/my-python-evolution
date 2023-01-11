@@ -16,6 +16,7 @@ class PlayersApp:
 commands:
 0 quit
 1 search for player
+2 teams
 3 countries
 4 players in team
 5 players from country
