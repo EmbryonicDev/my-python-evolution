@@ -20,10 +20,10 @@ while True:
     window.blit(robot, (x, y))
     pygame.display.flip()
 
-    x += velocity
-    if velocity > 0 and x + robot.get_width() >= 640:
+    y += velocity
+    if velocity > 0 and y + robot.get_height() >= 480:
         velocity = -velocity
-    if velocity < 0 and x <= 0:
+    if velocity < 0 and y <= 0:
         velocity = -velocity
 
     clock.tick(60)
