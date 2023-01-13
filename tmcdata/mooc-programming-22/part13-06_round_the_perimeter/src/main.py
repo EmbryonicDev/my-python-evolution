@@ -33,4 +33,4 @@ while True:
             horizontal = True
             y_velocity = -y_velocity
 
-    clock.tick(60)
+    clock.tick(450)
