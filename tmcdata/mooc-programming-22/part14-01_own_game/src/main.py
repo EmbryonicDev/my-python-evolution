@@ -163,6 +163,21 @@ class GetCoin:
                 coin.x += coin.x_speed
                 coin.y += coin.y_speed
 
+    def move_monster(self):
+        for monster in self.monsters:
+            if monster.x <= 0 or monster.x + monster.width >= self.width:
+                monster.x_speed *= -1
+            if monster.y <= 0 or monster.y + monster.height >= self.height:
+                monster.y_speed *= -1
+
+            # monster hits robot & adds point
+            if (self.bot.x <= monster.x <= self.bot.x + self.bot.width and
+                    self.bot.y <= monster.y <= self.bot.y + self.bot.height):
+                print('monster got you!!!')
+
+            monster.x += monster.x_speed
+            monster.y += monster.y_speed
+
     def release_coins(self):
         print('coins released')
         self.coins = []
