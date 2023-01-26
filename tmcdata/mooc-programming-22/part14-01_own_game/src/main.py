@@ -10,6 +10,22 @@ class MovingObject:
         self.y_speed = directions[1]
 
 
+class Robot:
+    def __init__(self, screen_height: int):
+        self.lives = 4
+        self.speed = 2
+        self.points = 0
+        self.image = pygame.image.load('robot.png')
+        self.width = self.image.get_width()
+        self.height = self.image.get_height()
+        self.x = 0
+        self.y = screen_height - self.height
+        self.to_left = False
+        self.to_right = False
+        self.to_up = False
+        self.to_down = False
+
+
 class GetCoin:
     def __init__(self):
         pygame.init()
@@ -22,12 +38,8 @@ class GetCoin:
             (self.width, self.height+self.info_board))
         pygame.display.set_caption('Coin Chaser')
 
-        self.to_left, self.to_right, self.to_up, self.to_down = False, False, False, False
         self.clock = pygame.time.Clock()
-
         self.load_images()
-        self.robot_height = self.images['robot'].get_height()
-        self.robot_width = self.images['robot'].get_width()
         self.coin_width = self.images['coin'].get_width()
         self.new_game()
         self.main_loop()
@@ -42,24 +54,25 @@ class GetCoin:
         for event in pygame.event.get():
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_LEFT:
-                    self.to_left = True
+                    self.bot.to_left = True
                 if event.key == pygame.K_RIGHT:
-                    self.to_right = True
+                    self.bot.to_right = True
                 if event.key == pygame.K_UP:
-                    self.to_up = True
+                    self.bot.to_up = True
                 if event.key == pygame.K_DOWN:
-                    self.to_down = True
+                    self.bot.to_down = True
                 if event.key == pygame.K_F2:
                     self.new_game()
+
             if event.type == pygame.KEYUP:
                 if event.key == pygame.K_LEFT:
-                    self.to_left = False
+                    self.bot.to_left = False
                 if event.key == pygame.K_RIGHT:
-                    self.to_right = False
+                    self.bot.to_right = False
                 if event.key == pygame.K_UP:
-                    self.to_up = False
+                    self.bot.to_up = False
                 if event.key == pygame.K_DOWN:
-                    self.to_down = False
+                    self.bot.to_down = False
 
             if event.type == pygame.QUIT:
                 exit()
@@ -68,7 +81,7 @@ class GetCoin:
 
     def draw_window(self):
         self.window.fill((0)*3)
-        self.window.blit(self.images['robot'], self.robot_pos)
+        self.window.blit(self.bot.image, (self.bot.x, self.bot.y))
 
         for coin in self.coins:
             self.window.blit(self.images['coin'],
@@ -78,14 +91,14 @@ class GetCoin:
         self.clock.tick(60)
 
     def move_bot(self):
-        if self.to_right and self.robot_pos[0] <= self.width - self.robot_width:
-            self.robot_pos[0] += 2
-        if self.to_left and self.robot_pos[0] >= 0:
-            self.robot_pos[0] -= 2
-        if self.to_down and self.robot_pos[1] <= self.height - self.robot_height:
-            self.robot_pos[1] += 2
-        if self.to_up and self.robot_pos[1] >= 0:
-            self.robot_pos[1] -= 2
+        if self.bot.to_right and self.bot.x <= self.width - self.bot.width:
+            self.bot.x += 2
+        if self.bot.to_left and self.bot.x >= 0:
+            self.bot.x -= 2
+        if self.bot.to_down and self.bot.y <= self.height - self.bot.height:
+            self.bot.y += 2
+        if self.bot.to_up and self.bot.y >= 0:
+            self.bot.y -= 2
 
     def move_coin(self):
         for coin in self.coins:
@@ -103,7 +116,7 @@ class GetCoin:
 
     def load_images(self):
         self.images = {}
-        for name in ['coin', 'robot', 'door', 'monster']:
+        for name in ['coin', 'door', 'monster']:
             self.images[name] = pygame.image.load(name+'.png')
 
     def release_coins(self):
@@ -115,7 +128,7 @@ class GetCoin:
             self.coins.append(new_coin)
 
     def new_game(self):
-        self.robot_pos = [0, self.height - self.robot_height]
+        self.bot = Robot(self.height)
         self.release_coins()
 
 
