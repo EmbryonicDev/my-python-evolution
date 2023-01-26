@@ -170,10 +170,12 @@ class GetCoin:
             if monster.y <= 0 or monster.y + monster.height >= self.height:
                 monster.y_speed *= -1
 
-            # monster hits robot & adds point
+            # monster hits robot and takes a life
             if (self.bot.x <= monster.x <= self.bot.x + self.bot.width and
                     self.bot.y <= monster.y <= self.bot.y + self.bot.height):
-                print('monster got you!!!')
+                self.bot.lives -= 1
+                print('lives remaining: ', self.bot.lives)
+                self.release_monsters()
 
             monster.x += monster.x_speed
             monster.y += monster.y_speed
