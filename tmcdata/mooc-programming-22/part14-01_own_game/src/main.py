@@ -127,11 +127,6 @@ class GetCoin:
                 coin.x += coin.x_speed
                 coin.y += coin.y_speed
 
-    def load_images(self):
-        self.images = {}
-        for name in ['door', 'monster']:
-            self.images[name] = pygame.image.load(name+'.png')
-
     def release_coins(self):
         self.coins = []
         for i in range(5):
