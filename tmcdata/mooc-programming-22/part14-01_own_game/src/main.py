@@ -115,6 +115,8 @@ class GetCoin:
                 self.window.blit(coin.image,
                                  (coin.x, coin.y))
 
+        self.window.blit(self.bot.image, (self.bot.x, self.bot.y))
+
         pygame.display.flip()
         self.clock.tick(60)
 
