@@ -36,7 +36,7 @@ class Door:
 
 class Robot:
     def __init__(self, screen_height: int):
-        self.lives = 4
+        self.health = 100
         self.speed = 8
         self.points = 0
         self.image = get_image('robot')
@@ -171,11 +171,11 @@ class GetCoin:
             if monster.y <= 0 or monster.y + monster.height >= self.height:
                 monster.y_speed *= -1
 
-            # monster hits robot and takes a life
+            # monster hits robot and takes a health point
             if (self.bot.x <= monster.x <= self.bot.x + self.bot.width and
                     self.bot.y <= monster.y <= self.bot.y + self.bot.height):
-                self.bot.lives -= 1
-                print('lives remaining: ', self.bot.lives)
+                self.bot.health -= 1
+                print('health remaining: ', self.bot.health)
                 self.release_monsters()
 
             monster.x += monster.x_speed
