@@ -7,7 +7,6 @@ def get_image(image: str):
 
 
 class MovingObject:
-
     def __init__(self, screen_dimensions: list, image: str):
         self.choices = [-4, 4, -5, 5, -6, 6, -7, 7, -8, 8]
         self.x_speed = random.choice(self.choices)
@@ -38,7 +37,7 @@ class Door:
 class Robot:
     def __init__(self, screen_height: int):
         self.lives = 4
-        self.speed = 2
+        self.speed = 8
         self.points = 0
         self.image = get_image('robot')
         self.width = self.image.get_width()
@@ -130,13 +129,13 @@ class GetCoin:
 
     def move_bot(self):
         if self.bot.to_right and self.bot.x <= self.width - self.bot.width:
-            self.bot.x += 2
+            self.bot.x += self.bot.speed
         if self.bot.to_left and self.bot.x >= 0:
-            self.bot.x -= 2
+            self.bot.x -= self.bot.speed
         if self.bot.to_down and self.bot.y <= self.height - self.bot.height:
-            self.bot.y += 2
+            self.bot.y += self.bot.speed
         if self.bot.to_up and self.bot.y >= 0:
-            self.bot.y -= 2
+            self.bot.y -= self.bot.speed
 
         # robot hits door
         if (self.bot.x <= self.door.x <= self.bot.x + self.bot.width and
