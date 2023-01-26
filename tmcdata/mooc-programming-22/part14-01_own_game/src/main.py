@@ -70,6 +70,7 @@ class GetCoin:
             self.check_events()
             self.draw_window()
             self.move_coin()
+            self.move_bot()
 
     def check_events(self):
         for event in pygame.event.get():
@@ -97,8 +98,6 @@ class GetCoin:
 
             if event.type == pygame.QUIT:
                 exit()
-
-        self.move_bot()
 
     def draw_window(self):
         self.window.fill((0)*3)
