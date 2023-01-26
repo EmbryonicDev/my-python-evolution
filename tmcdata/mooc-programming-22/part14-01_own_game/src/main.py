@@ -7,9 +7,11 @@ def get_image(image: str):
 
 
 class MovingObject:
+
     def __init__(self, screen_dimensions: list, image: str):
-        self.x_speed = random.choice([-8, 8])
-        self.y_speed = random.choice([-8, 8])
+        self.choices = [-4, 4, -5, 5, -6, 6, -7, 7, -8, 8]
+        self.x_speed = random.choice(self.choices)
+        self.y_speed = random.choice(self.choices)
         self.image = get_image(image)
         self.width = self.image.get_width()
         self.height = self.image.get_height()
@@ -189,11 +191,8 @@ class GetCoin:
 
     def release_monsters(self):
         self.monsters = []
-        choices = [-4, 4, -5, 5, -6, 6, -7, 7, -8, 8]
         for i in range(self.level):
             monster = MovingObject([self.width, self.height], 'monster')
-            monster.x_speed = random.choice(choices)
-            monster.y_speed = random.choice(choices)
             self.monsters.append(monster)
 
     def new_game(self):
