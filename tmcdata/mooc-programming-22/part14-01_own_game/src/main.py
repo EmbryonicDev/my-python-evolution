@@ -23,6 +23,12 @@ class MovingCoin(MovingObject):
         self.caught = False
 
 
+class Door:
+    def __init__(self):
+        self.visible = False
+        self.image = get_image('door')
+
+
 class Robot:
     def __init__(self, screen_height: int):
         self.lives = 4
