@@ -62,7 +62,6 @@ class GetCoin:
         pygame.display.set_caption('Coin Chaser')
 
         self.clock = pygame.time.Clock()
-        self.load_images()
         self.new_game()
         self.main_loop()
 
