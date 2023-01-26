@@ -2,11 +2,15 @@ import pygame
 import random
 
 
+def get_image(image: str):
+    return pygame.image.load(image+'.png')
+
+
 class MovingObject:
     def __init__(self, screen_dimensions: list, image: str):
         self.x_speed = random.choice([-8, 8])
         self.y_speed = random.choice([-8, 8])
-        self.image = pygame.image.load(image+'.png')
+        self.image = get_image(image)
         self.width = self.image.get_width()
         self.height = self.image.get_height()
         self.x = random.randint(0, screen_dimensions[0] - self.width)
@@ -24,7 +28,7 @@ class Robot:
         self.lives = 4
         self.speed = 2
         self.points = 0
-        self.image = pygame.image.load('robot.png')
+        self.image = get_image('robot')
         self.width = self.image.get_width()
         self.height = self.image.get_height()
         self.x = 0
