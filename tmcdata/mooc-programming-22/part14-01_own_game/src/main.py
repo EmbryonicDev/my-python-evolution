@@ -107,7 +107,7 @@ class GetCoin:
                 exit()
 
     def draw_window(self):
-        self.window.fill((255, 255, 0))
+        self.window.fill((255, 0, 0))
 
         # print door
         if all(i.caught == True for i in self.coins):
