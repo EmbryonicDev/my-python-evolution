@@ -13,6 +13,12 @@ class MovingObject:
         self.y = random.randint(0, screen_dimensions[1] - self.height)
 
 
+class MovingCoin(MovingObject):
+    def __init__(self, screen_dimensions, image):
+        MovingObject.__init__(self, screen_dimensions, image)
+        self.caught = False
+
+
 class Robot:
     def __init__(self, screen_height: int):
         self.lives = 4
@@ -86,8 +92,9 @@ class GetCoin:
         self.window.blit(self.bot.image, (self.bot.x, self.bot.y))
 
         for coin in self.coins:
-            self.window.blit(coin.image,
-                             (coin.x, coin.y))
+            if not coin.caught:
+                self.window.blit(coin.image,
+                                 (coin.x, coin.y))
 
         pygame.display.flip()
         self.clock.tick(60)
@@ -104,13 +111,21 @@ class GetCoin:
 
     def move_coin(self):
         for coin in self.coins:
-            if coin.x <= 0 or coin.x + coin.width >= self.width:
-                coin.x_speed *= -1
-            if coin.y <= 0 or coin.y + coin.height >= self.height:
-                coin.y_speed *= -1
+            if not coin.caught:
+                if coin.x <= 0 or coin.x + coin.width >= self.width:
+                    coin.x_speed *= -1
+                if coin.y <= 0 or coin.y + coin.height >= self.height:
+                    coin.y_speed *= -1
 
-            coin.x += coin.x_speed
-            coin.y += coin.y_speed
+                # Coin hits robot & adds point
+                if (self.bot.x <= coin.x <= self.bot.x + self.bot.width and
+                        self.bot.y <= coin.y <= self.bot.y + self.bot.height):
+                    self.bot.points += 1
+                    coin.caught = True
+                    print('points: ', self.bot.points)
+
+                coin.x += coin.x_speed
+                coin.y += coin.y_speed
 
     def load_images(self):
         self.images = {}
@@ -120,7 +135,7 @@ class GetCoin:
     def release_coins(self):
         self.coins = []
         for i in range(5):
-            new_coin = MovingObject([self.width, self.height], 'coin')
+            new_coin = MovingCoin([self.width, self.height], 'coin')
             self.coins.append(new_coin)
 
     def new_game(self):
