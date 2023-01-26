@@ -61,9 +61,13 @@ class GetCoin:
             (self.width, self.height+self.info_board))
         pygame.display.set_caption('Coin Chaser')
 
+        self.door = self.get_door()
         self.clock = pygame.time.Clock()
         self.new_game()
         self.main_loop()
+
+    def get_door(self):
+        return Door([self.width, self.height])
 
     def main_loop(self):
         while True:
@@ -101,7 +105,10 @@ class GetCoin:
 
     def draw_window(self):
         self.window.fill((0)*3)
-        self.window.blit(self.bot.image, (self.bot.x, self.bot.y))
+
+        # print door
+        if all(i.caught == True for i in self.coins):
+            self.window.blit(self.door.image, (self.door.x, self.door.y))
 
         for coin in self.coins:
             if not coin.caught:
