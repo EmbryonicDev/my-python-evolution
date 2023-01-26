@@ -62,6 +62,7 @@ class GetCoin:
         pygame.display.set_caption('Coin Chaser')
 
         self.door = self.get_door()
+        self.level = 0
         self.clock = pygame.time.Clock()
         self.new_game()
         self.main_loop()
@@ -133,6 +134,7 @@ class GetCoin:
         # robot hits door
         if (self.bot.x <= self.door.x <= self.bot.x + self.bot.width and
                 self.bot.y <= self.door.y <= self.bot.y + self.bot.height):
+            self.level += 1
             self.release_coins()
             self.door = self.get_door()
 
@@ -150,13 +152,15 @@ class GetCoin:
                     self.bot.points += 1
                     coin.caught = True
                     print('points: ', self.bot.points)
+                    print('level: ', self.level)
 
                 coin.x += coin.x_speed
                 coin.y += coin.y_speed
 
     def release_coins(self):
+        print('coins released')
         self.coins = []
-        for i in range(5):
+        for i in range(1):
             new_coin = MovingCoin([self.width, self.height], 'coin')
             self.coins.append(new_coin)
 
