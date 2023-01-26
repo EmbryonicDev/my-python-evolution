@@ -63,6 +63,7 @@ class GetCoin:
 
         self.door = self.get_door()
         self.level = 0
+        self.monsters = []
         self.clock = pygame.time.Clock()
         self.new_game()
         self.main_loop()
@@ -76,6 +77,7 @@ class GetCoin:
             self.draw_window()
             self.move_coin()
             self.move_bot()
+            self.move_monster()
 
     def check_events(self):
         for event in pygame.event.get():
@@ -137,6 +139,7 @@ class GetCoin:
             self.level += 1
             self.release_coins()
             self.door = self.get_door()
+            self.release_monsters()
 
     def move_coin(self):
         for coin in self.coins:
@@ -163,6 +166,15 @@ class GetCoin:
         for i in range(1):
             new_coin = MovingCoin([self.width, self.height], 'coin')
             self.coins.append(new_coin)
+
+    def release_monsters(self):
+        self.monsters = []
+        choices = [-4, 4, -5, 5, -6, 6, -7, 7, -8, 8]
+        for i in range(self.level):
+            monster = MovingObject([self.width, self.height], 'monster')
+            monster.x_speed = random.choice(choices)
+            monster.y_speed = random.choice(choices)
+            self.monsters.append(monster)
 
     def new_game(self):
         self.bot = Robot(self.height)
