@@ -128,6 +128,12 @@ class GetCoin:
         if self.bot.to_up and self.bot.y >= 0:
             self.bot.y -= 2
 
+        # robot hits door
+        if (self.bot.x <= self.door.x <= self.bot.x + self.bot.width and
+                self.bot.y <= self.door.y <= self.bot.y + self.bot.height):
+            self.release_coins()
+            self.door = self.get_door()
+
     def move_coin(self):
         for coin in self.coins:
             if not coin.caught:
