@@ -8,7 +8,7 @@ def get_image(image: str):
 
 class MovingObject:
     def __init__(self, screen_dimensions: list, image: str):
-        self.choices = [-4, 4, -5, 5, -6, 6, -7, 7, -8, 8]
+        self.choices = range(-7, 7)
         self.x_speed = random.choice(self.choices)
         self.y_speed = random.choice(self.choices)
         self.image = get_image(image)
