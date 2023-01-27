@@ -197,6 +197,7 @@ class GetCoin:
             self.monsters.append(monster)
 
     def new_game(self):
+        self.monsters = []
         self.bot = Robot(self.height)
         self.release_coins()
 
