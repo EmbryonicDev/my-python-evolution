@@ -94,6 +94,8 @@ class GetCoin:
                     self.bot.to_down = True
                 if event.key == pygame.K_F2:
                     self.new_game()
+                if event.key == pygame.K_ESCAPE:
+                    exit()
 
             if event.type == pygame.KEYUP:
                 if event.key == pygame.K_LEFT:
