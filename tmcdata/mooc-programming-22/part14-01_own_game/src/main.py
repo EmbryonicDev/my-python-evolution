@@ -110,6 +110,10 @@ class GetCoin:
     def draw_window(self):
         self.window.fill((255, 0, 0))
 
+        # Info board black rectangle
+        pygame.draw.rect(self.window, (0, 0, 0),
+                         (0, self.height, self.width, self.info_board))
+
         # print door
         if all(i.caught == True for i in self.coins):
             self.window.blit(self.door.image, (self.door.x, self.door.y))
