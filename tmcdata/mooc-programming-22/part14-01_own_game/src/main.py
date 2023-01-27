@@ -139,6 +139,12 @@ class GetCoin:
             "New Game - F2", True, (0, 255, 0))
         self.window.blit(game_text, (25, self.height + (self.info_board*0.35)))
 
+        # quit game
+        game_text = self.game_font.render(
+            "Quit Game - Esc", True, (0, 255, 0))
+        self.window.blit(game_text, (self.width-(game_text.get_width()+25),
+                         self.height + (self.info_board*0.35)))
+
         # print door
         if all(i.caught == True for i in self.coins):
             self.window.blit(self.door.image, (self.door.x, self.door.y))
