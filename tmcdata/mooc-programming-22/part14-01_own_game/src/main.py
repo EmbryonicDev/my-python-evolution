@@ -230,8 +230,8 @@ class GetCoin:
         self.monsters = []
         for i in range(self.level):
             monster = MovingObject([self.width, self.height], 'monster')
-            monster.x = random.choice([3, self.width*0.9])
-            monster.y = random.randint(0, self.height*0.1)
+            monster.x = random.randint(0, self.width-monster.width)
+            monster.y = random.randint(0, self.height*0.2)
             self.monsters.append(monster)
 
     def new_game(self):
