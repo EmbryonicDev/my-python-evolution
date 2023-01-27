@@ -114,14 +114,17 @@ class GetCoin:
         if all(i.caught == True for i in self.coins):
             self.window.blit(self.door.image, (self.door.x, self.door.y))
 
+        # coins
         for coin in self.coins:
             if not coin.caught:
                 self.window.blit(coin.image,
                                  (coin.x, coin.y))
 
+        # monsters
         for monster in self.monsters:
             self.window.blit(monster.image, (monster.x, monster.y))
 
+        # bot
         self.window.blit(self.bot.image, (self.bot.x, self.bot.y))
 
         pygame.display.flip()
