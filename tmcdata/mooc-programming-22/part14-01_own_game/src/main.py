@@ -26,7 +26,6 @@ class MovingCoin(MovingObject):
 
 class Door:
     def __init__(self, screen_dimensions: list):
-        self.visible = False
         self.image = get_image('door')
         self.width = self.image.get_width()
         self.height = self.image.get_height()
