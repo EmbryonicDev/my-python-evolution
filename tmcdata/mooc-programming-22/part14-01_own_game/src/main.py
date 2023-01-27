@@ -62,6 +62,7 @@ class GetCoin:
             (self.width, self.height+self.info_board))
         pygame.display.set_caption('Coin Chaser')
 
+        self.game_font = pygame.font.SysFont('Arial', 36)
         self.door = self.get_door()
         self.level = 0
         self.monsters = []
@@ -113,6 +114,28 @@ class GetCoin:
         # Info board black rectangle
         pygame.draw.rect(self.window, (0, 0, 0),
                          (0, self.height, self.width, self.info_board))
+        # Info board text
+        # points
+        game_text = self.game_font.render(
+            f"Points: {self.bot.points} ", True, (0, 255, 0))
+        self.window.blit(game_text, (25, self.height + (self.info_board*0.1)))
+
+        # level
+        game_text = self.game_font.render(
+            f"Level: {self.level+1} ", True, (0, 255, 0))
+        self.window.blit(game_text, (self.width*.5-(game_text.get_width()/2),
+                         self.height + (self.info_board*0.1)))
+
+        # health
+        game_text = self.game_font.render(
+            f"Health: {self.bot.health} ", True, (0, 255, 0))
+        self.window.blit(game_text, (self.width-(game_text.get_width()+25),
+                         self.height + (self.info_board*0.1)))
+
+        # new game
+        game_text = self.game_font.render(
+            "New Game - F2", True, (0, 255, 0))
+        self.window.blit(game_text, (25, self.height + (self.info_board*0.35)))
 
         # print door
         if all(i.caught == True for i in self.coins):
