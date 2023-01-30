@@ -220,7 +220,13 @@ class GetCoin:
             # monster hits robot and takes a health point
             if (self.bot.x <= monster.x <= self.bot.x + self.bot.width and
                     self.bot.y <= monster.y <= self.bot.y + self.bot.height):
-                self.bot.health -= 1
+                
+                # subtract health or end game
+                if self.bot.health >= 1:
+                    self.bot.health -= 1
+                else:
+                    self.game_over = True    
+                
                 print('health remaining: ', self.bot.health)
                 self.release_monsters()
 
