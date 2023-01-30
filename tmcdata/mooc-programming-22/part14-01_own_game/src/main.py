@@ -35,7 +35,7 @@ class Door:
         
     def new_location(self):
         self.x = random.randint(0, self.screen_x - self.width)
-        self.y = random.randint(0, self.screen_y - self.height)
+        self.y = random.randint(self.height, self.screen_y - self.height)
         
         
 class Robot:
