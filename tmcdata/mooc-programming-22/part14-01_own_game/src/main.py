@@ -25,14 +25,19 @@ class Door:
         self.image = get_image('door')
         self.width = self.image.get_width()
         self.height = self.image.get_height()
-        self.x = random.randint(0, screen_dimensions[0] - self.width)
-        self.y = random.randint(0, screen_dimensions[1] - self.height)
+        self.screen_x = screen_dimensions[0]
+        self.screen_y = screen_dimensions[1]
+        self.new_location()
         
     def toggle_visibility(self):
         self.x *= -1
         self.y *= -1
         
-
+    def new_location(self):
+        self.x = random.randint(0, self.screen_x - self.width)
+        self.y = random.randint(0, self.screen_y - self.height)
+        
+        
 class Robot:
     def __init__(self, screen_height: int):
         self.screen_height = screen_height
@@ -66,14 +71,11 @@ class GetCoin:
         pygame.display.set_caption('Coin Chaser')
 
         self.game_font = pygame.font.SysFont('Arial', 36)
-        self.door = self.get_door()
+        self.door = Door([self.width, self.height])
         self.monsters = []
         self.clock = pygame.time.Clock()
         self.new_game()
         self.main_loop()
-
-    def get_door(self):
-        return Door([self.width, self.height])
 
     def main_loop(self):
         while True:
@@ -184,7 +186,7 @@ class GetCoin:
                 self.bot.y <= self.door.y <= self.bot.y + self.bot.height):
             self.level += 1
             self.release_coins()
-            self.door = self.get_door()
+            self.door.new_location()
             self.release_monsters()
             self.bot.reset_pos()
 
