@@ -175,10 +175,16 @@ class GetCoin:
         # bot
         self.window.blit(self.bot.image, (self.bot.x, self.bot.y))
 
+        # main window text
         # game over
         if self.game_over:
             game_text = self.end_font.render('Game Over...', True, (255, 255, 255))
             self.window.blit(game_text, (self.width/2-game_text.get_width()/2, self.height/2-game_text.get_height()/2))
+        # game paused
+        if self.game_paused:
+            game_text = self.end_font.render('Game Paused...', True, (255, 255, 255))
+            self.window.blit(game_text, (self.width/2-game_text.get_width()/2, self.height/2-game_text.get_height()/2))           
+
         pygame.display.flip()
         self.clock.tick(60)
         
