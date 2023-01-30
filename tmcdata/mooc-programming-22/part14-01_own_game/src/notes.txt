@@ -1,0 +1,15 @@
+*Back to base:
+    After going through Door
+*Start game with one monster
+*Make sure door prints above screen with hidden
+Add lambda formulas where possible
+Teleport to opposite side of screen on screen exit
+Pause feature
+Game over on 0 health
+Delete 5 points per monster touch
+
+Secret coin:
+    edible monsters
+    pop 50% monsters
+    slow moving monsters
+    full health
