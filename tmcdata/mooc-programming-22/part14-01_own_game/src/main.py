@@ -158,6 +158,11 @@ class GetCoin:
 
         pygame.display.flip()
         self.clock.tick(60)
+        
+    def toggle_door_visibility(self):
+        self.door.x *=-1
+        self.door.y *=-1
+        
 
     def move_bot(self):
         if self.bot.to_right and self.bot.x <= self.width - self.bot.width:
