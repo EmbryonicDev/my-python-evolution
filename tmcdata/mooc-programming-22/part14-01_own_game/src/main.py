@@ -69,8 +69,7 @@ class GetCoin:
         self.main_loop()
 
     def get_door(self):
-        print('door placed')
-        return VisibleDoor([self.width, self.height])
+        return Door([self.width, self.height])
 
     def main_loop(self):
         while True:
