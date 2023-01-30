@@ -125,7 +125,7 @@ class GetCoin:
         self.window.blit(game_text, (25, self.height + (self.info_board*0.1)))
         # level
         game_text = self.game_font.render(
-            f"Level: {self.level+1} ", True, (0, 255, 0))
+            f"Level: {self.level} ", True, (0, 255, 0))
         self.window.blit(game_text, (self.width*.5-(game_text.get_width()/2),
                          self.height + (self.info_board*0.1)))
         # health
@@ -243,10 +243,11 @@ class GetCoin:
             self.monsters.append(monster)
 
     def new_game(self):
-        self.level = 0
+        self.level = 1
         self.monsters = []
         self.bot = Robot(self.height)
         self.release_coins()
+        self.release_monsters()
 
 
 if __name__ == '__main__':
