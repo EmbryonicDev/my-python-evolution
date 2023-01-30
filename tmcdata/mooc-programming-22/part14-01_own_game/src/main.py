@@ -81,7 +81,7 @@ class GetCoin:
         while True:
             self.check_events()
             self.draw_window()
-            if not self.game_over:
+            if not self.game_over and not self.game_paused:
                 self.move_coin()    
                 self.move_bot()
                 self.move_monster()
