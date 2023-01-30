@@ -71,6 +71,7 @@ class GetCoin:
         pygame.display.set_caption('Coin Chaser')
 
         self.game_font = pygame.font.SysFont('Arial', 36)
+        self.end_font = pygame.font.SysFont('Arial', 72)
         self.door = Door([self.width, self.height])
         self.clock = pygame.time.Clock()
         self.new_game()
@@ -221,10 +222,11 @@ class GetCoin:
                     self.bot.y <= monster.y <= self.bot.y + self.bot.height):
                 
                 # subtract health or end game
-                if self.bot.health >= 1:
-                    self.bot.health -= 1
-                else:
-                    self.game_over = True    
+                self.bot.health -= 1
+                # End game when score hits 0
+                if self.bot.health <= 0:
+                    self.bot.health = 0
+                    self.game_over = True
                 
                 print('health remaining: ', self.bot.health)
                 self.release_monsters()
