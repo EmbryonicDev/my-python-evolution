@@ -1,10 +1,8 @@
 import pygame
 import random
 
-
 def get_image(image: str):
     return pygame.image.load(image+'.png')
-
 
 class MovingObject:
     def __init__(self, screen_dimensions: list, image: str):
@@ -17,12 +15,10 @@ class MovingObject:
         self.x = random.randint(0, screen_dimensions[0] - self.width)
         self.y = random.randint(0, screen_dimensions[1] - self.height)
 
-
 class MovingCoin(MovingObject):
     def __init__(self, screen_dimensions, image):
         MovingObject.__init__(self, screen_dimensions, image)
         self.caught = False
-
 
 class Door:
     def __init__(self, screen_dimensions: list):
@@ -31,6 +27,11 @@ class Door:
         self.height = self.image.get_height()
         self.x = random.randint(0, screen_dimensions[0] - self.width)
         self.y = random.randint(0, screen_dimensions[1] - self.height)
+        
+    def toggle_visibility(self):
+        self.x *= -1
+        self.y *= -1
+        
 
 class Robot:
     def __init__(self, screen_height: int):
@@ -146,10 +147,10 @@ class GetCoin:
         # print door
         if all(i.caught == True for i in self.coins):
             if self.door.x < 0:
-                self.toggle_door_visibility()
+                self.door.toggle_visibility()
         else:
             if self.door.x >= 0:
-                self.toggle_door_visibility()
+                self.door.toggle_visibility()
         self.window.blit(self.door.image, (self.door.x, self.door.y))
 
         # coins
@@ -167,10 +168,6 @@ class GetCoin:
 
         pygame.display.flip()
         self.clock.tick(60)
-        
-    def toggle_door_visibility(self):
-        self.door.x *=-1
-        self.door.y *=-1
         
 
     def move_bot(self):
