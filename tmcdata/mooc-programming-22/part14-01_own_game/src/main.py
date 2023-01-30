@@ -190,6 +190,7 @@ class GetCoin:
             self.release_coins()
             self.door = self.get_door()
             self.release_monsters()
+            self.bot.reset_pos()
 
     def move_coin(self):
         for coin in self.coins:
