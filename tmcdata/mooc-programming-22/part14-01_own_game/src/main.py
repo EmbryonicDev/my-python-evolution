@@ -71,6 +71,7 @@ class GetCoin:
         pygame.display.set_caption('Coin Chaser')
 
         self.game_font = pygame.font.SysFont('Arial', 36)
+        self.end_font = pygame.font.SysFont('Arial', 72)
         self.door = Door([self.width, self.height])
         self.clock = pygame.time.Clock()
         self.new_game()
@@ -80,9 +81,10 @@ class GetCoin:
         while True:
             self.check_events()
             self.draw_window()
-            self.move_coin()
-            self.move_bot()
-            self.move_monster()
+            if not self.game_over:
+                self.move_coin()    
+                self.move_bot()
+                self.move_monster()
 
     def check_events(self):
         for event in pygame.event.get():
@@ -143,6 +145,10 @@ class GetCoin:
             "Quit Game - Esc", True, (0, 255, 0))
         self.window.blit(game_text, (self.width-(game_text.get_width()+25),
                          self.height + (self.info_board*0.35)))
+        # game over
+        if self.game_over:
+            game_text = self.end_font.render('Game Over...', True, (255, 255, 255))
+            self.window.blit(game_text, (self.width/2-game_text.get_width()/2, self.height/2-game_text.get_height()/2))
 
         # print door
         if all(i.caught == True for i in self.coins):
@@ -218,7 +224,14 @@ class GetCoin:
             # monster hits robot and takes a health point
             if (self.bot.x <= monster.x <= self.bot.x + self.bot.width and
                     self.bot.y <= monster.y <= self.bot.y + self.bot.height):
+                
+                # subtract health or end game
                 self.bot.health -= 1
+                # End game when score hits 0
+                if self.bot.health <= 0:
+                    self.bot.health = 0
+                    self.game_over = True
+                
                 print('health remaining: ', self.bot.health)
                 self.release_monsters()
 
@@ -241,6 +254,7 @@ class GetCoin:
             self.monsters.append(monster)
 
     def new_game(self):
+        self.game_over = False
         self.level = 1
         self.monsters = []
         self.bot = Robot(self.height)
