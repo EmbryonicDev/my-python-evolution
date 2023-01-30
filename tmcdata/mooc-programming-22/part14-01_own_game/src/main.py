@@ -56,6 +56,12 @@ class Robot:
     def reset_pos(self):
         self.x = 0
         self.y = self.screen_height - self.height
+    
+    def add_point(self):
+        self.points += 1
+    
+    def take_health(self):
+        self.health -= 1
 
 
 class GetCoin:
@@ -219,7 +225,7 @@ class GetCoin:
                 # Coin hits robot & adds point
                 if (self.bot.x <= coin.x <= self.bot.x + self.bot.width and
                         self.bot.y <= coin.y <= self.bot.y + self.bot.height):
-                    self.bot.points += 1
+                    self.bot.add_point()
                     coin.caught = True
                     print('points: ', self.bot.points)
                     print('level: ', self.level)
@@ -237,9 +243,7 @@ class GetCoin:
             # monster hits robot and takes a health point
             if (self.bot.x <= monster.x <= self.bot.x + self.bot.width and
                     self.bot.y <= monster.y <= self.bot.y + self.bot.height):
-                
-                # subtract health or end game
-                self.bot.health -= 1
+                self.bot.take_health()
                 # End game when score hits 0
                 if self.bot.health <= 0:
                     self.bot.health = 0
