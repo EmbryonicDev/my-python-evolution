@@ -34,18 +34,22 @@ class Door:
 
 class Robot:
     def __init__(self, screen_height: int):
+        self.screen_height = screen_height
         self.health = 100
         self.speed = 8
         self.points = 0
         self.image = get_image('robot')
         self.width = self.image.get_width()
         self.height = self.image.get_height()
-        self.x = 0
-        self.y = screen_height - self.height
         self.to_left = False
         self.to_right = False
         self.to_up = False
         self.to_down = False
+        self.reset_pos()
+    
+    def reset_pos(self):
+        self.x = 0
+        self.y = self.screen_height - self.height
 
 
 class GetCoin:
