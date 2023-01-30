@@ -72,7 +72,6 @@ class GetCoin:
 
         self.game_font = pygame.font.SysFont('Arial', 36)
         self.door = Door([self.width, self.height])
-        self.game_over = False
         self.clock = pygame.time.Clock()
         self.new_game()
         self.main_loop()
@@ -249,6 +248,7 @@ class GetCoin:
             self.monsters.append(monster)
 
     def new_game(self):
+        self.game_over = False
         self.level = 1
         self.monsters = []
         self.bot = Robot(self.height)
