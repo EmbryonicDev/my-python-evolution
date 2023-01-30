@@ -72,7 +72,6 @@ class GetCoin:
 
         self.game_font = pygame.font.SysFont('Arial', 36)
         self.door = Door([self.width, self.height])
-        self.monsters = []
         self.clock = pygame.time.Clock()
         self.new_game()
         self.main_loop()
