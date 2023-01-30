@@ -255,6 +255,7 @@ class GetCoin:
 
     def new_game(self):
         self.game_over = False
+        self.game_paused = False
         self.level = 1
         self.monsters = []
         self.bot = Robot(self.height)
