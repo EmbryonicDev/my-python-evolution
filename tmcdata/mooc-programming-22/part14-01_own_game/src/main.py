@@ -142,6 +142,11 @@ class GetCoin:
         game_text = self.game_font.render(
             "New Game - F2", True, (0, 255, 0))
         self.window.blit(game_text, (25, self.height + (self.info_board*0.35)))
+        # pause game
+        game_text = self.game_font.render(
+            "Pause - Space", True, (0, 255, 0))
+        self.window.blit(game_text, (self.width*.5-(game_text.get_width()/2),
+                         self.height + (self.info_board*0.35)))     
         # quit game
         game_text = self.game_font.render(
             "Quit - Esc", True, (0, 255, 0))
