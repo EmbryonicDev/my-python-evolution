@@ -81,9 +81,10 @@ class GetCoin:
         while True:
             self.check_events()
             self.draw_window()
-            self.move_coin()
-            self.move_bot()
-            self.move_monster()
+            if not self.game_over:
+                self.move_coin()    
+                self.move_bot()
+                self.move_monster()
 
     def check_events(self):
         for event in pygame.event.get():
