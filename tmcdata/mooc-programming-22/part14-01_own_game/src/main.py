@@ -141,7 +141,12 @@ class GetCoin:
 
         # print door
         if all(i.caught == True for i in self.coins):
-            self.window.blit(self.door.image, (self.door.x, self.door.y))
+            if self.door.x < 0:
+                self.toggle_door_visibility()
+        else:
+            if self.door.x >= 0:
+                self.toggle_door_visibility()
+        self.window.blit(self.door.image, (self.door.x, self.door.y))
 
         # coins
         for coin in self.coins:
