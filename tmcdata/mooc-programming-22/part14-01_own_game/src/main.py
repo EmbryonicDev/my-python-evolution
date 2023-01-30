@@ -25,22 +25,12 @@ class MovingCoin(MovingObject):
 
 
 class Door:
-    def __init__(self):
+    def __init__(self, screen_dimensions: list):
         self.image = get_image('door')
         self.width = self.image.get_width()
         self.height = self.image.get_height()
-        
-class VisibleDoor(Door):
-    def __init__(self, screen_dimensions: list):
-        super().__init__()
         self.x = random.randint(0, screen_dimensions[0] - self.width)
         self.y = random.randint(0, screen_dimensions[1] - self.height)
-        
-class HiddenDoor(Door):
-    def __init__(self):
-        super().__init__()
-        self.x = -200
-        self.y = -200
 
 class Robot:
     def __init__(self, screen_height: int):
