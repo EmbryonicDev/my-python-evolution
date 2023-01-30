@@ -145,6 +145,10 @@ class GetCoin:
             "Quit Game - Esc", True, (0, 255, 0))
         self.window.blit(game_text, (self.width-(game_text.get_width()+25),
                          self.height + (self.info_board*0.35)))
+        # game over
+        if self.game_over:
+            game_text = self.end_font.render('Game Over...', True, (255, 255, 255))
+            self.window.blit(game_text, (self.width/2-game_text.get_width()/2, self.height/2-game_text.get_height()/2))
 
         # print door
         if all(i.caught == True for i in self.coins):
