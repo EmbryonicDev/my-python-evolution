@@ -25,13 +25,22 @@ class MovingCoin(MovingObject):
 
 
 class Door:
-    def __init__(self, screen_dimensions: list):
+    def __init__(self):
         self.image = get_image('door')
         self.width = self.image.get_width()
         self.height = self.image.get_height()
+        
+class VisibleDoor(Door):
+    def __init__(self, screen_dimensions: list):
+        super().__init__()
         self.x = random.randint(0, screen_dimensions[0] - self.width)
         self.y = random.randint(0, screen_dimensions[1] - self.height)
-
+        
+class HiddenDoor(Door):
+    def __init__(self):
+        super().__init__()
+        self.x = -200
+        self.y = -200
 
 class Robot:
     def __init__(self, screen_height: int):
@@ -120,24 +129,20 @@ class GetCoin:
         game_text = self.game_font.render(
             f"Points: {self.bot.points} ", True, (0, 255, 0))
         self.window.blit(game_text, (25, self.height + (self.info_board*0.1)))
-
         # level
         game_text = self.game_font.render(
             f"Level: {self.level+1} ", True, (0, 255, 0))
         self.window.blit(game_text, (self.width*.5-(game_text.get_width()/2),
                          self.height + (self.info_board*0.1)))
-
         # health
         game_text = self.game_font.render(
             f"Health: {self.bot.health} ", True, (0, 255, 0))
         self.window.blit(game_text, (self.width-(game_text.get_width()+25),
                          self.height + (self.info_board*0.1)))
-
         # new game
         game_text = self.game_font.render(
             "New Game - F2", True, (0, 255, 0))
         self.window.blit(game_text, (25, self.height + (self.info_board*0.35)))
-
         # quit game
         game_text = self.game_font.render(
             "Quit Game - Esc", True, (0, 255, 0))
