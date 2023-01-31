@@ -55,6 +55,9 @@ class MovingCoin(MovingObject):
         MovingObject.__init__(self, screen_dimensions, image)
         self.caught = False
         
+    def catch_coin(self):
+        self.caught = True
+        
         
 class Robot(ScreenObject):
     def __init__(self, screen_dimensions, image):
@@ -241,7 +244,7 @@ class GetCoin:
                 if (self.bot.x <= coin.x <= self.bot.x + self.bot.width and
                         self.bot.y <= coin.y <= self.bot.y + self.bot.height):
                     self.bot.add_point()
-                    coin.caught = True
+                    coin.catch_coin()
                     print('points: ', self.bot.points)
                     print('level: ', self.level)
 
