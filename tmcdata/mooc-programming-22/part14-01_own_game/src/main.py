@@ -211,8 +211,8 @@ class GetCoin:
             self.level += 1
             self.release_coins()
             self.door.new_location()
-            self.release_monsters()
             self.bot.reset_pos()
+            self.release_monsters()
 
     def move_coin(self):
         for coin in self.coins:
