@@ -47,7 +47,7 @@ class MovingMonster(MovingObject):
         self.x = random.randint(0, self.screen_width-self.width)
         self.y = (random.randint(0, self.screen_height*0.2)
                          if bot_y > self.height / 2
-                         else random.randint(self.height*0.8, self.screen_height-monster.height))
+                         else random.randint(self.height*0.8, self.screen_height-self.height))
                      
 
 class MovingCoin(MovingObject):
@@ -57,6 +57,23 @@ class MovingCoin(MovingObject):
         
     def catch_coin(self):
         self.caught = True
+        
+    def move_coin(self):
+        if not self.caught:
+                if self.x <= 0 or self.x + self.width >= self.screen_width:
+                    self.x_speed *= -1
+                if self.y <= 0 or self.y + self.height >= self.screen_height:
+                    self.y_speed *= -1      
+                self.x += self.x_speed
+                self.y += self.y_speed
+        # move coin off screen once it's been caught
+        else:
+            self.x = -200
+            self.y = -200
+              
+    def hit_robot(self, bot_x, bot_y):
+        return (bot_x <= self.x <= self.x + self.screen_width and
+                        bot_y <= self.y <= self.y + self.screen_height)
         
         
 class Robot(ScreenObject):
@@ -237,22 +254,14 @@ class GetCoin:
 
     def move_coin(self):
         for coin in self.coins:
-            if not coin.caught:
-                if coin.x <= 0 or coin.x + coin.width >= self.width:
-                    coin.x_speed *= -1
-                if coin.y <= 0 or coin.y + coin.height >= self.height:
-                    coin.y_speed *= -1
+            coin.move_coin()
+            # Coin hits robot & adds point
+            if coin.hit_robot(self.bot.x, self.bot.y):
+                self.bot.add_point()
+                coin.catch_coin()
+                print('points: ', self.bot.points)
+                print('level: ', self.level)
 
-                # Coin hits robot & adds point
-                if (self.bot.x <= coin.x <= self.bot.x + self.bot.width and
-                        self.bot.y <= coin.y <= self.bot.y + self.bot.height):
-                    self.bot.add_point()
-                    coin.catch_coin()
-                    print('points: ', self.bot.points)
-                    print('level: ', self.level)
-
-                coin.x += coin.x_speed
-                coin.y += coin.y_speed
 
     def move_monster(self):
         for monster in self.monsters:
