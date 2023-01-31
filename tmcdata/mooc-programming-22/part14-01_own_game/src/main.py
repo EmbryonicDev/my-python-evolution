@@ -80,7 +80,20 @@ class Robot(ScreenObject):
     
     def take_health(self):
         self.health -= 1
-
+        
+    def move_bot(self):
+        if self.to_right and self.x <= self.screen_width - self.width:
+            self.x += self.speed
+        if self.to_left and self.x >= 0:
+            self.x -= self.speed
+        if self.to_down and self.y <= self.screen_height - self.height:
+            self.y += self.speed
+        if self.to_up and self.y >= 0:
+            self.y -= self.speed
+            
+    def hit_door(self, door_x, door_y):
+        return (self.x <= door_x <= self.x + self.screen_width and
+                self.y <= door_y <= self.y + self.screen_height)
 
 class GetCoin:
     def __init__(self):
@@ -214,18 +227,8 @@ class GetCoin:
         
 
     def move_bot(self):
-        if self.bot.to_right and self.bot.x <= self.width - self.bot.width:
-            self.bot.x += self.bot.speed
-        if self.bot.to_left and self.bot.x >= 0:
-            self.bot.x -= self.bot.speed
-        if self.bot.to_down and self.bot.y <= self.height - self.bot.height:
-            self.bot.y += self.bot.speed
-        if self.bot.to_up and self.bot.y >= 0:
-            self.bot.y -= self.bot.speed
-
-        # robot hits door
-        if (self.bot.x <= self.door.x <= self.bot.x + self.bot.width and
-                self.bot.y <= self.door.y <= self.bot.y + self.bot.height):
+        self.bot.move_bot()
+        if self.bot.hit_door(self.door.x, self.door.y):
             self.level += 1
             self.release_coins()
             self.door.new_location()
