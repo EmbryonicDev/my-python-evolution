@@ -4,49 +4,52 @@ import random
 def get_image(image: str):
     return pygame.image.load(image+'.png')
 
-class MovingObject:
+class ScreenObject:
     def __init__(self, screen_dimensions: list, image: str):
-        self.choices = range(-7, 7)
-        self.x_speed = random.choice(self.choices)
-        self.y_speed = random.choice(self.choices)
         self.image = get_image(image)
         self.width = self.image.get_width()
         self.height = self.image.get_height()
-        self.x = random.randint(0, screen_dimensions[0] - self.width)
-        self.y = random.randint(0, screen_dimensions[1] - self.height)
-
-class MovingCoin(MovingObject):
-    def __init__(self, screen_dimensions, image):
-        MovingObject.__init__(self, screen_dimensions, image)
-        self.caught = False
-
-class Door:
-    def __init__(self, screen_dimensions: list):
-        self.image = get_image('door')
-        self.width = self.image.get_width()
-        self.height = self.image.get_height()
-        self.screen_x = screen_dimensions[0]
-        self.screen_y = screen_dimensions[1]
-        self.new_location()
+        self.screen_width = screen_dimensions[0]
+        self.screen_height = screen_dimensions[1]      
         
+
+class StaticObject(ScreenObject):
+    def __init__(self, screen_dimensions: list, image: str):
+        ScreenObject.__init__(self, screen_dimensions, image)
+        self.new_location()
+                
     def toggle_visibility(self):
         self.x *= -1
         self.y *= -1
         
     def new_location(self):
-        self.x = random.randint(0, self.screen_x - self.width)
-        self.y = random.randint(self.height, self.screen_y - self.height)
+        self.x = random.randint(0, self.screen_width - self.width)
+        self.y = random.randint(self.height, self.screen_height - self.height)  
+                
+class MovingObject(ScreenObject):
+    def __init__(self, screen_dimensions: list, image: str):
+        ScreenObject.__init__(self, screen_dimensions, image)
+        self.choices = range(-7, 7)
+        self.x_speed = random.choice(self.choices)
+        self.y_speed = random.choice(self.choices)
+        self.new_location()        
+        
+    def new_location(self):
+        self.x = random.randint(0, self.screen_width - self.width)
+        self.y = random.randint(0, self.screen_height - self.height)          
+
+class MovingCoin(MovingObject):
+    def __init__(self, screen_dimensions, image):
+        MovingObject.__init__(self, screen_dimensions, image)
+        self.caught = False
         
         
-class Robot:
-    def __init__(self, screen_height: int):
-        self.screen_height = screen_height
+class Robot(ScreenObject):
+    def __init__(self, screen_dimensions, image):
+        ScreenObject.__init__(self, screen_dimensions, image)
         self.health = 100
         self.speed = 8
         self.points = 0
-        self.image = get_image('robot')
-        self.width = self.image.get_width()
-        self.height = self.image.get_height()
         self.to_left = False
         self.to_right = False
         self.to_up = False
@@ -78,7 +81,7 @@ class GetCoin:
 
         self.game_font = pygame.font.SysFont('Arial', 36)
         self.end_font = pygame.font.SysFont('Arial', 72)
-        self.door = Door([self.width, self.height])
+        self.door = StaticObject([self.width, self.height], 'door')
         self.clock = pygame.time.Clock()
         self.new_game()
         self.main_loop()
@@ -278,7 +281,7 @@ class GetCoin:
         self.game_paused = False
         self.level = 1
         self.monsters = []
-        self.bot = Robot(self.height)
+        self.bot = Robot([self.width, self.height], 'robot')
         self.release_coins()
         self.release_monsters()
 
