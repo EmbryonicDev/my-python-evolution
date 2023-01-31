@@ -36,7 +36,19 @@ class MovingObject(ScreenObject):
         
     def new_location(self):
         self.x = random.randint(0, self.screen_width - self.width)
-        self.y = random.randint(0, self.screen_height - self.height)          
+        self.y = random.randint(0, self.screen_height - self.height) 
+        
+class MovingMonster(MovingObject):
+    def __init__(self, screen_dimensions, image):
+        MovingObject.__init__(self, screen_dimensions, image)
+        
+    # release monsters on opposite side of bot on contact
+    def get_coords(self, bot_y: str):
+        self.x = random.randint(0, self.screen_width-self.width)
+        self.y = (random.randint(0, self.screen_height*0.2)
+                         if bot_y > self.height / 2
+                         else random.randint(self.height*0.8, self.screen_height-monster.height))
+                     
 
 class MovingCoin(MovingObject):
     def __init__(self, screen_dimensions, image):
@@ -265,15 +277,11 @@ class GetCoin:
             new_coin = MovingCoin([self.width, self.height], 'coin')
             self.coins.append(new_coin)
 
-    def release_monsters(self):
+    def release_monsters(self): 
         self.monsters = []
         for i in range(self.level):
-            monster = MovingObject([self.width, self.height], 'monster')
-            monster.x = random.randint(0, self.width-monster.width)
-            # release monsters on opposite side of robot's death
-            monster.y = (random.randint(0, self.height*0.2)
-                         if self.bot.y > self.height / 2
-                         else random.randint(self.height*0.8, self.height-monster.height))
+            monster = MovingMonster([self.width, self.height], 'monster')
+            monster.get_coords(self.bot.y)
             self.monsters.append(monster)
 
     def new_game(self):
