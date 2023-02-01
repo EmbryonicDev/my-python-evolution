@@ -23,7 +23,7 @@ class ScreenObject:
     # release objects on opposite side of bot on contact
     def get_coords(self, bot_y: str):
         self.x = random.randint(0, self.screen_width-self.width)
-        self.y = (random.randint(0, self.screen_height*0.2)
+        self.y = (random.randint(0+self.height, self.screen_height*0.2)
                   if bot_y > self.screen_height / 2
                   else random.randint(self.screen_height*0.8,
                                       self.screen_height-self.height))
