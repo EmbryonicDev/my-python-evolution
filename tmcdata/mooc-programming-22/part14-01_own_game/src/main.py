@@ -52,7 +52,7 @@ class MovingObject(ScreenObject):
 
     def hit_robot(self, bot_x: str, bot_y: str, bot_width: int):
         return (bot_x <= self.x <= bot_x + self.width and
-                bot_y <= self.y <= bot_y + self.width)
+                bot_y <= self.y <= bot_y + self.height)
 
 
 class MovingMonster(MovingObject):
@@ -109,8 +109,8 @@ class Robot(ScreenObject):
             self.y -= self.speed
 
     def hit_door(self, door_x, door_y):
-        return (self.x <= door_x <= self.x + self.screen_width and
-                self.y <= door_y <= self.y + self.screen_height)
+        return (self.x <= door_x <= self.x + self.width and
+                self.y <= door_y <= self.y + self.height)
 
 
 class GetCoin:
