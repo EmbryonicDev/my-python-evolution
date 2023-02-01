@@ -72,19 +72,6 @@ class MovingCoin(MovingObject):
     def catch_coin(self):
         self.caught = True
 
-    def move_coin(self):
-        if not self.caught:
-                if self.x <= 0 or self.x + self.width >= self.screen_width:
-                    self.x_speed *= -1
-                if self.y <= 0 or self.y + self.height >= self.screen_height:
-                    self.y_speed *= -1      
-                self.x += self.x_speed
-                self.y += self.y_speed
-        # move coin off screen once it's been caught
-        else:
-            self.x = -200
-            self.y = -200
-
     def hit_robot(self, bot_x, bot_y):
         return (bot_x <= self.x <= self.x + self.screen_width and
                 bot_y <= self.y <= self.y + self.screen_height)
@@ -272,7 +259,11 @@ class GetCoin:
 
     def move_coin(self):
         for coin in self.coins:
-            coin.move_coin()
+            if not coin.caught:
+                coin.move_object()
+            else:
+                self.x = -200
+                self.y = -200
             # Coin hits robot & adds point
             if coin.hit_robot(self.bot.x, self.bot.y):
                 self.bot.add_point()
