@@ -41,6 +41,14 @@ class MovingObject(ScreenObject):
         self.x = random.randint(0, self.screen_width - self.width)
         self.y = random.randint(0, self.screen_height - self.height)
 
+    def move_object(self):
+        if self.x <= 0 or self.x + self.width >= self.screen_width:
+            self.x_speed *= -1
+        if self.y <= 0 or self.y + self.height >= self.screen_height:
+            self.y_speed *= -1
+
+        self.x += self.x_speed
+        self.y += self.y_speed
 
 
 class MovingMonster(MovingObject):
