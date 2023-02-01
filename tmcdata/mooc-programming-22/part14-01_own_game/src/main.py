@@ -1,8 +1,10 @@
 import pygame
 import random
 
+
 def get_image(image: str):
     return pygame.image.load(image+'.png')
+
 
 class ScreenObject:
     def __init__(self, screen_dimensions: list, image: str):
@@ -10,38 +12,41 @@ class ScreenObject:
         self.width = self.image.get_width()
         self.height = self.image.get_height()
         self.screen_width = screen_dimensions[0]
-        self.screen_height = screen_dimensions[1]      
-        
+        self.screen_height = screen_dimensions[1]
+
 
 class StaticObject(ScreenObject):
     def __init__(self, screen_dimensions: list, image: str):
         ScreenObject.__init__(self, screen_dimensions, image)
         self.new_location()
-                
+
     def toggle_visibility(self):
         self.x *= -1
         self.y *= -1
-        
+
     def new_location(self):
         self.x = random.randint(0, self.screen_width - self.width)
-        self.y = random.randint(self.height, self.screen_height - self.height)  
-                
+        self.y = random.randint(self.height, self.screen_height - self.height)
+
+
 class MovingObject(ScreenObject):
     def __init__(self, screen_dimensions: list, image: str):
         ScreenObject.__init__(self, screen_dimensions, image)
         self.choices = range(-7, 7)
         self.x_speed = random.choice(self.choices)
         self.y_speed = random.choice(self.choices)
-        self.new_location()        
-        
+        self.new_location()
+
     def new_location(self):
         self.x = random.randint(0, self.screen_width - self.width)
-        self.y = random.randint(0, self.screen_height - self.height) 
-        
+        self.y = random.randint(0, self.screen_height - self.height)
+
+
+
 class MovingMonster(MovingObject):
     def __init__(self, screen_dimensions, image):
         MovingObject.__init__(self, screen_dimensions, image)
-        
+
     # release monsters on opposite side of bot on contact
     def get_coords(self, bot_y: str):
         self.x = random.randint(0, self.screen_width-self.width)
@@ -50,14 +55,15 @@ class MovingMonster(MovingObject):
                          else random.randint(self.height*0.8, self.screen_height-self.height))
                      
 
+
 class MovingCoin(MovingObject):
     def __init__(self, screen_dimensions, image):
         MovingObject.__init__(self, screen_dimensions, image)
         self.caught = False
-        
+
     def catch_coin(self):
         self.caught = True
-        
+
     def move_coin(self):
         if not self.caught:
                 if self.x <= 0 or self.x + self.width >= self.screen_width:
@@ -70,12 +76,12 @@ class MovingCoin(MovingObject):
         else:
             self.x = -200
             self.y = -200
-              
+
     def hit_robot(self, bot_x, bot_y):
         return (bot_x <= self.x <= self.x + self.screen_width and
-                        bot_y <= self.y <= self.y + self.screen_height)
-        
-        
+                bot_y <= self.y <= self.y + self.screen_height)
+
+
 class Robot(ScreenObject):
     def __init__(self, screen_dimensions, image):
         ScreenObject.__init__(self, screen_dimensions, image)
@@ -87,17 +93,17 @@ class Robot(ScreenObject):
         self.to_up = False
         self.to_down = False
         self.reset_pos()
-    
+
     def reset_pos(self):
         self.x = 0
         self.y = self.screen_height - self.height
-    
+
     def add_point(self):
         self.points += 1
-    
+
     def take_health(self):
         self.health -= 1
-        
+
     def move_bot(self):
         if self.to_right and self.x <= self.screen_width - self.width:
             self.x += self.speed
@@ -107,10 +113,11 @@ class Robot(ScreenObject):
             self.y += self.speed
         if self.to_up and self.y >= 0:
             self.y -= self.speed
-            
+
     def hit_door(self, door_x, door_y):
         return (self.x <= door_x <= self.x + self.screen_width and
                 self.y <= door_y <= self.y + self.screen_height)
+
 
 class GetCoin:
     def __init__(self):
@@ -136,7 +143,7 @@ class GetCoin:
             self.check_events()
             self.draw_window()
             if not self.game_over and not self.game_paused:
-                self.move_coin()    
+                self.move_coin()
                 self.move_bot()
                 self.move_monster()
 
@@ -200,7 +207,7 @@ class GetCoin:
         game_text = self.game_font.render(
             "Pause - Space", True, (0, 255, 0))
         self.window.blit(game_text, (self.width*.5-(game_text.get_width()/2),
-                         self.height + (self.info_board*0.35)))     
+                         self.height + (self.info_board*0.35)))
         # quit game
         game_text = self.game_font.render(
             "Quit - Esc", True, (0, 255, 0))
@@ -232,16 +239,19 @@ class GetCoin:
         # main window text
         # game over
         if self.game_over:
-            game_text = self.end_font.render('Game Over...', True, (255, 255, 255))
-            self.window.blit(game_text, (self.width/2-game_text.get_width()/2, self.height/2-game_text.get_height()/2))
+            game_text = self.end_font.render(
+                'Game Over...', True, (255, 255, 255))
+            self.window.blit(game_text, (self.width/2-game_text.get_width() /
+                             2, self.height/2-game_text.get_height()/2))
         # game paused
         if self.game_paused:
-            game_text = self.end_font.render('Game Paused...', True, (255, 255, 255))
-            self.window.blit(game_text, (self.width/2-game_text.get_width()/2, self.height/2-game_text.get_height()/2))           
+            game_text = self.end_font.render(
+                'Game Paused...', True, (255, 255, 255))
+            self.window.blit(game_text, (self.width/2-game_text.get_width() /
+                             2, self.height/2-game_text.get_height()/2))
 
         pygame.display.flip()
         self.clock.tick(60)
-        
 
     def move_bot(self):
         self.bot.move_bot()
@@ -262,7 +272,6 @@ class GetCoin:
                 print('points: ', self.bot.points)
                 print('level: ', self.level)
 
-
     def move_monster(self):
         for monster in self.monsters:
             if monster.x <= 0 or monster.x + monster.width >= self.width:
@@ -278,7 +287,7 @@ class GetCoin:
                 if self.bot.health <= 0:
                     self.bot.health = 0
                     self.game_over = True
-                
+
                 print('health remaining: ', self.bot.health)
                 self.release_monsters()
 
@@ -292,7 +301,7 @@ class GetCoin:
             new_coin = MovingCoin([self.width, self.height], 'coin')
             self.coins.append(new_coin)
 
-    def release_monsters(self): 
+    def release_monsters(self):
         self.monsters = []
         for i in range(self.level):
             monster = MovingMonster([self.width, self.height], 'monster')
