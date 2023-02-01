@@ -50,6 +50,10 @@ class MovingObject(ScreenObject):
         self.x += self.x_speed
         self.y += self.y_speed
 
+    def hit_robot(self, bot_x: str, bot_y: str, bot_width: int):
+        return (bot_x <= self.x <= bot_x + self.width and
+                bot_y <= self.y <= bot_y + self.width)
+
 
 class MovingMonster(MovingObject):
     def __init__(self, screen_dimensions, image):
@@ -62,10 +66,6 @@ class MovingMonster(MovingObject):
                   if bot_y > self.screen_height / 2
                   else random.randint(self.height*0.8, self.screen_height-self.height))
 
-    def hit_robot(self, bot_x: str, bot_y: str, bot_width: int):
-        return (bot_x <= self.x <= bot_x + bot_width and
-                bot_y <= self.y <= bot_y + bot_width)
-
 
 class MovingCoin(MovingObject):
     def __init__(self, screen_dimensions, image):
@@ -74,10 +74,6 @@ class MovingCoin(MovingObject):
 
     def catch_coin(self):
         self.caught = True
-
-    def hit_robot(self, bot_x, bot_y):
-        return (bot_x <= self.x <= self.x + self.screen_width and
-                bot_y <= self.y <= self.y + self.screen_height)
 
 
 class Robot(ScreenObject):
@@ -268,7 +264,7 @@ class GetCoin:
                 self.x = -200
                 self.y = -200
             # Coin hits robot & adds point
-            if coin.hit_robot(self.bot.x, self.bot.y):
+            if coin.hit_robot(self.bot.x, self.bot.y, self.bot.width):
                 self.bot.add_point()
                 coin.catch_coin()
                 print('points: ', self.bot.points)
