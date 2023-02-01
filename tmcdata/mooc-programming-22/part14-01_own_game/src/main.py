@@ -13,6 +13,8 @@ class ScreenObject:
         self.height = self.image.get_height()
         self.screen_width = screen_dimensions[0]
         self.screen_height = screen_dimensions[1]
+        self.x = random.randint(0, self.screen_width - self.width)
+        self.y = random.randint(0, self.screen_height - self.height)
 
     def toggle_visibility(self):
         self.x *= -1
@@ -35,11 +37,6 @@ class MovingObject(ScreenObject):
         self.choices = range(-7, 7)
         self.x_speed = random.choice(self.choices)
         self.y_speed = random.choice(self.choices)
-        self.new_location()
-
-    def new_location(self):
-        self.x = random.randint(0, self.screen_width - self.width)
-        self.y = random.randint(0, self.screen_height - self.height)
 
     def move_object(self):
         if self.x <= 0 or self.x + self.width >= self.screen_width:
@@ -260,7 +257,7 @@ class GetCoin:
         if self.bot.hit_door(self.door.x, self.door.y):
             self.level += 1
             self.release_coins()
-            self.door.new_location()
+            self.door.get_coords(self.bot.y)
             self.bot.reset_pos()
             self.release_monsters()
 
