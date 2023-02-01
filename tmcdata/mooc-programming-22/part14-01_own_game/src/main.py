@@ -96,6 +96,26 @@ class Robot(ScreenObject):
                 self.y <= door_y <= self.y + self.height)
 
 
+class Timer:
+    def __init__(self):
+        self.frame_counter = 0
+        self.timer = 0
+
+    def clear_timer(self):
+        self.timer = 0
+
+    def add_counter(self):
+        self.frame_counter += 1
+        if self.frame_counter % 60 == 0:
+            self.update_timer()
+
+    def update_timer(self):
+        self.timer += 1
+        if self.timer == 60:
+            self.clear_timer()
+        print(self.timer)
+
+
 class GetCoin:
     def __init__(self):
         pygame.init()
@@ -116,6 +136,7 @@ class GetCoin:
         self.main_loop()
 
     def new_game(self):
+        self.timer = Timer()
         self.game_over = False
         self.game_paused = False
         self.level = 1
@@ -128,6 +149,7 @@ class GetCoin:
         while True:
             self.check_events()
             self.draw_window()
+            self.timer.add_counter()
             if not self.game_over and not self.game_paused:
                 self.move_coin()
                 self.move_bot()
