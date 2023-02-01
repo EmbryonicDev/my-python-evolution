@@ -26,9 +26,7 @@ class ScreenObject:
         self.y = (random.randint(0, self.screen_height*0.2)
                   if bot_y > self.screen_height / 2
                   else random.randint(self.screen_height*0.8,
-    def new_location(self):
-        self.x = random.randint(0, self.screen_width - self.width)
-        self.y = random.randint(self.height, self.screen_height - self.height)
+                                      self.screen_height-self.height))
 
 
 class MovingObject(ScreenObject):
