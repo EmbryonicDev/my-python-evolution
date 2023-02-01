@@ -14,15 +14,15 @@ class ScreenObject:
         self.screen_width = screen_dimensions[0]
         self.screen_height = screen_dimensions[1]
 
+    def toggle_visibility(self):
+        self.x *= -1
+        self.y *= -1
+
 
 class StaticObject(ScreenObject):
     def __init__(self, screen_dimensions: list, image: str):
         ScreenObject.__init__(self, screen_dimensions, image)
         self.new_location()
-
-    def toggle_visibility(self):
-        self.x *= -1
-        self.y *= -1
 
     def new_location(self):
         self.x = random.randint(0, self.screen_width - self.width)
