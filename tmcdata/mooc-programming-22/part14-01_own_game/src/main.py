@@ -32,7 +32,7 @@ class ScreenObject:
 class MovingObject(ScreenObject):
     def __init__(self, screen_dimensions: list, image: str):
         ScreenObject.__init__(self, screen_dimensions, image)
-        self.choices = range(-7, 7)
+        self.choices = [-7, -6, -5, -4, -3, -2, -1, 1, 2, 3, 4, 5, 6, 7]
         self.x_speed = random.choice(self.choices)
         self.y_speed = random.choice(self.choices)
 
