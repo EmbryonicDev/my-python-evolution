@@ -261,7 +261,7 @@ class GetCoin:
             if coin.hit_robot(self.bot.x, self.bot.y, self.bot.width):
                 self.bot.add_point()
                 coin.catch_coin()
-                print('points: ', self.bot.points)
+                coin.toggle_visibility()
                 print('level: ', self.level)
 
     def move_monster(self):
