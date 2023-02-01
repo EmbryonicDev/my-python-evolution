@@ -219,9 +219,7 @@ class GetCoin:
 
         # coins
         for coin in self.coins:
-            if not coin.caught:
-                self.window.blit(coin.image,
-                                 (coin.x, coin.y))
+            self.window.blit(coin.image, (coin.x, coin.y))
 
         # monsters
         for monster in self.monsters:
