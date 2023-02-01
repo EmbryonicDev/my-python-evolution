@@ -59,9 +59,12 @@ class MovingMonster(MovingObject):
     def get_coords(self, bot_y: str):
         self.x = random.randint(0, self.screen_width-self.width)
         self.y = (random.randint(0, self.screen_height*0.2)
-                         if bot_y > self.height / 2
-                         else random.randint(self.height*0.8, self.screen_height-self.height))
-                     
+                  if bot_y > self.screen_height / 2
+                  else random.randint(self.height*0.8, self.screen_height-self.height))
+
+    def hit_robot(self, bot_x: str, bot_y: str, bot_width: int):
+        return (bot_x <= self.x <= bot_x + bot_width and
+                bot_y <= self.y <= bot_y + bot_width)
 
 
 class MovingCoin(MovingObject):
@@ -273,14 +276,9 @@ class GetCoin:
 
     def move_monster(self):
         for monster in self.monsters:
-            if monster.x <= 0 or monster.x + monster.width >= self.width:
-                monster.x_speed *= -1
-            if monster.y <= 0 or monster.y + monster.height >= self.height:
-                monster.y_speed *= -1
+            monster.move_object()
 
-            # monster hits robot and takes a health point
-            if (self.bot.x <= monster.x <= self.bot.x + self.bot.width and
-                    self.bot.y <= monster.y <= self.bot.y + self.bot.height):
+            if monster.hit_robot(self.bot.x, self.bot.y, self.bot.width):
                 self.bot.take_health()
                 # End game when score hits 0
                 if self.bot.health <= 0:
@@ -289,9 +287,6 @@ class GetCoin:
 
                 print('health remaining: ', self.bot.health)
                 self.release_monsters()
-
-            monster.x += monster.x_speed
-            monster.y += monster.y_speed
 
     def release_coins(self):
         print('coins released')
