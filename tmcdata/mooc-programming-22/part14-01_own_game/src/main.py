@@ -287,9 +287,10 @@ class GetCoin:
 
     def release_monsters(self):
         self.monsters = []
+        bot_y = self.bot.y
         for i in range(self.level):
             monster = MovingMonster([self.width, self.height], 'monster')
-            monster.get_coords(self.bot.y)
+            monster.get_coords(bot_y)
             self.monsters.append(monster)
 
     def new_game(self):
