@@ -133,6 +133,15 @@ class GetCoin:
         self.new_game()
         self.main_loop()
 
+    def new_game(self):
+        self.game_over = False
+        self.game_paused = False
+        self.level = 1
+        self.monsters = []
+        self.bot = Robot([self.width, self.height], 'robot')
+        self.release_coins()
+        self.release_monsters()
+
     def main_loop(self):
         while True:
             self.check_events()
@@ -293,15 +302,6 @@ class GetCoin:
             monster = MovingMonster([self.width, self.height], 'monster')
             monster.get_coords(bot_y)
             self.monsters.append(monster)
-
-    def new_game(self):
-        self.game_over = False
-        self.game_paused = False
-        self.level = 1
-        self.monsters = []
-        self.bot = Robot([self.width, self.height], 'robot')
-        self.release_coins()
-        self.release_monsters()
 
 
 if __name__ == '__main__':
