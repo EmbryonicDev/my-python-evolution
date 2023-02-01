@@ -256,11 +256,7 @@ class GetCoin:
 
     def move_coin(self):
         for coin in self.coins:
-            if not coin.caught:
-                coin.move_object()
-            else:
-                self.x = -200
-                self.y = -200
+            coin.move_object()
             # Coin hits robot & adds point
             if coin.hit_robot(self.bot.x, self.bot.y, self.bot.width):
                 self.bot.add_point()
