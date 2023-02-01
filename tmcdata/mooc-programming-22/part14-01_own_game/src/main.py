@@ -20,12 +20,12 @@ class ScreenObject:
         self.x *= -1
         self.y *= -1
 
-
-class StaticObject(ScreenObject):
-    def __init__(self, screen_dimensions: list, image: str):
-        ScreenObject.__init__(self, screen_dimensions, image)
-        self.new_location()
-
+    # release objects on opposite side of bot on contact
+    def get_coords(self, bot_y: str):
+        self.x = random.randint(0, self.screen_width-self.width)
+        self.y = (random.randint(0, self.screen_height*0.2)
+                  if bot_y > self.screen_height / 2
+                  else random.randint(self.screen_height*0.8,
     def new_location(self):
         self.x = random.randint(0, self.screen_width - self.width)
         self.y = random.randint(self.height, self.screen_height - self.height)
@@ -55,14 +55,6 @@ class MovingObject(ScreenObject):
 class MovingMonster(MovingObject):
     def __init__(self, screen_dimensions, image):
         MovingObject.__init__(self, screen_dimensions, image)
-
-    # release monsters on opposite side of bot on contact
-    def get_coords(self, bot_y: str):
-        self.x = random.randint(0, self.screen_width-self.width)
-        self.y = (random.randint(0, self.screen_height*0.2)
-                  if bot_y > self.screen_height / 2
-                  else random.randint(self.screen_height*0.8,
-                                      self.screen_height-self.height))
 
 
 class MovingCoin(MovingObject):
