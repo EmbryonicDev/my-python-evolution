@@ -50,11 +50,6 @@ class MovingObject(ScreenObject):
                 bot_y <= self.y <= bot_y + self.height)
 
 
-class MovingMonster(MovingObject):
-    def __init__(self, screen_dimensions, image):
-        MovingObject.__init__(self, screen_dimensions, image)
-
-
 class MovingCoin(MovingObject):
     def __init__(self, screen_dimensions, image):
         MovingObject.__init__(self, screen_dimensions, image)
@@ -115,7 +110,7 @@ class GetCoin:
 
         self.game_font = pygame.font.SysFont('Arial', 36)
         self.end_font = pygame.font.SysFont('Arial', 72)
-        self.door = StaticObject([self.width, self.height], 'door')
+        self.door = ScreenObject([self.width, self.height], 'door')
         self.clock = pygame.time.Clock()
         self.new_game()
         self.main_loop()
@@ -287,7 +282,7 @@ class GetCoin:
         self.monsters = []
         bot_y = self.bot.y
         for i in range(self.level):
-            monster = MovingMonster([self.width, self.height], 'monster')
+            monster = MovingObject([self.width, self.height], 'monster')
             monster.get_coords(bot_y)
             self.monsters.append(monster)
 
