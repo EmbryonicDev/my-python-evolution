@@ -272,6 +272,7 @@ class GetCoin:
                 self.bot.add_point()
                 coin.catch_coin()
                 coin.toggle_visibility()
+                print('points: ', self.bot.points)
                 print('level: ', self.level)
 
     def move_monster(self):
