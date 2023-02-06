@@ -7,6 +7,7 @@ Teleport to opposite side of screen on screen exit
 Pause feature
 Game over on 0 health
 Delete 5 points per monster touch
+Create variable for: [self.width, self.height]
 
 Secret coin:
     edible monsters
