@@ -99,10 +99,11 @@ class Robot(ScreenObject):
 class Timer:
     def __init__(self):
         self.frame_counter = 0
-        self.timer = 0
+        self.seconds = 0
 
     def clear_timer(self):
-        self.timer = 0
+        self.seconds = 0
+        self.frame_counter = 0
 
     def add_counter(self):
         self.frame_counter += 1
@@ -110,10 +111,10 @@ class Timer:
             self.update_timer()
 
     def update_timer(self):
-        self.timer += 1
-        if self.timer == 60:
+        print(self.seconds)
+        self.seconds += 1
+        if self.seconds == 60:
             self.clear_timer()
-        print(self.timer)
 
 
 class GetCoin:
