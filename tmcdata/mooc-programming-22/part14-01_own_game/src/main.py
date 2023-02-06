@@ -250,6 +250,17 @@ class GetCoin:
         for coin in self.coins:
             self.window.blit(coin.image, (coin.x, coin.y))
 
+        # bonus coin
+        if self.timer.seconds == 59:
+            self.bonus_coin.toggle_visibility()
+            self.timer.clear_timer()
+            self.bonus_coin.activate()
+        if self.bonus_coin.active and self.timer.seconds > 5:
+            self.timer.clear_timer()
+            self.bonus_coin = BonusCoin([self.width, self.height], 'coin')
+        self.window.blit(self.bonus_coin.image,
+                         (self.bonus_coin.x, self.bonus_coin.y))
+
         # monsters
         for monster in self.monsters:
             self.window.blit(monster.image, (monster.x, monster.y))
