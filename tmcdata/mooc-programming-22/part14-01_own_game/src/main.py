@@ -29,6 +29,19 @@ class ScreenObject:
                                       self.screen_height-self.height))
 
 
+class BonusCoin(ScreenObject):
+    def __init__(self, screen_dimensions: list, image: str):
+        ScreenObject.__init__(self, screen_dimensions, image)
+        self.power = random.choice(
+            ['eat', 'kill', 'freeze', 'add health', 'multiply', 'invincible'])
+        self.toggle_visibility()
+        self.active = False
+        print(self.power)
+
+    def activate(self):
+        self.active = True
+
+
 class MovingObject(ScreenObject):
     def __init__(self, screen_dimensions: list, image: str):
         ScreenObject.__init__(self, screen_dimensions, image)
@@ -138,6 +151,7 @@ class GetCoin:
 
     def new_game(self):
         self.timer = Timer()
+        self.bonus_coin = BonusCoin([self.width, self.height], 'coin')
         self.game_over = False
         self.game_paused = False
         self.level = 1
