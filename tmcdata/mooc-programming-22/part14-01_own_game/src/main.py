@@ -121,9 +121,9 @@ class Timer:
     def add_counter(self):
         self.frame_counter += 1
         if self.frame_counter % 60 == 0:
-            self.update_timer()
+            self.update_seconds()
 
-    def update_timer(self):
+    def update_seconds(self):
         print(self.seconds)
         self.seconds += 1
         if self.seconds == 60:
