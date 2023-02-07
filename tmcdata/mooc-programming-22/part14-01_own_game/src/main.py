@@ -174,6 +174,7 @@ class GetCoin:
             self.timer.add_counter()
             if not self.game_over and not self.game_paused:
                 self.move_coin()
+                self.move_bonus_coin()
                 self.move_bot()
                 self.move_monster()
 
