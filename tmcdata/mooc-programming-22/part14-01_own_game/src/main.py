@@ -259,15 +259,7 @@ class GetCoin:
             self.window.blit(coin.image, (coin.x, coin.y))
 
         # bonus coin
-        if self.timer.seconds == 59:
-            self.bonus_coin.toggle_visibility()
-            self.timer.clear_timer()
-            self.bonus_coin.activate()
-        if self.bonus_coin.active and self.timer.seconds > 5:
-            self.timer.clear_timer()
-            self.bonus_coin = BonusCoin([self.width, self.height], 'coin')
-        self.window.blit(self.bonus_coin.image,
-                         (self.bonus_coin.x, self.bonus_coin.y))
+        self.handle_bonus()
 
         # monsters
         for monster in self.monsters:
@@ -340,6 +332,35 @@ class GetCoin:
     def unfreeze_monsters(self):
         for monster in self.monsters:
             monster.unfreeze()
+
+    def handle_bonus(self):
+        # bonus coin to screen
+        if self.timer.seconds == 59:
+            self.bonus_coin.toggle_visibility()
+            self.bonus_coin.unfreeze()
+            self.timer.clear_timer()
+
+        # bonus coin contact with Robot
+        if self.bonus_coin.hit_robot(self.bot.x, self.bot.y):
+            print('caught bonus coin: ', self.bonus_coin.power)
+            self.bonus_coin.catch_coin()
+            self.toggle_active_bonus()
+            for monster in self.monsters:
+                if self.bonus_coin.power == 'freeze':
+                    monster.freeze()
+            self.timer.clear_timer()
+            self.bonus_coin = BonusCoin(
+                [self.width, self.height], 'bonus_coin')
+        if self.active_bonus and self.timer.seconds == 5:
+            self.toggle_active_bonus()
+        if not self.active_bonus and self.timer.seconds == 5:
+            for monster in self.monsters:
+                monster.unfreeze()
+            # self.timer.clear_timer()
+            self.bonus_coin = BonusCoin(
+                [self.width, self.height], 'bonus_coin')
+        self.window.blit(self.bonus_coin.image,
+                         (self.bonus_coin.x, self.bonus_coin.y))
 
     def release_coins(self):
         print('coins released')
