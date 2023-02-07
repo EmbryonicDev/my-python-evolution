@@ -326,6 +326,14 @@ class GetCoin:
                 print('health remaining: ', self.bot.health)
                 self.release_monsters()
 
+    def freeze_monsters(self):
+        for monster in self.monsters:
+            monster.freeze()
+
+    def unfreeze_monsters(self):
+        for monster in self.monsters:
+            monster.unfreeze()
+
     def release_coins(self):
         print('coins released')
         self.coins = []
