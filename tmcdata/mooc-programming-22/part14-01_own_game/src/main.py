@@ -62,6 +62,13 @@ class MovingObject(ScreenObject):
         return (bot_x <= self.x <= bot_x + self.width and
                 bot_y <= self.y <= bot_y + self.height)
 
+    def freeze(self):
+        self.x_speed, self.y_speed = 0, 0
+
+    def unfreeze(self):
+        self.x_speed, self.y_speed = random.choice(
+            self.choices), random.choice(self.choices)
+
 
 class MovingCoin(MovingObject):
     def __init__(self, screen_dimensions, image):
