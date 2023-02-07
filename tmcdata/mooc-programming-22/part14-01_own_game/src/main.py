@@ -29,19 +29,6 @@ class ScreenObject:
                                       self.screen_height-self.height))
 
 
-class BonusCoin(ScreenObject):
-    def __init__(self, screen_dimensions: list, image: str):
-        ScreenObject.__init__(self, screen_dimensions, image)
-        self.power = random.choice(
-            ['eat', 'kill', 'freeze', 'add health', 'multiply', 'invincible'])
-        self.toggle_visibility()
-        self.active = False
-        print(self.power)
-
-    def activate(self):
-        self.active = True
-
-
 class MovingObject(ScreenObject):
     def __init__(self, screen_dimensions: list, image: str):
         ScreenObject.__init__(self, screen_dimensions, image)
@@ -77,6 +64,18 @@ class MovingCoin(MovingObject):
 
     def catch_coin(self):
         self.caught = True
+
+
+class BonusCoin(MovingCoin):
+    def __init__(self, screen_dimensions: list, image: str):
+        MovingCoin.__init__(self, screen_dimensions, image)
+        self.power = random.choice(
+            # ['eat', 'kill', 'freeze', 'add health', 'multiply', 'invincible']
+            ['freeze']
+        )
+        self.freeze()
+        self.toggle_visibility()
+        print(self.power)
 
 
 class Robot(ScreenObject):
