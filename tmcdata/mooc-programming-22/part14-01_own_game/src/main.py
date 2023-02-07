@@ -58,7 +58,7 @@ class MovingObject(ScreenObject):
         self.x += self.x_speed
         self.y += self.y_speed
 
-    def hit_robot(self, bot_x: str, bot_y: str, bot_width: int):
+    def hit_robot(self, bot_x: str, bot_y: str):
         return (bot_x <= self.x <= bot_x + self.width and
                 bot_y <= self.y <= bot_y + self.height)
 
@@ -298,7 +298,7 @@ class GetCoin:
         for coin in self.coins:
             coin.move_object()
             # Coin hits robot & adds point
-            if coin.hit_robot(self.bot.x, self.bot.y, self.bot.width):
+            if coin.hit_robot(self.bot.x, self.bot.y):
                 self.bot.add_point()
                 coin.catch_coin()
                 coin.toggle_visibility()
@@ -309,7 +309,7 @@ class GetCoin:
         for monster in self.monsters:
             monster.move_object()
 
-            if monster.hit_robot(self.bot.x, self.bot.y, self.bot.width):
+            if monster.hit_robot(self.bot.x, self.bot.y):
                 self.bot.take_health()
                 # End game when score hits 0
                 if self.bot.health <= 0:
