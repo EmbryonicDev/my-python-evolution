@@ -157,7 +157,7 @@ class GetCoin:
 
     def new_game(self):
         self.timer = Timer()
-        self.bonus_coin = BonusCoin([self.width, self.height], 'coin')
+        self.bonus_coin = BonusCoin([self.width, self.height], 'bonus_coin')
         self.game_over = False
         self.game_paused = False
         self.level = 1
