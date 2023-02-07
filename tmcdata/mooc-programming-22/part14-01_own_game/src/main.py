@@ -315,6 +315,10 @@ class GetCoin:
 
     def move_bonus_coin(self):
         self.bonus_coin.move_object()
+
+    def toggle_active_bonus(self):
+        self.active_bonus != self.active_bonus
+
     def move_monster(self):
         for monster in self.monsters:
             monster.move_object()
