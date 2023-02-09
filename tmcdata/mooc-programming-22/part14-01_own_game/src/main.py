@@ -191,7 +191,8 @@ class GetCoin:
                 if event.key == pygame.K_F2:
                     self.new_game()
                 if event.key == pygame.K_SPACE:
-                    self.game_paused = True if self.game_paused == False else False
+                    if not self.game_over:
+                        self.game_paused = True if self.game_paused == False else False
                 if event.key == pygame.K_ESCAPE:
                     exit()
 
