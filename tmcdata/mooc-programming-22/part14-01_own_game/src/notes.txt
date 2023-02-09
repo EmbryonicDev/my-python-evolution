@@ -12,6 +12,7 @@ Create variable for: [self.width, self.height]
 Update event handler - https://pygame.readthedocs.io/en/latest/1_intro/intro.html
 move all object contact to Robot
 Disable pause game on game over
+create method to create new BonusCoin
 
 
 
