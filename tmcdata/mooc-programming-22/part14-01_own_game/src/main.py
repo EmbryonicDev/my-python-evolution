@@ -344,14 +344,19 @@ class GetCoin:
             self.bonus_coin = BonusCoin(
                 [self.width, self.height], 'bonus_coin')
 
+        # bonus coin caught by Robot
         if self.bonus_coin.hit_robot(self.bot.x, self.bot.y):
+            # Hide coin when caught
             print('caught bonus coin: ', self.bonus_coin.power)
             self.bonus_coin.catch_coin()
-            self.toggle_active_bonus()
-            for monster in self.monsters:
-                if self.bonus_coin.power == 'freeze':
-                    monster.freeze()
-            self.timer.clear_timer()
+            self.bonus_coin.toggle_visibility()
+            self.timer.seconds = 66
+
+        # if coin is caught
+        if self.bonus_coin.caught:
+            if self.bonus_coin.power == 'freeze':
+                self.freeze_monsters()
+
             self.bonus_coin = BonusCoin(
                 [self.width, self.height], 'bonus_coin')
         if self.active_bonus and self.timer.seconds == 5:
