@@ -132,7 +132,7 @@ class Timer:
     def update_seconds(self):
         print(self.seconds)
         self.seconds += 1
-        if self.seconds == 60:
+        if self.seconds == 73:
             self.clear_timer()
 
 
