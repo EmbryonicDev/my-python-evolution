@@ -334,7 +334,6 @@ class GetCoin:
         if self.timer.seconds == 60:
             self.bonus_coin.toggle_visibility()
             self.bonus_coin.unfreeze()
-            self.timer.clear_timer()
             self.timer.update_seconds()
 
         # bonus coin with no contact
