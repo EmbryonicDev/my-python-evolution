@@ -149,7 +149,7 @@ class GetCoin:
         pygame.display.set_caption('Coin Chaser')
 
         self.game_font = pygame.font.SysFont('Arial', 36)
-        self.end_font = pygame.font.SysFont('Arial', 72)
+        self.heading_font = pygame.font.SysFont('Arial', 72)
         self.door = ScreenObject([self.width, self.height], 'door')
         self.clock = pygame.time.Clock()
         self.new_game()
@@ -273,13 +273,13 @@ class GetCoin:
         # main window text
         # game over
         if self.game_over:
-            game_text = self.end_font.render(
+            game_text = self.heading_font.render(
                 'Game Over...', True, (255, 255, 255))
             self.window.blit(game_text, (self.width/2-game_text.get_width() /
                              2, self.height/2-game_text.get_height()/2))
         # game paused
         if self.game_paused:
-            game_text = self.end_font.render(
+            game_text = self.heading_font.render(
                 'Game Paused...', True, (255, 255, 255))
             self.window.blit(game_text, (self.width/2-game_text.get_width() /
                              2, self.height/2-game_text.get_height()/2))
