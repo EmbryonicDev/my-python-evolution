@@ -151,7 +151,6 @@ class GetCoin:
         self.game_font = pygame.font.SysFont('Arial', 36)
         self.end_font = pygame.font.SysFont('Arial', 72)
         self.door = ScreenObject([self.width, self.height], 'door')
-        self.active_bonus = False
         self.clock = pygame.time.Clock()
         self.new_game()
         self.main_loop()
