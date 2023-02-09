@@ -304,9 +304,6 @@ class GetCoin:
                 print('points: ', self.bot.points)
                 print('level: ', self.level)
 
-    def move_bonus_coin(self):
-        self.bonus_coin.move_object()
-
     def move_monster(self):
         for monster in self.monsters:
             monster.move_object()
@@ -328,6 +325,9 @@ class GetCoin:
     def unfreeze_monsters(self):
         for monster in self.monsters:
             monster.unfreeze()
+
+    def move_bonus_coin(self):
+        self.bonus_coin.move_object()
 
     def handle_bonus(self):
         # bonus coin to screen
