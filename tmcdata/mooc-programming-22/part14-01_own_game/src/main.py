@@ -143,7 +143,7 @@ class GetCoin:
         # Window
         self.width = 1000
         self.height = 900
-        self.info_board = 200
+        self.info_board = 250
         self.window = pygame.display.set_mode(
             (self.width, self.height+self.info_board))
         pygame.display.set_caption('Coin Chaser')
