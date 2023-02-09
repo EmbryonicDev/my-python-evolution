@@ -371,7 +371,7 @@ class GetCoin:
     def release_coins(self):
         print('coins released')
         self.coins = []
-        for i in range(1):
+        for i in range(10):
             new_coin = MovingCoin([self.width, self.height], 'coin')
             self.coins.append(new_coin)
 
