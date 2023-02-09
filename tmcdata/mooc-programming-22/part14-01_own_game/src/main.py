@@ -383,6 +383,11 @@ class GetCoin:
             monster.get_coords(bot_y)
             self.monsters.append(monster)
 
+        # release frozen monsters if bonus_coin was caught
+        if (self.bonus_coin.caught and
+                self.bonus_coin.power == 'freeze'):
+            self.freeze_monsters()
+
 
 if __name__ == '__main__':
     GetCoin()
