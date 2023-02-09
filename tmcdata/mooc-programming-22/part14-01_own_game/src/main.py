@@ -157,7 +157,7 @@ class GetCoin:
 
     def new_game(self):
         self.timer = Timer()
-        self.bonus_coin = BonusCoin([self.width, self.height], 'bonus_coin')
+        self.bonus_coin = self.get_bonus_coin()
         self.game_over = False
         self.game_paused = False
         self.level = 1
@@ -329,6 +329,10 @@ class GetCoin:
     def move_bonus_coin(self):
         self.bonus_coin.move_object()
 
+    def get_bonus_coin(self):
+        return BonusCoin(
+            [self.width, self.height], 'bonus_coin')
+
     def handle_bonus(self):
         # bonus coin to screen
         if self.timer.seconds == 60:
@@ -340,8 +344,7 @@ class GetCoin:
         if (self.timer.seconds == 66 and
                 not self.bonus_coin.caught):
             self.timer.update_seconds()
-            self.bonus_coin = BonusCoin(
-                [self.width, self.height], 'bonus_coin')
+            self.bonus_coin = self.get_bonus_coin()
 
         # bonus coin caught by Robot
         if self.bonus_coin.hit_robot(self.bot.x, self.bot.y):
@@ -360,8 +363,7 @@ class GetCoin:
             if self.timer.seconds == 72:
                 self.timer.clear_timer()
                 self.unfreeze_monsters()
-                self.bonus_coin = BonusCoin(
-                    [self.width, self.height], 'bonus_coin')
+                self.bonus_coin = self.get_bonus_coin()
 
         # bonus coin to window
         self.window.blit(self.bonus_coin.image,
