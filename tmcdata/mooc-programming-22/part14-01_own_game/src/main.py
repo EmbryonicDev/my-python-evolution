@@ -161,6 +161,7 @@ class GetCoin:
         self.game_over = False
         self.game_paused = False
         self.level = 1
+        self.monster_count = 1
         self.monsters = []
         self.bot = Robot([self.width, self.height], 'robot')
         self.release_coins()
@@ -289,6 +290,7 @@ class GetCoin:
         self.bot.move_bot()
         if self.bot.hit_door(self.door.x, self.door.y):
             self.level += 1
+            self.monster_count += 1
             self.release_coins()
             self.door.get_coords(self.bot.y)
             self.bot.reset_pos()
@@ -380,7 +382,7 @@ class GetCoin:
     def release_monsters(self):
         self.monsters = []
         bot_y = self.bot.y
-        for i in range(self.level):
+        for i in range(self.monster_count):
             monster = MovingObject([self.width, self.height], 'monster')
             monster.get_coords(bot_y)
             self.monsters.append(monster)
