@@ -357,9 +357,13 @@ class GetCoin:
             if self.bonus_coin.power == 'freeze':
                 self.freeze_monsters()
 
-            self.bonus_coin = BonusCoin(
-                [self.width, self.height], 'bonus_coin')
-        if self.active_bonus and self.timer.seconds == 5:
+            # end bonus round
+            if self.timer.seconds == 72:
+                self.timer.clear_timer()
+                self.unfreeze_monsters()
+                self.bonus_coin = BonusCoin(
+                    [self.width, self.height], 'bonus_coin')
+
             self.toggle_active_bonus()
         if not self.active_bonus and self.timer.seconds == 5:
             for monster in self.monsters:
