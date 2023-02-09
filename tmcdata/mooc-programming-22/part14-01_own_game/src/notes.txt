@@ -2,6 +2,7 @@
     After going through Door
 *Start game with one monster
 *Make sure door prints above screen with hidden
+*stop timer when game is paused
 Add lambda formulas where possible
 Teleport to opposite side of screen on screen exit
 Pause feature
@@ -10,6 +11,9 @@ Delete 5 points per monster touch
 Create variable for: [self.width, self.height]
 Update event handler - https://pygame.readthedocs.io/en/latest/1_intro/intro.html
 move all object contact to Robot
+Disable pause game on game over
+
+
 
 Secret coin:
     edible monsters
