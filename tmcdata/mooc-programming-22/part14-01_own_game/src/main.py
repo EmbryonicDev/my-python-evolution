@@ -170,8 +170,8 @@ class GetCoin:
         while True:
             self.check_events()
             self.draw_window()
-            self.timer.add_counter()
             if not self.game_over and not self.game_paused:
+                self.timer.add_counter()
                 self.move_coin()
                 self.move_bonus_coin()
                 self.move_bot()
