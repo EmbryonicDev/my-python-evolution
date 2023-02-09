@@ -331,10 +331,11 @@ class GetCoin:
 
     def handle_bonus(self):
         # bonus coin to screen
-        if self.timer.seconds == 59:
+        if self.timer.seconds == 60:
             self.bonus_coin.toggle_visibility()
             self.bonus_coin.unfreeze()
             self.timer.clear_timer()
+            self.timer.update_seconds()
 
         # bonus coin contact with Robot
         if self.bonus_coin.hit_robot(self.bot.x, self.bot.y):
