@@ -364,13 +364,7 @@ class GetCoin:
                 self.bonus_coin = BonusCoin(
                     [self.width, self.height], 'bonus_coin')
 
-            self.toggle_active_bonus()
-        if not self.active_bonus and self.timer.seconds == 5:
-            for monster in self.monsters:
-                monster.unfreeze()
-            # self.timer.clear_timer()
-            self.bonus_coin = BonusCoin(
-                [self.width, self.height], 'bonus_coin')
+        # bonus coin to window
         self.window.blit(self.bonus_coin.image,
                          (self.bonus_coin.x, self.bonus_coin.y))
 
