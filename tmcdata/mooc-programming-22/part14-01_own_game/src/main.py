@@ -337,7 +337,13 @@ class GetCoin:
             self.timer.clear_timer()
             self.timer.update_seconds()
 
-        # bonus coin contact with Robot
+        # bonus coin with no contact
+        if (self.timer.seconds == 66 and
+                not self.bonus_coin.caught):
+            self.timer.update_seconds()
+            self.bonus_coin = BonusCoin(
+                [self.width, self.height], 'bonus_coin')
+
         if self.bonus_coin.hit_robot(self.bot.x, self.bot.y):
             print('caught bonus coin: ', self.bonus_coin.power)
             self.bonus_coin.catch_coin()
