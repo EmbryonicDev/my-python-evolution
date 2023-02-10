@@ -262,7 +262,7 @@ class GetCoin:
             self.window.blit(coin.image, (coin.x, coin.y))
 
         # bonus coin
-        self.handle_bonus()
+        self.handle_bonus_ball()
 
         # monsters
         for monster in self.monsters:
@@ -338,7 +338,7 @@ class GetCoin:
         return BonusCoin(
             [self.width, self.height], 'bonus_coin')
 
-    def handle_bonus(self):
+    def handle_bonus_ball(self):
         # bonus coin to screen
         if self.timer.seconds == 60:
             self.bonus_coin.toggle_visibility()
