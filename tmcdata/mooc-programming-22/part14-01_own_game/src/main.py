@@ -250,6 +250,8 @@ class GetCoin:
         self.window.blit(game_text, (self.width-(game_text.get_width()+25),
                          self.height + (self.info_board*0.5)))
 
+        # bonus mode info board
+        self.handle_bonus_text()
 
         # print door
         if all(i.caught == True for i in self.coins):
@@ -382,6 +384,14 @@ class GetCoin:
         self.window.blit(self.bonus_coin.image,
                          (self.bonus_coin.x, self.bonus_coin.y))
 
+    def handle_bonus_text(self):
+        # new color every second
+        self.get_color()
+        board_color = (0*3) if self.bonus_coin.x < 0 else self.random_color
+
+        # Info board rectangle
+        pygame.draw.rect(self.window, (board_color),
+                         (0, self.height+self.info_board, self.width, self.height + self.info_board))
     def release_coins(self):
         print('coins released')
         self.coins = []
