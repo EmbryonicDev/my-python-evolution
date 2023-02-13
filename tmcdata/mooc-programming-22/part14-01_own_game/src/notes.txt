@@ -3,23 +3,24 @@
 *Start game with one monster
 *Make sure door prints above screen with hidden
 *stop timer when game is paused
+*Disable pause game on game over
+*create method to create new BonusCoin
+*move all object contact to Robot
 Add lambda formulas where possible
 Teleport to opposite side of screen on screen exit
 Delete 5 points per monster touch
 Create variable for: [self.width, self.height]
 Update event handler - https://pygame.readthedocs.io/en/latest/1_intro/intro.html
-move all object contact to Robot
-Disable pause game on game over
-create method to create new BonusCoin
 Add high score & save to local storage
 print door on opposite side of bot
+increase accuracy of object contact with robot
 
 
 
 Secret coin:
+    *freeze monsters
     edible monsters
     pop 50% monsters
     slow moving monsters
     full health
-    freeze monsters
     super slow motion
