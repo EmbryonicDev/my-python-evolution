@@ -392,6 +392,10 @@ class GetCoin:
         # Info board rectangle
         pygame.draw.rect(self.window, (board_color),
                          (0, self.height+self.info_board, self.width, self.height + self.info_board))
+
+        # text when ball is on screen
+        game_text = self.heading_font.render(
+            "Catch Bonus Ball", True, (255, 255, 255))
     def release_coins(self):
         print('coins released')
         self.coins = []
