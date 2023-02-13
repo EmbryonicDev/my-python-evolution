@@ -14,6 +14,8 @@ Update event handler - https://pygame.readthedocs.io/en/latest/1_intro/intro.htm
 Add high score & save to local storage
 print door on opposite side of bot
 increase accuracy of object contact with robot
+                    if (object.y >= height-(robot.get_height()+rock.get_height()) and
+                        x-robot.get_width() <= object.x <= x+robot.get_width()):
 
 
 
