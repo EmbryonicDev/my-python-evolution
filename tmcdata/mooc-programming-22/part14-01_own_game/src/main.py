@@ -159,6 +159,8 @@ class GetCoin:
 
     def new_game(self):
         self.timer = Timer()
+        self.random_color = (random.randint(
+            0, 255), random.randint(0, 255), random.randint(0, 255))
         self.bonus_coin = self.get_bonus_coin()
         self.game_over = False
         self.game_paused = False
