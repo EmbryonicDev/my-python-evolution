@@ -387,8 +387,12 @@ class GetCoin:
     def handle_bonus_text(self):
         # new color every second
         self.get_color()
-        # black if bonus_coin is not on screen, else, random color
-        board_color = (0*3) if self.bonus_coin.x < 0 else self.random_color
+        # random color if bonus_coin is caught or is not on screen, else, black
+        board_color = (self.random_color
+                       if self.bonus_coin.x > 0
+                       or self.bonus_coin.caught
+                       else (
+                           0*3))
 
         # Info board rectangle
         pygame.draw.rect(self.window, (board_color),
