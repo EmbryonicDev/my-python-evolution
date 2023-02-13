@@ -14,6 +14,7 @@ move all object contact to Robot
 Disable pause game on game over
 create method to create new BonusCoin
 Add high score & save to local storage
+print door on opposite side of bot
 
 
 
