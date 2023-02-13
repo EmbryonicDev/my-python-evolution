@@ -416,6 +416,11 @@ class GetCoin:
             # game text to window
             blit_text()
 
+        if self.bonus_coin.caught:
+            game_text = self.heading_font.render(
+                self.bonus_coin.user_prompt, True, (255, 255, 255))
+            blit_text_bg()
+            blit_text()
 
     def release_coins(self):
         print('coins released')
