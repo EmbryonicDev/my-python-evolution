@@ -341,6 +341,11 @@ class GetCoin:
         return BonusCoin(
             [self.width, self.height], 'bonus_coin')
 
+    def get_color(self):
+        if self.timer.frame_counter % 60 == 0:
+            self.random_color = (random.randint(
+                0, 255), random.randint(0, 255), random.randint(0, 255))
+
     def handle_bonus_ball(self):
         # bonus coin to screen
         if self.timer.seconds == 60:
