@@ -69,10 +69,12 @@ class MovingCoin(MovingObject):
 class BonusCoin(MovingCoin):
     def __init__(self, screen_dimensions: list, image: str):
         MovingCoin.__init__(self, screen_dimensions, image)
-        self.power = random.choice(
-            # ['eat', 'kill', 'freeze', 'add health', 'multiply', 'invincible']
-            ['freeze']
-        )
+        # ['eat', 'kill', 'freeze', 'add health', 'multiply', 'invincible']
+
+        self.dict = random.choice(
+            [{'power': 'freeze', 'user_prompt': 'Ghosts are Frozen'}])
+        self.power = self.dict['power']
+        self.user_prompt = self.dict['user_prompt']
         self.freeze()
         self.toggle_visibility()
         print(self.power)
@@ -143,13 +145,15 @@ class GetCoin:
         # Window
         self.width = 1000
         self.height = 900
-        self.info_board = 200
+        self.info_board = 100
+        self.bonus_board = 135
+        self.total_height = self.height+self.info_board+self.bonus_board
         self.window = pygame.display.set_mode(
-            (self.width, self.height+self.info_board))
+            (self.width, self.height+self.info_board+self.bonus_board))
         pygame.display.set_caption('Coin Chaser')
 
         self.game_font = pygame.font.SysFont('Arial', 36)
-        self.end_font = pygame.font.SysFont('Arial', 72)
+        self.heading_font = pygame.font.SysFont('Arial', 72)
         self.door = ScreenObject([self.width, self.height], 'door')
         self.clock = pygame.time.Clock()
         self.new_game()
@@ -157,10 +161,13 @@ class GetCoin:
 
     def new_game(self):
         self.timer = Timer()
+        self.random_color = (random.randint(
+            0, 255), random.randint(0, 255), random.randint(0, 255))
         self.bonus_coin = self.get_bonus_coin()
         self.game_over = False
         self.game_paused = False
         self.level = 1
+        self.monster_count = 1
         self.monsters = []
         self.bot = Robot([self.width, self.height], 'robot')
         self.release_coins()
@@ -233,17 +240,20 @@ class GetCoin:
         # new game
         game_text = self.game_font.render(
             "New Game - F2", True, (0, 255, 0))
-        self.window.blit(game_text, (25, self.height + (self.info_board*0.35)))
+        self.window.blit(game_text, (25, self.height + (self.info_board*0.5)))
         # pause game
         game_text = self.game_font.render(
             "Pause - Space", True, (0, 255, 0))
         self.window.blit(game_text, (self.width*.5-(game_text.get_width()/2),
-                         self.height + (self.info_board*0.35)))
+                         self.height + (self.info_board*0.5)))
         # quit game
         game_text = self.game_font.render(
             "Quit - Esc", True, (0, 255, 0))
         self.window.blit(game_text, (self.width-(game_text.get_width()+25),
-                         self.height + (self.info_board*0.35)))
+                         self.height + (self.info_board*0.5)))
+
+        # bonus mode info board
+        self.handle_bonus_text()
 
         # print door
         if all(i.caught == True for i in self.coins):
@@ -259,7 +269,7 @@ class GetCoin:
             self.window.blit(coin.image, (coin.x, coin.y))
 
         # bonus coin
-        self.handle_bonus()
+        self.handle_bonus_ball()
 
         # monsters
         for monster in self.monsters:
@@ -271,13 +281,13 @@ class GetCoin:
         # main window text
         # game over
         if self.game_over:
-            game_text = self.end_font.render(
+            game_text = self.heading_font.render(
                 'Game Over...', True, (255, 255, 255))
             self.window.blit(game_text, (self.width/2-game_text.get_width() /
                              2, self.height/2-game_text.get_height()/2))
         # game paused
         if self.game_paused:
-            game_text = self.end_font.render(
+            game_text = self.heading_font.render(
                 'Game Paused...', True, (255, 255, 255))
             self.window.blit(game_text, (self.width/2-game_text.get_width() /
                              2, self.height/2-game_text.get_height()/2))
@@ -289,6 +299,7 @@ class GetCoin:
         self.bot.move_bot()
         if self.bot.hit_door(self.door.x, self.door.y):
             self.level += 1
+            self.monster_count += 1
             self.release_coins()
             self.door.get_coords(self.bot.y)
             self.bot.reset_pos()
@@ -334,10 +345,16 @@ class GetCoin:
         return BonusCoin(
             [self.width, self.height], 'bonus_coin')
 
-    def handle_bonus(self):
+    def get_color(self):
+        if self.timer.frame_counter % 60 == 0:
+            self.random_color = (random.randint(
+                0, 255), random.randint(0, 255), random.randint(0, 255))
+
+    def handle_bonus_ball(self):
         # bonus coin to screen
         if self.timer.seconds == 60:
             self.bonus_coin.toggle_visibility()
+            self.bonus_coin.get_coords(self.bot.y)
             self.bonus_coin.unfreeze()
             self.timer.update_seconds()
 
@@ -370,6 +387,44 @@ class GetCoin:
         self.window.blit(self.bonus_coin.image,
                          (self.bonus_coin.x, self.bonus_coin.y))
 
+    def handle_bonus_text(self):
+        # new color every second
+        self.get_color()
+        # random color if bonus_coin is caught or is not on screen, else, black
+        board_color = (self.random_color
+                       if self.bonus_coin.x > 0
+                       or self.bonus_coin.caught
+                       else (
+                           0*3))
+
+        # Info board rectangle
+        pygame.draw.rect(self.window, (board_color),
+                         (0, self.height+self.info_board, self.width, self.height + self.info_board))
+
+        # text when ball is on screen
+        game_text = self.heading_font.render(
+            "Catch Bonus Ball", True, (255, 255, 255))
+
+        def blit_text():
+            return self.window.blit(game_text, (self.width*.5-(game_text.get_width()/2),
+                                                self.height + self.info_board + (self.info_board*0.35)))
+
+        def blit_text_bg():
+            return pygame.draw.rect(self.window, (0, 0, 0), (self.width/2-game_text.get_width()/2, self.total_height - self.bonus_board/2 - game_text.get_height()/2, game_text.get_width(), game_text.get_height()))
+
+        # if bonus ball is on screen, prompt user to catch it
+        if self.bonus_coin.x > -1:
+            # rectangle behind bonus text
+            blit_text_bg()
+            # game text to window
+            blit_text()
+
+        if self.bonus_coin.caught:
+            game_text = self.heading_font.render(
+                self.bonus_coin.user_prompt, True, (255, 255, 255))
+            blit_text_bg()
+            blit_text()
+
     def release_coins(self):
         print('coins released')
         self.coins = []
@@ -380,7 +435,7 @@ class GetCoin:
     def release_monsters(self):
         self.monsters = []
         bot_y = self.bot.y
-        for i in range(self.level):
+        for i in range(self.monster_count):
             monster = MovingObject([self.width, self.height], 'monster')
             monster.get_coords(bot_y)
             self.monsters.append(monster)

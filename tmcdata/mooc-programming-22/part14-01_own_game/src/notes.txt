@@ -5,14 +5,14 @@
 *stop timer when game is paused
 Add lambda formulas where possible
 Teleport to opposite side of screen on screen exit
-Pause feature
-Game over on 0 health
 Delete 5 points per monster touch
 Create variable for: [self.width, self.height]
 Update event handler - https://pygame.readthedocs.io/en/latest/1_intro/intro.html
 move all object contact to Robot
 Disable pause game on game over
 create method to create new BonusCoin
+Add high score & save to local storage
+print door on opposite side of bot
 
 
 
@@ -21,3 +21,5 @@ Secret coin:
     pop 50% monsters
     slow moving monsters
     full health
+    freeze monsters
+    super slow motion
