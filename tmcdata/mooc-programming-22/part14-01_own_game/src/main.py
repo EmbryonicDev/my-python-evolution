@@ -69,10 +69,12 @@ class MovingCoin(MovingObject):
 class BonusCoin(MovingCoin):
     def __init__(self, screen_dimensions: list, image: str):
         MovingCoin.__init__(self, screen_dimensions, image)
-        self.power = random.choice(
-            # ['eat', 'kill', 'freeze', 'add health', 'multiply', 'invincible']
-            ['freeze']
-        )
+        # ['eat', 'kill', 'freeze', 'add health', 'multiply', 'invincible']
+
+        self.dict = random.choice(
+            [{'power': 'freeze', 'user_prompt': 'Ghosts are Frozen'}])
+        self.power = self.dict['power']
+        self.user_prompt = self.dict['user_prompt']
         self.freeze()
         self.toggle_visibility()
         print(self.power)
