@@ -354,6 +354,7 @@ class GetCoin:
         # bonus coin to screen
         if self.timer.seconds == 60:
             self.bonus_coin.toggle_visibility()
+            self.bonus_coin.get_coords(self.bot.y)
             self.bonus_coin.unfreeze()
             self.timer.update_seconds()
 
