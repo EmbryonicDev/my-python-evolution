@@ -79,7 +79,7 @@ class BonusCoin(MovingCoin):
             [
                 # {'power': 'freeze', 'user_prompt': 'Ghosts are Frozen'},
                 # {'power': 'speed up', 'user_prompt': 'Super Fast Ghosts! Be Careful!'},
-                {'power': 'cupcake', 'user_prompt': 'Eat the Cupcakes! Bitch!'}
+                {'power': 'cupcake', 'user_prompt': 'Eat the Cupcakes!'}
 
             ])
         self.power = self.dict['power']
@@ -443,7 +443,7 @@ class GetCoin:
     def release_coins(self):
         print('coins released')
         self.coins = []
-        for i in range(10):
+        for i in range(5):
             new_coin = MovingCoin([self.width, self.height], 'coin')
             self.coins.append(new_coin)
 
