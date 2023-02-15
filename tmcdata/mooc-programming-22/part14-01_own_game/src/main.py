@@ -88,6 +88,8 @@ class BonusCoin(MovingCoin):
             # {'power': 'speed up', 'user_prompt': 'Super Fast Ghosts! Be Careful!'},
             # {'power': 'cupcake', 'user_prompt': 'Eat the Cupcakes!'},
             # {'power': 'add monsters', 'user_prompt': 'Adding 5 Monsters'},
+            {'power': 'add health', 'user_prompt': 'Adding 10 Health Points'},
+
 
         ])
         self.power = self.dict['power']
@@ -118,6 +120,9 @@ class Robot(ScreenObject):
 
     def take_health(self):
         self.health -= 1
+
+    def add_health(self):
+        self.health += 2
 
     def move_bot(self):
         if self.to_right and self.x <= self.screen_width - self.width:
@@ -349,6 +354,10 @@ class GetCoin:
                         self.game_over = True
                     self.release_monsters()
 
+    def add_health(self):
+        if self.timer.frame_counter % 70 == 0:
+            self.bot.add_health()
+
     def add_extra_monsters(self):
         if self.timer.frame_counter % 70 == 0:
             self.monster_count += 1
@@ -414,6 +423,8 @@ class GetCoin:
                 self.toggle_cupcake(True)
             if self.bonus_coin.power == 'add monsters':
                 self.add_extra_monsters()
+            if self.bonus_coin.power == 'add health':
+                self.add_health()
 
             # end bonus round
             if self.timer.seconds == 72:
