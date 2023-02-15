@@ -88,9 +88,8 @@ class BonusCoin(MovingCoin):
             # {'power': 'speed up', 'user_prompt': 'Super Fast Ghosts! Be Careful!'},
             # {'power': 'cupcake', 'user_prompt': 'Eat the Cupcakes!'},
             # {'power': 'add monsters', 'user_prompt': 'Adding 5 Monsters'},
-            {'power': 'add health', 'user_prompt': 'Adding 10 Health Points'},
-
-
+            # {'power': 'add health', 'user_prompt': 'Adding 10 Health Points'},
+            {'power': 'take health', 'user_prompt': 'Taking 10 Health Points'},
         ])
         self.power = self.dict['power']
         self.user_prompt = self.dict['user_prompt']
@@ -358,6 +357,11 @@ class GetCoin:
         if self.timer.frame_counter % 70 == 0:
             self.bot.add_health()
 
+    def take_health(self):
+        if self.timer.frame_counter % 70 == 0:
+            for i in range(2):
+                self.bot.take_health()
+
     def add_extra_monsters(self):
         if self.timer.frame_counter % 70 == 0:
             self.monster_count += 1
@@ -425,6 +429,8 @@ class GetCoin:
                 self.add_extra_monsters()
             if self.bonus_coin.power == 'add health':
                 self.add_health()
+            if self.bonus_coin.power == 'take health':
+                self.take_health()
 
             # end bonus round
             if self.timer.seconds == 72:
