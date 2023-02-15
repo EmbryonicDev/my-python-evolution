@@ -468,7 +468,7 @@ class GetCoin:
         self.monsters = []
         bot_y = self.bot.y
         for i in range(self.monster_count):
-            monster = MovingObject([self.width, self.height], 'monster')
+            monster = MovingMonster([self.width, self.height], 'monster')
             print('monster height: ', monster.height)
             monster.get_coords(bot_y)
             self.monsters.append(monster)
