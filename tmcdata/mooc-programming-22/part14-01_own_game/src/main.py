@@ -354,6 +354,10 @@ class GetCoin:
                         self.game_over = True
                     self.release_monsters()
 
+    def add_health(self):
+        if self.timer.frame_counter % 70 == 0:
+            self.bot.add_health()
+
     def add_extra_monsters(self):
         if self.timer.frame_counter % 70 == 0:
             self.monster_count += 1
