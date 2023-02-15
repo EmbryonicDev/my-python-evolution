@@ -332,14 +332,18 @@ class GetCoin:
             monster.move_object()
 
             if monster.hit_robot(self.bot.x, self.bot.y):
-                self.bot.take_health()
-                # End game when score hits 0
-                if self.bot.health <= 0:
-                    self.bot.health = 0
-                    self.game_over = True
-
-                print('health remaining: ', self.bot.health)
-                self.release_monsters()
+                # if cupcake BonusCoin was caught, make them edible
+                if self.bonus_coin.caught and self.bonus_coin.power == 'cupcake':
+                    monster.toggle_visibility()
+                    monster.freeze()
+                    self.monster_count -= 1
+                else:
+                    self.bot.take_health()
+                    # End game when score hits 0
+                    if self.bot.health <= 0:
+                        self.bot.health = 0
+                        self.game_over = True
+                    self.release_monsters()
 
     def toggle_cupcake(self, cupcake: bool):
         for monster in self.monsters:
