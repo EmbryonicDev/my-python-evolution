@@ -357,6 +357,11 @@ class GetCoin:
         if self.timer.frame_counter % 70 == 0:
             self.bot.add_health()
 
+    def take_health(self):
+        if self.timer.frame_counter % 70 == 0:
+            for i in range(2):
+                self.bot.take_health()
+
     def add_extra_monsters(self):
         if self.timer.frame_counter % 70 == 0:
             self.monster_count += 1
