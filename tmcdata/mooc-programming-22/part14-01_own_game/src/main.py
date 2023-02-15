@@ -349,6 +349,11 @@ class GetCoin:
                         self.game_over = True
                     self.release_monsters()
 
+    def add_extra_monsters(self):
+        if self.timer.frame_counter % 70 == 0:
+            self.monster_count += 1
+            self.release_monsters()
+
     def toggle_cupcake(self, cupcake: bool):
         for monster in self.monsters:
             monster.toggle_cupcake(cupcake)
