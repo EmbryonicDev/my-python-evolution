@@ -429,6 +429,8 @@ class GetCoin:
                 self.add_extra_monsters()
             if self.bonus_coin.power == 'add health':
                 self.add_health()
+            if self.bonus_coin.power == 'take health':
+                self.take_health()
 
             # end bonus round
             if self.timer.seconds == 72:
