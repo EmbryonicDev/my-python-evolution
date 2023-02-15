@@ -16,6 +16,7 @@ print door on opposite side of bot
 increase accuracy of object contact with robot
                     if (object.y >= height-(robot.get_height()+rock.get_height()) and
                         x-robot.get_width() <= object.x <= x+robot.get_width()):
+Make separate class for moving monsters & move appropriate methods from MovingObject to MovingMonster
 
 
 
