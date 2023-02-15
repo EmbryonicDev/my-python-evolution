@@ -338,6 +338,10 @@ class GetCoin:
                 print('health remaining: ', self.bot.health)
                 self.release_monsters()
 
+    def toggle_cupcake(self, cupcake: bool):
+        for monster in self.monsters:
+            monster.toggle_cupcake(cupcake)
+
     def speed_up_monsters(self):
         for monster in self.monsters:
             monster.speed_up()
