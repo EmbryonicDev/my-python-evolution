@@ -88,6 +88,8 @@ class BonusCoin(MovingCoin):
             # {'power': 'speed up', 'user_prompt': 'Super Fast Ghosts! Be Careful!'},
             # {'power': 'cupcake', 'user_prompt': 'Eat the Cupcakes!'},
             # {'power': 'add monsters', 'user_prompt': 'Adding 5 Monsters'},
+            {'power': 'add health', 'user_prompt': 'Adding 10 Health Points'},
+
 
         ])
         self.power = self.dict['power']
