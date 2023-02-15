@@ -83,12 +83,13 @@ class BonusCoin(MovingCoin):
         MovingCoin.__init__(self, screen_dimensions, image)
         # ['eat', 'kill', 'freeze', 'add health', 'multiply', 'invincible']
 
-        self.dict = random.choice(
-            [
-                # {'power': 'freeze', 'user_prompt': 'Ghosts are Frozen'},
-                # {'power': 'speed up', 'user_prompt': 'Super Fast Ghosts! Be Careful!'},
-                {'power': 'cupcake', 'user_prompt': 'Eat the Cupcakes!'}
-            ])
+        self.dict = random.choice([
+            # {'power': 'freeze', 'user_prompt': 'Ghosts are Frozen'},
+            # {'power': 'speed up', 'user_prompt': 'Super Fast Ghosts! Be Careful!'},
+            # {'power': 'cupcake', 'user_prompt': 'Eat the Cupcakes!'},
+            {'power': 'add monsters', 'user_prompt': 'Added 5 monsters'},
+
+        ])
         self.power = self.dict['power']
         self.user_prompt = self.dict['user_prompt']
         self.freeze()
@@ -348,6 +349,11 @@ class GetCoin:
                         self.game_over = True
                     self.release_monsters()
 
+    def add_extra_monsters(self):
+        if self.timer.frame_counter % 70 == 0:
+            self.monster_count += 1
+            self.release_monsters()
+
     def toggle_cupcake(self, cupcake: bool):
         for monster in self.monsters:
             monster.toggle_cupcake(cupcake)
@@ -406,6 +412,9 @@ class GetCoin:
                 self.speed_up_monsters()
             if self.bonus_coin.power == 'cupcake':
                 self.toggle_cupcake(True)
+            if self.bonus_coin.power == 'add monsters':
+                self.add_extra_monsters()
+
             # end bonus round
             if self.timer.seconds == 72:
                 self.timer.clear_timer()
