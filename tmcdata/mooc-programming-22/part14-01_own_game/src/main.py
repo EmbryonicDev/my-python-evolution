@@ -329,8 +329,6 @@ class GetCoin:
                 self.bot.add_point()
                 coin.catch_coin()
                 coin.toggle_visibility()
-                print('points: ', self.bot.points)
-                print('level: ', self.level)
 
     def move_monster(self):
         for monster in self.monsters:
@@ -458,7 +456,6 @@ class GetCoin:
             blit_text()
 
     def release_coins(self):
-        print('coins released')
         self.coins = []
         for i in range(5):
             new_coin = MovingCoin([self.width, self.height], 'coin')
@@ -469,7 +466,6 @@ class GetCoin:
         bot_y = self.bot.y
         for i in range(self.monster_count):
             monster = MovingMonster([self.width, self.height], 'monster')
-            print('monster height: ', monster.height)
             monster.get_coords(bot_y)
             self.monsters.append(monster)
 
