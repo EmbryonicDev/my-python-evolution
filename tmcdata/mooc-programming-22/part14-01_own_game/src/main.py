@@ -60,6 +60,9 @@ class MovingObject(ScreenObject):
         self.x_speed, self.y_speed = random.choice(
             self.choices), random.choice(self.choices)
 
+    def toggle_cupcake(self, cupcake: bool):
+        self.image = get_image('cupcake' if cupcake else 'monster')
+
 
 class MovingCoin(MovingObject):
     def __init__(self, screen_dimensions, image):
