@@ -76,7 +76,12 @@ class BonusCoin(MovingCoin):
         # ['eat', 'kill', 'freeze', 'add health', 'multiply', 'invincible']
 
         self.dict = random.choice(
-            [{'power': 'freeze', 'user_prompt': 'Ghosts are Frozen'}, {'power': 'speed', 'user_prompt': 'Supercharged Ghosts! Be Careful'}])
+            [
+                # {'power': 'freeze', 'user_prompt': 'Ghosts are Frozen'},
+                # {'power': 'speed up', 'user_prompt': 'Super Fast Ghosts! Be Careful!'},
+                {'power': 'cupcake', 'user_prompt': 'Eat the Cupcakes! Bitch!'}
+
+            ])
         self.power = self.dict['power']
         self.user_prompt = self.dict['user_prompt']
         self.freeze()
