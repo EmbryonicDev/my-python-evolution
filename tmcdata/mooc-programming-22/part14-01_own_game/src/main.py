@@ -401,11 +401,13 @@ class GetCoin:
                 self.freeze_monsters()
             if self.bonus_coin.power == 'speed up':
                 self.speed_up_monsters()
-
+            if self.bonus_coin.power == 'cupcake':
+                self.toggle_cupcake(True)
             # end bonus round
             if self.timer.seconds == 72:
                 self.timer.clear_timer()
                 self.unfreeze_monsters()
+                self.toggle_cupcake(False)
                 self.bonus_coin = self.get_bonus_coin()
 
         # bonus coin to window
