@@ -412,6 +412,9 @@ class GetCoin:
                 self.speed_up_monsters()
             if self.bonus_coin.power == 'cupcake':
                 self.toggle_cupcake(True)
+            if self.bonus_coin.power == 'add monsters':
+                self.add_extra_monsters()
+
             # end bonus round
             if self.timer.seconds == 72:
                 self.timer.clear_timer()
