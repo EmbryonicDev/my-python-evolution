@@ -121,6 +121,9 @@ class Robot(ScreenObject):
     def take_health(self):
         self.health -= 1
 
+    def add_health(self):
+        self.health += 2
+
     def move_bot(self):
         if self.to_right and self.x <= self.screen_width - self.width:
             self.x += self.speed
