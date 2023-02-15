@@ -49,16 +49,21 @@ class MovingObject(ScreenObject):
         return (bot_x <= self.x <= bot_x + self.width and
                 bot_y <= self.y <= bot_y + self.height)
 
-    def speed_up(self):
-        self.x_speed = 14 if self.x_speed > 0 else -14
-        self.y_speed = 14 if self.y_speed > 0 else -14
-
     def freeze(self):
         self.x_speed, self.y_speed = 0, 0
 
     def unfreeze(self):
         self.x_speed, self.y_speed = random.choice(
             self.choices), random.choice(self.choices)
+
+
+class MovingMonster(MovingObject):
+    def __init__(self, screen_dimensions: list, image: str):
+        MovingObject.__init__(self, screen_dimensions, image)
+
+    def speed_up(self):
+        self.x_speed = 14 if self.x_speed > 0 else -14
+        self.y_speed = 14 if self.y_speed > 0 else -14
 
     def toggle_cupcake(self, cupcake: bool):
         self.image = get_image('cupcake' if cupcake else 'monster')
@@ -463,7 +468,7 @@ class GetCoin:
         self.monsters = []
         bot_y = self.bot.y
         for i in range(self.monster_count):
-            monster = MovingObject([self.width, self.height], 'monster')
+            monster = MovingMonster([self.width, self.height], 'monster')
             print('monster height: ', monster.height)
             monster.get_coords(bot_y)
             self.monsters.append(monster)
