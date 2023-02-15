@@ -49,6 +49,10 @@ class MovingObject(ScreenObject):
         return (bot_x <= self.x <= bot_x + self.width and
                 bot_y <= self.y <= bot_y + self.height)
 
+    def speed_up(self):
+        self.x_speed = 14 if self.x_speed > 0 else -14
+        self.y_speed = 14 if self.y_speed > 0 else -14
+
     def freeze(self):
         self.x_speed, self.y_speed = 0, 0
 
@@ -330,6 +334,10 @@ class GetCoin:
                 print('health remaining: ', self.bot.health)
                 self.release_monsters()
 
+    def speed_up_monsters(self):
+        for monster in self.monsters:
+            monster.speed_up()
+
     def freeze_monsters(self):
         for monster in self.monsters:
             monster.freeze()
@@ -376,6 +384,8 @@ class GetCoin:
         if self.bonus_coin.caught:
             if self.bonus_coin.power == 'freeze':
                 self.freeze_monsters()
+            if self.bonus_coin.power == 'speed up':
+                self.speed_up_monsters()
 
             # end bonus round
             if self.timer.seconds == 72:
@@ -437,6 +447,7 @@ class GetCoin:
         bot_y = self.bot.y
         for i in range(self.monster_count):
             monster = MovingObject([self.width, self.height], 'monster')
+            print('monster height: ', monster.height)
             monster.get_coords(bot_y)
             self.monsters.append(monster)
 
