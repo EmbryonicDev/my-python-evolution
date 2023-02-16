@@ -241,7 +241,7 @@ class GetCoin:
                 exit()
 
     def draw_window(self):
-        self.window.fill((255, 0, 0))
+        self.window.fill((204, 255, 255))
 
         # Info board black rectangle
         pygame.draw.rect(self.window, (0, 0, 0),
