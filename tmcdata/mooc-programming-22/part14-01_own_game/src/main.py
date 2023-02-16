@@ -452,7 +452,7 @@ class GetCoin:
 
         # text when ball is on screen
         game_text = self.heading_font.render(
-            "Catch Bonus Ball", True, (255, 255, 255))
+            "Trick or Treat???", True, (255, 255, 255))
 
         def blit_text():
             return self.window.blit(game_text, (self.width*.5-(game_text.get_width()/2),
