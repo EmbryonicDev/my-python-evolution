@@ -376,11 +376,6 @@ class GetCoin:
         return BonusCoin(
             [self.width, self.height], 'bonus_coin')
 
-    def get_color(self):
-        if self.timer.return_on_frame(60):
-            self.random_color = (random.randint(
-                0, 255), random.randint(0, 255), random.randint(0, 255))
-
     def handle_bonus_ball(self):
         # bonus coin to screen
         if self.timer.seconds == 60:
@@ -484,6 +479,25 @@ class GetCoin:
                 self.bonus_coin.user_prompt, True, (255, 255, 255))
             blit_text_bg()
             blit_text()
+
+    # handle_bonus_text - helper function
+    def get_color(self):
+        colors = [(0, 0, 0), (0, 0, 0)]
+        if self.bonus_coin.x > 0 and not self.bonus_coin.caught:
+            colors = [(random.randint(
+                0, 255), random.randint(0, 255), random.randint(0, 255)), (0, 0, 0)]
+
+        if self.bonus_coin.caught:
+            if self.bonus_coin.power in ['cupcake', 'add health', 'freeze']:
+                colors = [(0, 255, 0), (0, 0, 255)]
+            else:
+                colors = [(255, 0, 0), (255, 188, 0)]
+
+        if self.timer.return_on_frame(30):
+            if self.timer.seconds % 2 == 0:
+                self.random_color = colors[0]
+            else:
+                self.random_color = colors[1]
 
     def release_coins(self):
         self.coins = []
