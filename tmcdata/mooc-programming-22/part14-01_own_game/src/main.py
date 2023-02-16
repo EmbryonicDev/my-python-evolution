@@ -148,7 +148,7 @@ class Timer:
 
     def add_counter(self):
         self.frame_counter += 1
-        if self.frame_counter % 60 == 0:
+        if self.return_on_frame(60):
             self.update_seconds()
 
     def update_seconds(self):
@@ -156,6 +156,10 @@ class Timer:
         self.seconds += 1
         if self.seconds == 73:
             self.clear_timer()
+
+    def return_on_frame(self, divisor):
+        if self.frame_counter % divisor == 0:
+            return True
 
 
 class GetCoin:
@@ -353,7 +357,7 @@ class GetCoin:
                     self.release_monsters()
 
     def take_health(self):
-        if self.timer.frame_counter % 70 == 0:
+        if self.timer.return_on_frame(70):
             for i in range(2):
                 self.bot.take_health()
 
@@ -373,7 +377,7 @@ class GetCoin:
             [self.width, self.height], 'bonus_coin')
 
     def get_color(self):
-        if self.timer.frame_counter % 60 == 0:
+        if self.timer.return_on_frame(60):
             self.random_color = (random.randint(
                 0, 255), random.randint(0, 255), random.randint(0, 255))
 
@@ -401,7 +405,7 @@ class GetCoin:
 
         # helper functions
         def add_health():
-            if self.timer.frame_counter % 70 == 0:
+            if self.timer.return_on_frame(70):
                 self.bot.add_health()
 
         def speed_up_monsters():
@@ -413,7 +417,7 @@ class GetCoin:
                 monster.toggle_cupcake(cupcake)
 
         def add_extra_monsters():
-            if self.timer.frame_counter % 70 == 0:
+            if self.timer.return_on_frame(70):
                 self.monster_count += 1
                 self.release_monsters()
 
