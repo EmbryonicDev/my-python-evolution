@@ -352,27 +352,10 @@ class GetCoin:
                         self.game_over = True
                     self.release_monsters()
 
-    def add_health(self):
-        if self.timer.frame_counter % 70 == 0:
-            self.bot.add_health()
-
     def take_health(self):
         if self.timer.frame_counter % 70 == 0:
             for i in range(2):
                 self.bot.take_health()
-
-    def add_extra_monsters(self):
-        if self.timer.frame_counter % 70 == 0:
-            self.monster_count += 1
-            self.release_monsters()
-
-    def toggle_cupcake(self, cupcake: bool):
-        for monster in self.monsters:
-            monster.toggle_cupcake(cupcake)
-
-    def speed_up_monsters(self):
-        for monster in self.monsters:
-            monster.speed_up()
 
     def freeze_monsters(self):
         for monster in self.monsters:
@@ -416,18 +399,36 @@ class GetCoin:
             self.bonus_coin.toggle_visibility()
             self.timer.seconds = 66
 
+        # helper functions
+        def add_health():
+            if self.timer.frame_counter % 70 == 0:
+                self.bot.add_health()
+
+        def speed_up_monsters():
+            for monster in self.monsters:
+                monster.speed_up()
+
+        def toggle_cupcake(cupcake: bool):
+            for monster in self.monsters:
+                monster.toggle_cupcake(cupcake)
+
+        def add_extra_monsters():
+            if self.timer.frame_counter % 70 == 0:
+                self.monster_count += 1
+                self.release_monsters()
+
         # if coin is caught
         if self.bonus_coin.caught:
             if self.bonus_coin.power == 'freeze':
                 self.freeze_monsters()
             if self.bonus_coin.power == 'speed up':
-                self.speed_up_monsters()
+                speed_up_monsters()
             if self.bonus_coin.power == 'cupcake':
-                self.toggle_cupcake(True)
+                toggle_cupcake(True)
             if self.bonus_coin.power == 'add monsters':
-                self.add_extra_monsters()
+                add_extra_monsters()
             if self.bonus_coin.power == 'add health':
-                self.add_health()
+                add_health()
             if self.bonus_coin.power == 'take health':
                 self.take_health()
 
@@ -435,7 +436,7 @@ class GetCoin:
             if self.timer.seconds == 72:
                 self.timer.clear_timer()
                 self.unfreeze_monsters()
-                self.toggle_cupcake(False)
+                toggle_cupcake(False)
                 self.bonus_coin = self.get_bonus_coin()
 
         # bonus coin to window
