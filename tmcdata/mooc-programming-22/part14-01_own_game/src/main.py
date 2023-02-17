@@ -459,39 +459,41 @@ class GetCoin:
 
         # text when no ball / no active bonus
         # bonus record text
+        line_one_height = self.total_height - self.bonus_board + 10
+        line_two_height = line_one_height+40
         if self.bonus_coin.x < 0 and not self.bonus_coin.caught:
             # freeze count
             game_text = self.get_text(
                 self.game_font, 'Freeze', self.bonus_record['freeze'], (0, 255, 0))
             self.window.blit(
-                game_text, (25, self.total_height - self.bonus_board + 10))
+                game_text, (25, line_one_height))
             # cupcake count
             game_text = self.get_text(
                 self.game_font, 'Cupcakes', self.bonus_record['cupcake'], (0, 255, 0))
             self.window.blit(
-                game_text, (self.width*.5-(game_text.get_width()/2), self.total_height - self.bonus_board + 10))
+                game_text, (self.width*.5-(game_text.get_width()/2), line_one_height))
             # add health count
             game_text = self.get_text(
                 self.game_font, '+ Health', self.bonus_record['add health'], (0, 255, 0))
             self.window.blit(
                 game_text, (self.width-(game_text.get_width()+25),
-                            self.total_height - self.bonus_board + 10))
+                            line_one_height))
             # speed count
             game_text = self.get_text(
                 self.game_font, 'Fast', self.bonus_record['speed up'], (255, 0, 0))
             self.window.blit(
-                game_text, (25, self.total_height - self.bonus_board+50))
+                game_text, (25, line_two_height))
             # add monsters count
             game_text = self.get_text(
                 self.game_font, '+ Monsters', self.bonus_record['add monsters'], (255, 0, 0))
             self.window.blit(
-                game_text, (self.width*.5-(game_text.get_width()/2), self.total_height - self.bonus_board+50))
+                game_text, (self.width*.5-(game_text.get_width()/2), line_two_height))
             # take health count
             game_text = self.get_text(
                 self.game_font, '- Health', self.bonus_record['take health'], (255, 0, 0))
             self.window.blit(
                 game_text, (self.width-(game_text.get_width()+25),
-                            self.total_height - self.bonus_board+50))
+                            line_two_height))
 
         # text when ball is on screen
         game_text = self.heading_font.render(
