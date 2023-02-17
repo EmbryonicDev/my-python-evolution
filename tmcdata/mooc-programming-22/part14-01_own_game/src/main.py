@@ -392,8 +392,8 @@ class GetCoin:
 
         # bonus coin caught by Robot
         if self.bonus_coin.hit_robot(self.bot.x, self.bot.y):
-            # Hide coin when caught
             print('caught bonus coin: ', self.bonus_coin.power)
+            # Hide coin when caught
             self.bonus_coin.catch_coin()
             self.bonus_coin.toggle_visibility()
             self.timer.seconds = 66
