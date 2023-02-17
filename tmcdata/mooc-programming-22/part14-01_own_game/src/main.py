@@ -170,7 +170,7 @@ class GetCoin:
         self.width = 1000
         self.height = 900
         self.info_board = 100
-        self.bonus_board = 270
+        self.bonus_board = 100
         self.total_height = self.height+self.info_board+self.bonus_board
         self.window = pygame.display.set_mode(
             (self.width, self.height+self.info_board+self.bonus_board))
