@@ -28,6 +28,7 @@ class ScreenObject:
                   if bot_y > self.screen_height / 2
                   else random.randint(self.screen_height*0.8,
                                       self.screen_height-self.height))
+        self.update_footprint()
 
     def update_footprint(self):
         self.footprint = self.image.get_rect(x=self.x, y=self.y)
