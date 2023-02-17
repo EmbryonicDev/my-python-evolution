@@ -139,8 +139,9 @@ class Robot(ScreenObject):
             self.y -= self.speed
 
         self.update_footprint()
-        return (self.x <= door_x <= self.x + self.width and
-                self.y <= door_y <= self.y + self.height)
+
+    def hit_door(self, door_footprint):
+        return self.footprint.colliderect(door_footprint)
 
 
 class Timer:
