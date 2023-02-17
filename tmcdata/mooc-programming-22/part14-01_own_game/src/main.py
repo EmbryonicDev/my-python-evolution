@@ -470,7 +470,9 @@ class GetCoin:
         # bonus record text
         line_one_height = self.total_height - self.bonus_board + 10
         line_two_height = line_one_height+40
-        if self.bonus_coin.x < 0 and not self.bonus_coin.caught:
+        if ((self.bonus_coin.x < 0 and
+            not self.bonus_coin.caught) or
+                self.game_over):
             # freeze count
             game_text = self.get_text(
                 self.game_font, 'Freeze', self.bonus_record['freeze'], (0, 255, 0))
@@ -512,8 +514,8 @@ class GetCoin:
         def blit_text():
             return self.window.blit(game_text, (self.width*.5-(game_text.get_width()/2),
                                                 self.total_height-self.bonus_board*0.5-game_text.get_height()/2))
-        # background rectangle behind bonus board text
 
+        # background rectangle behind bonus board text
         def blit_text_bg():
             return pygame.draw.rect(self.window, (0, 0, 0),
                                     (self.width/2-game_text.get_width()/2,
@@ -523,17 +525,19 @@ class GetCoin:
 
         # if bonus ball is on screen, prompt user to catch it
         if self.bonus_coin.x > -1:
-            # rectangle behind bonus text
-            blit_text_bg()
-            # game text to window
-            blit_text()
+            if not self.game_over:
+                # rectangle behind bonus text
+                blit_text_bg()
+                # game text to window
+                blit_text()
 
         # display user prompt based on bonus_coin.power
         if self.bonus_coin.caught:
             game_text = self.heading_font.render(
                 self.bonus_coin.user_prompt, True, (255, 255, 255))
-            blit_text_bg()
-            blit_text()
+            if not self.game_over:
+                blit_text_bg()
+                blit_text()
 
     # get text for variable
     def get_text(self, font, text, variable, color: tuple):
