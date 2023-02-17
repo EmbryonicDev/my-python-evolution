@@ -457,6 +457,42 @@ class GetCoin:
         pygame.draw.rect(self.window, (self.random_color),
                          (0, self.height+self.info_board, self.width, self.height + self.info_board))
 
+        # text when no ball / no active bonus
+        # bonus record text
+        if self.bonus_coin.x < 0 and not self.bonus_coin.caught:
+            # freeze count
+            game_text = self.get_text(
+                self.game_font, 'Freeze', self.bonus_record['freeze'], (0, 255, 0))
+            self.window.blit(
+                game_text, (25, self.total_height - self.bonus_board + 10))
+            # cupcake count
+            game_text = self.get_text(
+                self.game_font, 'Cupcakes', self.bonus_record['cupcake'], (0, 255, 0))
+            self.window.blit(
+                game_text, (self.width*.5-(game_text.get_width()/2), self.total_height - self.bonus_board + 10))
+            # add health count
+            game_text = self.get_text(
+                self.game_font, '+ Health', self.bonus_record['add health'], (0, 255, 0))
+            self.window.blit(
+                game_text, (self.width-(game_text.get_width()+25),
+                            self.total_height - self.bonus_board + 10))
+            # speed count
+            game_text = self.get_text(
+                self.game_font, 'Fast', self.bonus_record['speed up'], (255, 0, 0))
+            self.window.blit(
+                game_text, (25, self.total_height - self.bonus_board+50))
+            # add monsters count
+            game_text = self.get_text(
+                self.game_font, '+ Monsters', self.bonus_record['add monsters'], (255, 0, 0))
+            self.window.blit(
+                game_text, (self.width*.5-(game_text.get_width()/2), self.total_height - self.bonus_board+50))
+            # take health count
+            game_text = self.get_text(
+                self.game_font, '- Health', self.bonus_record['take health'], (255, 0, 0))
+            self.window.blit(
+                game_text, (self.width-(game_text.get_width()+25),
+                            self.total_height - self.bonus_board+50))
+
         # text when ball is on screen
         game_text = self.heading_font.render(
             "Trick or Treat???", True, (255, 255, 255))
