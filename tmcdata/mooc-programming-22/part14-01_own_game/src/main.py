@@ -192,6 +192,8 @@ class GetCoin:
         self.level = 1
         self.monster_count = 1
         self.monsters = []
+        self.bonus_record = {'freeze': 0, 'speed up': 0, 'cupcake': 0,
+                             'add monsters': 0, 'add health': 0, 'take health': 0}
         self.bonus_coin = self.get_bonus_coin()
         self.bot = Robot([self.width, self.height], 'robot')
         self.release_coins()
