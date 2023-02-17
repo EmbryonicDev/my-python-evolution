@@ -179,13 +179,14 @@ class GetCoin:
         self.info_board = 100
         self.bonus_board = 100
         self.total_height = self.height+self.info_board+self.bonus_board
+        self.window_dimensions = (self.width, self.height)
         self.window = pygame.display.set_mode(
-            (self.width, self.height+self.info_board+self.bonus_board))
+            (self.width, self.total_height))
         pygame.display.set_caption('Coin Chaser')
 
         self.game_font = pygame.font.SysFont('Arial', 36)
         self.heading_font = pygame.font.SysFont('Arial', 72)
-        self.door = ScreenObject([self.width, self.height], 'door')
+        self.door = ScreenObject(self.window_dimensions, 'door')
         self.clock = pygame.time.Clock()
         self.new_game()
         self.main_loop()
@@ -202,7 +203,7 @@ class GetCoin:
         self.bonus_record = {'freeze': 0, 'speed up': 0, 'cupcake': 0,
                              'add monsters': 0, 'add health': 0, 'take health': 0}
         self.bonus_coin = self.get_bonus_coin()
-        self.bot = Robot([self.width, self.height], 'robot')
+        self.bot = Robot(self.window_dimensions, 'robot')
         self.release_coins()
         self.release_monsters()
 
@@ -383,7 +384,7 @@ class GetCoin:
 
     def get_bonus_coin(self):
         return BonusCoin(
-            [self.width, self.height], 'bonus_coin')
+            self.window_dimensions, 'bonus_coin')
 
     def handle_bonus_ball(self):
         # bonus coin to screen
@@ -566,14 +567,14 @@ class GetCoin:
     def release_coins(self):
         self.coins = []
         for i in range(5):
-            new_coin = MovingCoin([self.width, self.height], 'coin')
+            new_coin = MovingCoin(self.window_dimensions, 'coin')
             self.coins.append(new_coin)
 
     def release_monsters(self):
         self.monsters = []
         bot_y = self.bot.y
         for i in range(self.monster_count):
-            monster = MovingMonster([self.width, self.height], 'monster')
+            monster = MovingMonster(self.window_dimensions, 'monster')
             monster.get_coords(bot_y)
             self.monsters.append(monster)
 
