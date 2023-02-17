@@ -50,7 +50,7 @@ class MovingObject(ScreenObject):
         self.x += self.x_speed
         self.y += self.y_speed
 
-    def hit_robot(self, bot_x: str, bot_y: str):
+        self.update_footprint()
         return (bot_x <= self.x <= bot_x + self.width and
                 bot_y <= self.y <= bot_y + self.height)
 
