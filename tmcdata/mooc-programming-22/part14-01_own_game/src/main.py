@@ -449,6 +449,10 @@ class GetCoin:
         # new color every second
         self.get_color()
 
+        # dividing line
+        pygame.draw.line(self.window, (204, 0, 204),
+                         (0, self.total_height-self.bonus_board), (self.width, self.total_height-self.bonus_board), 8)
+
         # Info board rectangle
         pygame.draw.rect(self.window, (self.random_color),
                          (0, self.height+self.info_board, self.width, self.height + self.info_board))
