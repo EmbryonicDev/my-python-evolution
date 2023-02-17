@@ -20,6 +20,7 @@ increase accuracy of object contact with robot
 move key commands above text for: points/level/health, + color = blue                   
 change color of game over / game paused text     
 use get_text() for draw window elements
+-Display bonus-board on game over / make sure bgc is black
 
 
 
