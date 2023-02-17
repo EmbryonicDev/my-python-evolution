@@ -29,6 +29,9 @@ class ScreenObject:
                   else random.randint(self.screen_height*0.8,
                                       self.screen_height-self.height))
 
+    def update_footprint(self):
+        self.footprint = self.image.get_rect(x=self.x, y=self.y)
+
 
 class MovingObject(ScreenObject):
     def __init__(self, screen_dimensions: list, image: str):
