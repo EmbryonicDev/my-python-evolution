@@ -170,7 +170,7 @@ class GetCoin:
         self.width = 1000
         self.height = 900
         self.info_board = 100
-        self.bonus_board = 135
+        self.bonus_board = 100
         self.total_height = self.height+self.info_board+self.bonus_board
         self.window = pygame.display.set_mode(
             (self.width, self.height+self.info_board+self.bonus_board))
@@ -187,12 +187,14 @@ class GetCoin:
         self.timer = Timer()
         self.random_color = (random.randint(
             0, 255), random.randint(0, 255), random.randint(0, 255))
-        self.bonus_coin = self.get_bonus_coin()
         self.game_over = False
         self.game_paused = False
         self.level = 1
         self.monster_count = 1
         self.monsters = []
+        self.bonus_record = {'freeze': 0, 'speed up': 0, 'cupcake': 0,
+                             'add monsters': 0, 'add health': 0, 'take health': 0}
+        self.bonus_coin = self.get_bonus_coin()
         self.bot = Robot([self.width, self.height], 'robot')
         self.release_coins()
         self.release_monsters()
@@ -392,10 +394,11 @@ class GetCoin:
 
         # bonus coin caught by Robot
         if self.bonus_coin.hit_robot(self.bot.x, self.bot.y):
-            # Hide coin when caught
             print('caught bonus coin: ', self.bonus_coin.power)
+            # Hide coin when caught
             self.bonus_coin.catch_coin()
             self.bonus_coin.toggle_visibility()
+            self.bonus_record[self.bonus_coin.power] += 1
             self.timer.seconds = 66
 
         # helper functions
@@ -446,20 +449,68 @@ class GetCoin:
         # new color every second
         self.get_color()
 
+        # dividing line
+        pygame.draw.line(self.window, (204, 0, 204),
+                         (0, self.total_height-self.bonus_board), (self.width, self.total_height-self.bonus_board), 8)
+
         # Info board rectangle
         pygame.draw.rect(self.window, (self.random_color),
                          (0, self.height+self.info_board, self.width, self.height + self.info_board))
+
+        # text when no ball / no active bonus
+        # bonus record text
+        line_one_height = self.total_height - self.bonus_board + 10
+        line_two_height = line_one_height+40
+        if self.bonus_coin.x < 0 and not self.bonus_coin.caught:
+            # freeze count
+            game_text = self.get_text(
+                self.game_font, 'Freeze', self.bonus_record['freeze'], (0, 255, 0))
+            self.window.blit(
+                game_text, (25, line_one_height))
+            # cupcake count
+            game_text = self.get_text(
+                self.game_font, 'Cupcakes', self.bonus_record['cupcake'], (0, 255, 0))
+            self.window.blit(
+                game_text, (self.width*.5-(game_text.get_width()/2), line_one_height))
+            # add health count
+            game_text = self.get_text(
+                self.game_font, '+ Health', self.bonus_record['add health'], (0, 255, 0))
+            self.window.blit(
+                game_text, (self.width-(game_text.get_width()+25),
+                            line_one_height))
+            # speed count
+            game_text = self.get_text(
+                self.game_font, 'Fast', self.bonus_record['speed up'], (255, 0, 0))
+            self.window.blit(
+                game_text, (25, line_two_height))
+            # add monsters count
+            game_text = self.get_text(
+                self.game_font, '+ Monsters', self.bonus_record['add monsters'], (255, 0, 0))
+            self.window.blit(
+                game_text, (self.width*.5-(game_text.get_width()/2), line_two_height))
+            # take health count
+            game_text = self.get_text(
+                self.game_font, '- Health', self.bonus_record['take health'], (255, 0, 0))
+            self.window.blit(
+                game_text, (self.width-(game_text.get_width()+25),
+                            line_two_height))
 
         # text when ball is on screen
         game_text = self.heading_font.render(
             "Trick or Treat???", True, (255, 255, 255))
 
+        # bonus board text if ball / bonus state is active
         def blit_text():
             return self.window.blit(game_text, (self.width*.5-(game_text.get_width()/2),
-                                                self.height + self.info_board + (self.info_board*0.35)))
+                                                self.total_height-self.bonus_board*0.5-game_text.get_height()/2))
+        # background rectangle behind bonus board text
 
         def blit_text_bg():
-            return pygame.draw.rect(self.window, (0, 0, 0), (self.width/2-game_text.get_width()/2, self.total_height - self.bonus_board/2 - game_text.get_height()/2, game_text.get_width(), game_text.get_height()))
+            return pygame.draw.rect(self.window, (0, 0, 0),
+                                    (self.width/2-game_text.get_width()/2,
+                                     self.total_height-self.bonus_board*0.5-game_text.get_height()/2,
+                                     game_text.get_width(),
+                                     game_text.get_height()))
 
         # if bonus ball is on screen, prompt user to catch it
         if self.bonus_coin.x > -1:
@@ -468,11 +519,17 @@ class GetCoin:
             # game text to window
             blit_text()
 
+        # display user prompt based on bonus_coin.power
         if self.bonus_coin.caught:
             game_text = self.heading_font.render(
                 self.bonus_coin.user_prompt, True, (255, 255, 255))
             blit_text_bg()
             blit_text()
+
+    # get text for variable
+    def get_text(self, font, text, variable, color: tuple):
+        return font.render(
+            f"{text}: {variable}", True, color)
 
     # handle_bonus_text - helper function
     def get_color(self):
