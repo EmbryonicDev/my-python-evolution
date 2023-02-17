@@ -501,10 +501,14 @@ class GetCoin:
 
         def blit_text():
             return self.window.blit(game_text, (self.width*.5-(game_text.get_width()/2),
-                                                self.height + self.info_board + (self.info_board*0.35)))
+                                                self.total_height-self.bonus_board*0.5-game_text.get_height()/2))
 
         def blit_text_bg():
-            return pygame.draw.rect(self.window, (0, 0, 0), (self.width/2-game_text.get_width()/2, self.total_height - self.bonus_board/2 - game_text.get_height()/2, game_text.get_width(), game_text.get_height()))
+            return pygame.draw.rect(self.window, (0, 0, 0),
+                                    (self.width/2-game_text.get_width()/2,
+                                     self.total_height-self.bonus_board*0.5-game_text.get_height()/2,
+                                     game_text.get_width(),
+                                     game_text.get_height()))
 
         # if bonus ball is on screen, prompt user to catch it
         if self.bonus_coin.x > -1:
