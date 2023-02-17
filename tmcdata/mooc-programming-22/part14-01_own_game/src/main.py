@@ -477,6 +477,10 @@ class GetCoin:
             blit_text_bg()
             blit_text()
 
+    def get_text(self, font, text, variable, color: tuple):
+        return font.render(
+            f"{text}: {variable}", True, color)
+
     # handle_bonus_text - helper function
     def get_color(self):
         colors = [(0, 0, 0), (0, 0, 0)]
