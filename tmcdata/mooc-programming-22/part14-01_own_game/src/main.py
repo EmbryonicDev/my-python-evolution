@@ -499,9 +499,11 @@ class GetCoin:
         game_text = self.heading_font.render(
             "Trick or Treat???", True, (255, 255, 255))
 
+        # bonus board text if ball / bonus state is active
         def blit_text():
             return self.window.blit(game_text, (self.width*.5-(game_text.get_width()/2),
                                                 self.total_height-self.bonus_board*0.5-game_text.get_height()/2))
+        # background rectangle behind bonus board text
 
         def blit_text_bg():
             return pygame.draw.rect(self.window, (0, 0, 0),
@@ -517,12 +519,14 @@ class GetCoin:
             # game text to window
             blit_text()
 
+        # display user prompt based on bonus_coin.power
         if self.bonus_coin.caught:
             game_text = self.heading_font.render(
                 self.bonus_coin.user_prompt, True, (255, 255, 255))
             blit_text_bg()
             blit_text()
 
+    # get text for variable
     def get_text(self, font, text, variable, color: tuple):
         return font.render(
             f"{text}: {variable}", True, color)
