@@ -455,6 +455,8 @@ class GetCoin:
     def handle_bonus_text(self):
         # new color every second
         self.get_color()
+        if self.game_over:
+            self.random_color = (0, 0, 0)
 
         # dividing line
         pygame.draw.line(self.window, (204, 0, 204),
