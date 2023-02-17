@@ -398,6 +398,7 @@ class GetCoin:
             # Hide coin when caught
             self.bonus_coin.catch_coin()
             self.bonus_coin.toggle_visibility()
+            self.bonus_record[self.bonus_coin.power] += 1
             self.timer.seconds = 66
 
         # helper functions
