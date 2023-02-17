@@ -51,8 +51,9 @@ class MovingObject(ScreenObject):
         self.y += self.y_speed
 
         self.update_footprint()
-        return (bot_x <= self.x <= bot_x + self.width and
-                bot_y <= self.y <= bot_y + self.height)
+
+    def hit_robot(self, bot_footprint):
+        return self.footprint.colliderect(bot_footprint)
 
     def freeze(self):
         self.x_speed, self.y_speed = 0, 0
@@ -328,7 +329,7 @@ class GetCoin:
 
     def move_bot(self):
         self.bot.move_bot()
-        if self.bot.hit_door(self.door.x, self.door.y):
+        if self.bot.hit_door(self.door.footprint):
             self.level += 1
             self.monster_count += 1
             self.release_coins()
@@ -340,7 +341,7 @@ class GetCoin:
         for coin in self.coins:
             coin.move_object()
             # Coin hits robot & adds point
-            if coin.hit_robot(self.bot.x, self.bot.y):
+            if coin.hit_robot(self.bot.footprint):
                 self.bot.add_point()
                 coin.catch_coin()
                 coin.toggle_visibility()
@@ -349,7 +350,7 @@ class GetCoin:
         for monster in self.monsters:
             monster.move_object()
 
-            if monster.hit_robot(self.bot.x, self.bot.y):
+            if monster.hit_robot(self.bot.footprint):
                 # if cupcake BonusCoin was caught, make them edible
                 if self.bonus_coin.caught and self.bonus_coin.power == 'cupcake':
                     monster.toggle_visibility()
@@ -398,7 +399,7 @@ class GetCoin:
             self.bonus_coin = self.get_bonus_coin()
 
         # bonus coin caught by Robot
-        if self.bonus_coin.hit_robot(self.bot.x, self.bot.y):
+        if self.bonus_coin.hit_robot(self.bot.footprint):
             print('caught bonus coin: ', self.bonus_coin.power)
             # Hide coin when caught
             self.bonus_coin.catch_coin()
