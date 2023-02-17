@@ -138,7 +138,7 @@ class Robot(ScreenObject):
         if self.to_up and self.y >= 0:
             self.y -= self.speed
 
-    def hit_door(self, door_x, door_y):
+        self.update_footprint()
         return (self.x <= door_x <= self.x + self.width and
                 self.y <= door_y <= self.y + self.height)
 
