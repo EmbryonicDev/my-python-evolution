@@ -187,12 +187,12 @@ class GetCoin:
         self.timer = Timer()
         self.random_color = (random.randint(
             0, 255), random.randint(0, 255), random.randint(0, 255))
-        self.bonus_coin = self.get_bonus_coin()
         self.game_over = False
         self.game_paused = False
         self.level = 1
         self.monster_count = 1
         self.monsters = []
+        self.bonus_coin = self.get_bonus_coin()
         self.bot = Robot([self.width, self.height], 'robot')
         self.release_coins()
         self.release_monsters()
