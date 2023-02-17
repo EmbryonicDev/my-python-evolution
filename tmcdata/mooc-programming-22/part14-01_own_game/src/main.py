@@ -15,6 +15,7 @@ class ScreenObject:
         self.screen_height = screen_dimensions[1]
         self.x = random.randint(0, self.screen_width - self.width)
         self.y = random.randint(0, self.screen_height - self.height)
+        self.footprint = self.image.get_rect(x=self.x, y=self.y)
 
     def toggle_visibility(self):
         self.x *= -1
