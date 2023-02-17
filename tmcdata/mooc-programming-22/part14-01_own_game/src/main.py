@@ -15,6 +15,7 @@ class ScreenObject:
         self.screen_height = screen_dimensions[1]
         self.x = random.randint(0, self.screen_width - self.width)
         self.y = random.randint(0, self.screen_height - self.height)
+        self.footprint = self.image.get_rect(x=self.x, y=self.y)
 
     def toggle_visibility(self):
         self.x *= -1
@@ -27,6 +28,10 @@ class ScreenObject:
                   if bot_y > self.screen_height / 2
                   else random.randint(self.screen_height*0.8,
                                       self.screen_height-self.height))
+        self.update_footprint()
+
+    def update_footprint(self):
+        self.footprint = self.image.get_rect(x=self.x, y=self.y)
 
 
 class MovingObject(ScreenObject):
@@ -45,9 +50,10 @@ class MovingObject(ScreenObject):
         self.x += self.x_speed
         self.y += self.y_speed
 
-    def hit_robot(self, bot_x: str, bot_y: str):
-        return (bot_x <= self.x <= bot_x + self.width and
-                bot_y <= self.y <= bot_y + self.height)
+        self.update_footprint()
+
+    def hit_robot(self, bot_footprint):
+        return self.footprint.colliderect(bot_footprint)
 
     def freeze(self):
         self.x_speed, self.y_speed = 0, 0
@@ -132,9 +138,10 @@ class Robot(ScreenObject):
         if self.to_up and self.y >= 0:
             self.y -= self.speed
 
-    def hit_door(self, door_x, door_y):
-        return (self.x <= door_x <= self.x + self.width and
-                self.y <= door_y <= self.y + self.height)
+        self.update_footprint()
+
+    def hit_door(self, door_footprint):
+        return self.footprint.colliderect(door_footprint)
 
 
 class Timer:
@@ -323,7 +330,7 @@ class GetCoin:
 
     def move_bot(self):
         self.bot.move_bot()
-        if self.bot.hit_door(self.door.x, self.door.y):
+        if self.bot.hit_door(self.door.footprint):
             self.level += 1
             self.monster_count += 1
             self.release_coins()
@@ -335,7 +342,7 @@ class GetCoin:
         for coin in self.coins:
             coin.move_object()
             # Coin hits robot & adds point
-            if coin.hit_robot(self.bot.x, self.bot.y):
+            if coin.hit_robot(self.bot.footprint):
                 self.bot.add_point()
                 coin.catch_coin()
                 coin.toggle_visibility()
@@ -344,7 +351,7 @@ class GetCoin:
         for monster in self.monsters:
             monster.move_object()
 
-            if monster.hit_robot(self.bot.x, self.bot.y):
+            if monster.hit_robot(self.bot.footprint):
                 # if cupcake BonusCoin was caught, make them edible
                 if self.bonus_coin.caught and self.bonus_coin.power == 'cupcake':
                     monster.toggle_visibility()
@@ -393,7 +400,7 @@ class GetCoin:
             self.bonus_coin = self.get_bonus_coin()
 
         # bonus coin caught by Robot
-        if self.bonus_coin.hit_robot(self.bot.x, self.bot.y):
+        if self.bonus_coin.hit_robot(self.bot.footprint):
             print('caught bonus coin: ', self.bonus_coin.power)
             # Hide coin when caught
             self.bonus_coin.catch_coin()
@@ -448,6 +455,8 @@ class GetCoin:
     def handle_bonus_text(self):
         # new color every second
         self.get_color()
+        if self.game_over:
+            self.random_color = (0, 0, 0)
 
         # dividing line
         pygame.draw.line(self.window, (204, 0, 204),
@@ -461,7 +470,9 @@ class GetCoin:
         # bonus record text
         line_one_height = self.total_height - self.bonus_board + 10
         line_two_height = line_one_height+40
-        if self.bonus_coin.x < 0 and not self.bonus_coin.caught:
+        if ((self.bonus_coin.x < 0 and
+            not self.bonus_coin.caught) or
+                self.game_over):
             # freeze count
             game_text = self.get_text(
                 self.game_font, 'Freeze', self.bonus_record['freeze'], (0, 255, 0))
@@ -503,8 +514,8 @@ class GetCoin:
         def blit_text():
             return self.window.blit(game_text, (self.width*.5-(game_text.get_width()/2),
                                                 self.total_height-self.bonus_board*0.5-game_text.get_height()/2))
-        # background rectangle behind bonus board text
 
+        # background rectangle behind bonus board text
         def blit_text_bg():
             return pygame.draw.rect(self.window, (0, 0, 0),
                                     (self.width/2-game_text.get_width()/2,
@@ -514,17 +525,19 @@ class GetCoin:
 
         # if bonus ball is on screen, prompt user to catch it
         if self.bonus_coin.x > -1:
-            # rectangle behind bonus text
-            blit_text_bg()
-            # game text to window
-            blit_text()
+            if not self.game_over:
+                # rectangle behind bonus text
+                blit_text_bg()
+                # game text to window
+                blit_text()
 
         # display user prompt based on bonus_coin.power
         if self.bonus_coin.caught:
             game_text = self.heading_font.render(
                 self.bonus_coin.user_prompt, True, (255, 255, 255))
-            blit_text_bg()
-            blit_text()
+            if not self.game_over:
+                blit_text_bg()
+                blit_text()
 
     # get text for variable
     def get_text(self, font, text, variable, color: tuple):
