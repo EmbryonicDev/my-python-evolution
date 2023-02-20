@@ -402,7 +402,7 @@ class GetCoin:
         self.coins = []
         for i in range(1):
             new_coin = MovingCoin(self.window_dimensions, 'coin')
-            new_coin.get_coords(self.bot.y)
+            new_coin.get_coords(self.height)
             self.coins.append(new_coin)
 
     def release_monsters(self):
