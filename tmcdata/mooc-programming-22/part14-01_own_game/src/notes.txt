@@ -7,9 +7,8 @@
 *create method to create new BonusCoin
 *move all object contact to Robot
 *Make separate class for moving monsters & move appropriate methods from MovingObject to MovingMonster
+*Delete 5 points per monster touch
 Add lambda formulas where possible
-Teleport to opposite side of screen on screen exit
-Delete 5 points per monster touch
 Create variable for: [self.width, self.height]
 Update event handler - https://pygame.readthedocs.io/en/latest/1_intro/intro.html
 Add high score & save to text file
