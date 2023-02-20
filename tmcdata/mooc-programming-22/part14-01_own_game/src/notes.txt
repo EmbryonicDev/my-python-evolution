@@ -8,19 +8,18 @@
 *move all object contact to Robot
 *Make separate class for moving monsters & move appropriate methods from MovingObject to MovingMonster
 *Delete 5 points per monster touch
+*Create variable for: [self.width, self.height]
+*Update event handler - https://pygame.readthedocs.io/en/latest/1_intro/intro.html
+*print door on opposite side of bot
+*increase accuracy of object contact with robot
+*Release coins on opposite side of robot
+*-Display bonus-board on game over / make sure bgc is black
+*change color of game over / game paused text     
+
 Add lambda formulas where possible
-Create variable for: [self.width, self.height]
-Update event handler - https://pygame.readthedocs.io/en/latest/1_intro/intro.html
 Add high score & save to text file
-print door on opposite side of bot
-increase accuracy of object contact with robot
-                    if (object.y >= height-(robot.get_height()+rock.get_height()) and
-                        x-robot.get_width() <= object.x <= x+robot.get_width()):
 move key commands above text for: points/level/health, + color = blue                   
-change color of game over / game paused text     
 use get_text() for draw window elements
--Display bonus-board on game over / make sure bgc is black
--Release coins on opposite side of robot
 
 
 
