@@ -293,6 +293,7 @@ class GetCoin:
         if all(i.caught == True for i in self.coins):
             if self.door.x < 0:
                 self.door.toggle_visibility()
+                self.door.get_coords(self.bot.y)
         else:
             if self.door.x >= 0:
                 self.door.toggle_visibility()
