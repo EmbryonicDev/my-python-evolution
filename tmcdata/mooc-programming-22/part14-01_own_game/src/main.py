@@ -587,6 +587,10 @@ class GetCoin:
             else:
                 self.random_color = colors[1]
 
+    def toggle_game_over(self):
+        if not self.game_over:
+            self.game_paused = False if self.game_paused else True
+
     def release_coins(self):
         self.coins = []
         for i in range(5):
