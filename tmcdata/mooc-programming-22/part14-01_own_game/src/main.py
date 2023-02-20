@@ -260,18 +260,17 @@ class GetCoin:
 
         # if coin is caught
         if self.bonus_coin.caught:
-            if self.bonus_coin.power == 'freeze':
-                self.freeze_monsters()
-            if self.bonus_coin.power == 'speed up':
-                speed_up_monsters()
-            if self.bonus_coin.power == 'cupcake':
-                toggle_cupcake(True)
-            if self.bonus_coin.power == 'add monsters':
-                add_extra_monsters()
-            if self.bonus_coin.power == 'add health':
-                add_health()
-            if self.bonus_coin.power == 'take health':
-                self.take_health()
+            power_dict = {
+                'freeze': self.freeze_monsters,
+                'speed up': speed_up_monsters,
+                'cupcake': toggle_cupcake,
+                'add monsters': add_extra_monsters,
+                'add health': add_health,
+                'take health': self.take_health,
+            }
+            # activate bonus ball power
+            if self.bonus_coin.power in power_dict:
+                power_dict[self.bonus_coin.power]()
 
             # end bonus round
             if self.timer.seconds == 72:
