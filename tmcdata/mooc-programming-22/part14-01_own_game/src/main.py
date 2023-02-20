@@ -128,6 +128,18 @@ class Robot(ScreenObject):
     def add_health(self):
         self.health += 2
 
+    def toggle_left(self):
+        self.to_left = False if self.to_left else True
+
+    def toggle_right(self):
+        self.to_right = False if self.to_right else True
+
+    def toggle_up(self):
+        self.to_up = False if self.to_up else True
+
+    def toggle_down(self):
+        self.to_down = False if self.to_down else True
+
     def move_bot(self):
         if self.to_right and self.x <= self.screen_width - self.width:
             self.x += self.speed
@@ -219,33 +231,25 @@ class GetCoin:
                 self.move_monster()
 
     def check_events(self):
+        key_dict = {
+            pygame.K_LEFT: self.bot.toggle_left,
+            pygame.K_RIGHT:  self.bot.toggle_right,
+            pygame.K_UP:  self.bot.toggle_up,
+            pygame.K_DOWN:  self.bot.toggle_down,
+            pygame.K_F2:  self.new_game,
+            pygame.K_SPACE:  self.toggle_game_over,
+            pygame.K_ESCAPE:  exit
+        }
+
         for event in pygame.event.get():
             if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_LEFT:
-                    self.bot.to_left = True
-                if event.key == pygame.K_RIGHT:
-                    self.bot.to_right = True
-                if event.key == pygame.K_UP:
-                    self.bot.to_up = True
-                if event.key == pygame.K_DOWN:
-                    self.bot.to_down = True
-                if event.key == pygame.K_F2:
-                    self.new_game()
-                if event.key == pygame.K_SPACE:
-                    if not self.game_over:
-                        self.game_paused = True if self.game_paused == False else False
-                if event.key == pygame.K_ESCAPE:
-                    exit()
+                if event.key in key_dict:
+                    key_dict[event.key]()
 
             if event.type == pygame.KEYUP:
-                if event.key == pygame.K_LEFT:
-                    self.bot.to_left = False
-                if event.key == pygame.K_RIGHT:
-                    self.bot.to_right = False
-                if event.key == pygame.K_UP:
-                    self.bot.to_up = False
-                if event.key == pygame.K_DOWN:
-                    self.bot.to_down = False
+                if (event.key in key_dict and
+                        event.key != pygame.K_SPACE):
+                    key_dict[event.key]()
 
             if event.type == pygame.QUIT:
                 exit()
@@ -564,6 +568,10 @@ class GetCoin:
                 self.random_color = colors[0]
             else:
                 self.random_color = colors[1]
+
+    def toggle_game_over(self):
+        if not self.game_over:
+            self.game_paused = False if self.game_paused else True
 
     def release_coins(self):
         self.coins = []
