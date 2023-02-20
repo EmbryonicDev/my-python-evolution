@@ -231,6 +231,16 @@ class GetCoin:
                 self.move_monster()
 
     def check_events(self):
+        key_dict = {
+            pygame.K_LEFT: self.bot.toggle_left,
+            pygame.K_RIGHT:  self.bot.toggle_right,
+            pygame.K_UP:  self.bot.toggle_up,
+            pygame.K_DOWN:  self.bot.toggle_down,
+            pygame.K_F2:  self.new_game,
+            pygame.K_SPACE:  self.toggle_game_over,
+            pygame.K_ESCAPE:  exit
+        }
+
         for event in pygame.event.get():
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_LEFT:
