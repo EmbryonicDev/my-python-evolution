@@ -249,7 +249,7 @@ class GetCoin:
             for monster in self.monsters:
                 monster.speed_up()
 
-        def toggle_cupcake(cupcake: bool):
+        def toggle_cupcake(cupcake=True):
             for monster in self.monsters:
                 monster.toggle_cupcake(cupcake)
 
