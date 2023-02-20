@@ -243,31 +243,13 @@ class GetCoin:
 
         for event in pygame.event.get():
             if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_LEFT:
-                    self.bot.to_left = True
-                if event.key == pygame.K_RIGHT:
-                    self.bot.to_right = True
-                if event.key == pygame.K_UP:
-                    self.bot.to_up = True
-                if event.key == pygame.K_DOWN:
-                    self.bot.to_down = True
-                if event.key == pygame.K_F2:
-                    self.new_game()
-                if event.key == pygame.K_SPACE:
-                    if not self.game_over:
-                        self.game_paused = True if self.game_paused == False else False
-                if event.key == pygame.K_ESCAPE:
-                    exit()
+                if event.key in key_dict:
+                    key_dict[event.key]()
 
             if event.type == pygame.KEYUP:
-                if event.key == pygame.K_LEFT:
-                    self.bot.to_left = False
-                if event.key == pygame.K_RIGHT:
-                    self.bot.to_right = False
-                if event.key == pygame.K_UP:
-                    self.bot.to_up = False
-                if event.key == pygame.K_DOWN:
-                    self.bot.to_down = False
+                if (event.key in key_dict and
+                        event.key != pygame.K_SPACE):
+                    key_dict[event.key]()
 
             if event.type == pygame.QUIT:
                 exit()
