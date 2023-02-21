@@ -20,6 +20,7 @@ Add lambda formulas where possible
 Add high score & save to text file
 move key commands above text for: points/level/health, + color = blue                   
 use get_text() for draw window elements
+-Flash red screen 1 second before bonus round is over
 
 
 
