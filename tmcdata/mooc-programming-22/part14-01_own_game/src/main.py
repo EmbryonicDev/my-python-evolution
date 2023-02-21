@@ -85,6 +85,7 @@ class GetCoin:
         green = (0, 255, 0)
         blue = (0, 0, 255)
         yellow = (255, 255, 0)
+        orange = (255, 153, 51)
 
         # helper functions
         def handle_window_text():
@@ -122,7 +123,7 @@ class GetCoin:
 
         def get_shortcuts():
             # Info board orange rectangle
-            pygame.draw.rect(self.window, (255, 153, 51),
+            pygame.draw.rect(self.window, orange,
                              (0, self.height+3, self.width, self.info_board/2-3))
             # new game
             game_text = self.game_font.render(
@@ -171,7 +172,7 @@ class GetCoin:
                     if self.bonus_coin.power in ['cupcake', 'add health', 'freeze']:
                         colors = [green, blue]
                     else:
-                        colors = [red, (255, 188, 0)]
+                        colors = [red, orange]
 
                 if self.timer.return_on_frame(30):
                     if self.timer.seconds % 2 == 0:
