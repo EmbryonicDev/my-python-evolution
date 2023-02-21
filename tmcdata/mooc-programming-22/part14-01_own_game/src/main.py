@@ -78,60 +78,287 @@ class GetCoin:
                 exit()
 
     def draw_window(self):
+        black = (0, 0, 0)
+        red = (255, 0, 0)
+        green = (0, 255, 0)
+        blue = (0, 0, 255)
+        yellow = (255, 255, 0)
+
+        # helper functions
+        def handle_window_text():
+            # game over
+            if self.game_over:
+                game_text = self.heading_font.render(
+                    'Game Over...', True, (255, 255, 255))
+                self.window.blit(game_text, (self.width/2-game_text.get_width() /
+                                             2, self.height/2-game_text.get_height()/2))
+            # game paused
+            if self.game_paused:
+                game_text = self.heading_font.render(
+                    'Game Paused...', True, (255, 255, 255))
+
+                self.window.blit(game_text, (self.width/2-game_text.get_width() /
+                                             2, self.height/2-game_text.get_height()/2))
+
+        def get_dividing_lines():
+            # Info board black rectangle
+            pygame.draw.rect(self.window, yellow,
+                             (0, self.height, self.width, self.info_board+self.bonus_board))
+            # 1st dividing line
+            pygame.draw.line(self.window, yellow,
+                             (0, self.height), (self.width, self.height), 4)
+            # 2nd dividing line
+            pygame.draw.line(self.window, yellow,
+                             (0, self.total_height-self.bonus_board-self.info_board/2), (self.width, self.total_height-self.bonus_board-self.info_board/2), 4)
+            # 3rd dividing line
+            pygame.draw.line(self.window, yellow,
+                             (0, self.total_height-self.bonus_board), (self.width, self.total_height-self.bonus_board), 4)
+
+        def get_shortcuts():
+            # Info board orange rectangle
+            pygame.draw.rect(self.window, (255, 153, 51),
+                             (0, self.height+3, self.width, self.info_board/2-3))
+            # new game
+            game_text = self.game_font.render(
+                "New Game - F2", True, blue)
+            self.window.blit(game_text, (25, self.height + 10))
+            # pause game
+            game_text = self.game_font.render(
+                "Pause - Space", True, blue)
+            self.window.blit(game_text, (self.width*.5-(game_text.get_width()/2),
+                                         self.height + 10))
+            # quit game
+            game_text = self.game_font.render(
+                "Quit - Esc", True, blue)
+            self.window.blit(game_text, (self.width-(game_text.get_width()+25),
+                                         self.height + 10))
+
+        def get_bot_info():
+            # Info board red rectangle
+            pygame.draw.rect(self.window, red,
+                             (0, self.height+self.info_board/2+3, self.width, self.info_board/2-3))
+            # points
+            game_text = self.game_font.render(
+                f"Points: {self.bot.points} ", True, green)
+            self.window.blit(
+                game_text, (25, self.height + (self.info_board*0.6)))
+            # level
+            game_text = self.game_font.render(
+                f"Level: {self.level} ", True, green)
+            self.window.blit(game_text, (self.width*.5-(game_text.get_width()/2),
+                                         self.height + (self.info_board*0.6)))
+            # health
+            game_text = self.game_font.render(
+                f"Health: {self.bot.health} ", True, green)
+            self.window.blit(game_text, (self.width-(game_text.get_width()+25),
+                                         self.height + (self.info_board*0.6)))
+
+        def handle_bonus_text():
+            dark_grey = (64, 64, 64)
+
+            # helper function
+            def get_color():
+                colors = [dark_grey, dark_grey]
+                if self.bonus_coin.x > 0 and not self.bonus_coin.caught:
+                    colors = [(random.randint(
+                        0, 255), random.randint(0, 255), random.randint(0, 255)), black]
+
+                if self.bonus_coin.caught:
+                    if self.bonus_coin.power in ['cupcake', 'add health', 'freeze']:
+                        colors = [green, blue]
+                    else:
+                        colors = [red, (255, 188, 0)]
+
+                if self.timer.return_on_frame(30):
+                    if self.timer.seconds % 2 == 0:
+                        self.random_color = colors[0]
+                    else:
+                        self.random_color = colors[1]
+
+            # get text for variable
+            def get_text(font, text, variable, color: tuple):
+                return font.render(
+                    f"{text}: {variable}", True, color)
+
+            # new color every second
+            get_color()
+            if self.game_over:
+                self.random_color = dark_grey
+
+            # Info board rectangle
+            pygame.draw.rect(self.window, (self.random_color),
+                             (0, self.height+self.info_board+3, self.width, self.height + self.info_board+3))
+
+            # text when no ball / no active bonus
+            # bonus record text
+            line_one_height = self.total_height - self.bonus_board + 10
+            line_two_height = line_one_height+40
+            if ((self.bonus_coin.x < 0 and
+                not self.bonus_coin.caught) or
+                    self.game_over):
+                # freeze count
+                game_text = get_text(
+                    self.game_font, 'Freeze', self.bonus_record['freeze'], (0, 255, 0))
+                self.window.blit(
+                    game_text, (25, line_one_height))
+                # cupcake count
+                game_text = get_text(
+                    self.game_font, 'Cupcakes', self.bonus_record['cupcake'], (0, 255, 0))
+                self.window.blit(
+                    game_text, (self.width*.5-(game_text.get_width()/2), line_one_height))
+                # add health count
+                game_text = get_text(
+                    self.game_font, '+ Health', self.bonus_record['add health'], (0, 255, 0))
+                self.window.blit(
+                    game_text, (self.width-(game_text.get_width()+25),
+                                line_one_height))
+                # speed count
+                game_text = get_text(
+                    self.game_font, 'Fast', self.bonus_record['speed up'], red)
+                self.window.blit(
+                    game_text, (25, line_two_height))
+                # add monsters count
+                game_text = get_text(
+                    self.game_font, '+ Monsters', self.bonus_record['add monsters'], red)
+                self.window.blit(
+                    game_text, (self.width*.5-(game_text.get_width()/2), line_two_height))
+                # take health count
+                game_text = get_text(
+                    self.game_font, '- Health', self.bonus_record['take health'], red)
+                self.window.blit(
+                    game_text, (self.width-(game_text.get_width()+25),
+                                line_two_height))
+
+            # text when ball is on screen
+            game_text = self.heading_font.render(
+                "Trick or Treat???", True, (255, 255, 255))
+
+            # bonus board text if ball / bonus state is active
+            def blit_text():
+                return self.window.blit(game_text, (self.width*.5-(game_text.get_width()/2),
+                                                    self.total_height-self.bonus_board*0.5-game_text.get_height()/2))
+
+            # background rectangle behind bonus board text
+            def blit_text_bg():
+                return pygame.draw.rect(self.window, (0, 0, 0),
+                                        (self.width/2-game_text.get_width()/2,
+                                        self.total_height-self.bonus_board*0.5-game_text.get_height()/2,
+                                        game_text.get_width(),
+                                        game_text.get_height()))
+
+            # if bonus ball is on screen, prompt user to catch it
+            if self.bonus_coin.x > -1:
+                if not self.game_over:
+                    # rectangle behind bonus text
+                    blit_text_bg()
+                    # game text to window
+                    blit_text()
+
+            # display user prompt based on bonus_coin.power
+            if self.bonus_coin.caught:
+                game_text = self.heading_font.render(
+                    self.bonus_coin.user_prompt, True, (255, 255, 255))
+                if not self.game_over:
+                    blit_text_bg()
+                    blit_text()
+
+        def handle_door():
+            if all(i.caught == True for i in self.coins):
+                if self.door.x < 0:
+                    self.door.toggle_visibility()
+                    self.door.get_coords(self.bot.y)
+            else:
+                if self.door.x >= 0:
+                    self.door.toggle_visibility()
+            self.window.blit(self.door.image, (self.door.x, self.door.y))
+
+        def handle_bonus_ball():
+            # bonus coin to screen
+            if self.timer.seconds == 60:
+                self.bonus_coin.toggle_visibility()
+                self.bonus_coin.get_coords(self.bot.y)
+                self.bonus_coin.unfreeze()
+                self.timer.update_seconds()
+
+            # bonus coin with no contact
+            if (self.timer.seconds == 66 and
+                    not self.bonus_coin.caught):
+                self.timer.update_seconds()
+                self.bonus_coin = self.get_bonus_coin()
+
+            # bonus coin caught by Robot
+            if self.bonus_coin.hit_robot(self.bot.footprint):
+                print('caught bonus coin: ', self.bonus_coin.power)
+                # Hide coin when caught
+                self.bonus_coin.catch_coin()
+                self.bonus_coin.toggle_visibility()
+                self.bonus_record[self.bonus_coin.power] += 1
+                self.timer.seconds = 66
+
+            # helper functions
+            def add_health():
+                if self.timer.return_on_frame(70):
+                    self.bot.add_health()
+
+            def speed_up_monsters():
+                for monster in self.monsters:
+                    monster.speed_up()
+
+            def toggle_cupcake(cupcake=True):
+                for monster in self.monsters:
+                    monster.toggle_cupcake(cupcake)
+
+            def add_extra_monsters():
+                if self.timer.return_on_frame(70):
+                    self.monster_count += 1
+                    self.release_monsters()
+
+            # if coin is caught
+            if self.bonus_coin.caught:
+                power_dict = {
+                    'freeze': self.freeze_monsters,
+                    'speed up': speed_up_monsters,
+                    'cupcake': toggle_cupcake,
+                    'add monsters': add_extra_monsters,
+                    'add health': add_health,
+                    'take health': self.take_health,
+                }
+                # activate bonus ball power
+                if self.bonus_coin.power in power_dict:
+                    power_dict[self.bonus_coin.power]()
+
+                # end bonus round
+                if self.timer.seconds == 72:
+                    self.timer.clear_timer()
+                    self.unfreeze_monsters()
+                    toggle_cupcake(False)
+                    self.bonus_coin = self.get_bonus_coin()
+
+            # bonus coin to window
+            self.window.blit(self.bonus_coin.image,
+                             (self.bonus_coin.x, self.bonus_coin.y))
+
         self.window.fill((204, 255, 255))
 
-        # Info board black rectangle
-        pygame.draw.rect(self.window, (0, 0, 0),
-                         (0, self.height, self.width, self.info_board))
-        # Info board text
-        # points
-        game_text = self.game_font.render(
-            f"Points: {self.bot.points} ", True, (0, 255, 0))
-        self.window.blit(game_text, (25, self.height + (self.info_board*0.1)))
-        # level
-        game_text = self.game_font.render(
-            f"Level: {self.level} ", True, (0, 255, 0))
-        self.window.blit(game_text, (self.width*.5-(game_text.get_width()/2),
-                         self.height + (self.info_board*0.1)))
-        # health
-        game_text = self.game_font.render(
-            f"Health: {self.bot.health} ", True, (0, 255, 0))
-        self.window.blit(game_text, (self.width-(game_text.get_width()+25),
-                         self.height + (self.info_board*0.1)))
-        # new game
-        game_text = self.game_font.render(
-            "New Game - F2", True, (0, 255, 0))
-        self.window.blit(game_text, (25, self.height + (self.info_board*0.5)))
-        # pause game
-        game_text = self.game_font.render(
-            "Pause - Space", True, (0, 255, 0))
-        self.window.blit(game_text, (self.width*.5-(game_text.get_width()/2),
-                         self.height + (self.info_board*0.5)))
-        # quit game
-        game_text = self.game_font.render(
-            "Quit - Esc", True, (0, 255, 0))
-        self.window.blit(game_text, (self.width-(game_text.get_width()+25),
-                         self.height + (self.info_board*0.5)))
+        # dividing lines
+        get_dividing_lines()
 
-        # bonus mode info board
-        self.handle_bonus_text()
+        # Info board text
+        get_shortcuts()
+        get_bot_info()
+
+        # # bonus mode info board
+        handle_bonus_text()
 
         # print door
-        if all(i.caught == True for i in self.coins):
-            if self.door.x < 0:
-                self.door.toggle_visibility()
-                self.door.get_coords(self.bot.y)
-        else:
-            if self.door.x >= 0:
-                self.door.toggle_visibility()
-        self.window.blit(self.door.image, (self.door.x, self.door.y))
+        handle_door()
 
         # coins
         for coin in self.coins:
             self.window.blit(coin.image, (coin.x, coin.y))
 
         # bonus coin
-        self.handle_bonus_ball()
+        handle_bonus_ball()
 
         # monsters
         for monster in self.monsters:
@@ -141,18 +368,7 @@ class GetCoin:
         self.window.blit(self.bot.image, (self.bot.x, self.bot.y))
 
         # main window text
-        # game over
-        if self.game_over:
-            game_text = self.heading_font.render(
-                'Game Over...', True, (255, 255, 255))
-            self.window.blit(game_text, (self.width/2-game_text.get_width() /
-                             2, self.height/2-game_text.get_height()/2))
-        # game paused
-        if self.game_paused:
-            game_text = self.heading_font.render(
-                'Game Paused...', True, (255, 255, 255))
-            self.window.blit(game_text, (self.width/2-game_text.get_width() /
-                             2, self.height/2-game_text.get_height()/2))
+        handle_window_text()
 
         pygame.display.flip()
         self.clock.tick(60)
@@ -216,183 +432,6 @@ class GetCoin:
     def get_bonus_coin(self):
         return BonusCoin(
             self.window_dimensions, 'bonus_coin')
-
-    def handle_bonus_ball(self):
-        # bonus coin to screen
-        if self.timer.seconds == 60:
-            self.bonus_coin.toggle_visibility()
-            self.bonus_coin.get_coords(self.bot.y)
-            self.bonus_coin.unfreeze()
-            self.timer.update_seconds()
-
-        # bonus coin with no contact
-        if (self.timer.seconds == 66 and
-                not self.bonus_coin.caught):
-            self.timer.update_seconds()
-            self.bonus_coin = self.get_bonus_coin()
-
-        # bonus coin caught by Robot
-        if self.bonus_coin.hit_robot(self.bot.footprint):
-            print('caught bonus coin: ', self.bonus_coin.power)
-            # Hide coin when caught
-            self.bonus_coin.catch_coin()
-            self.bonus_coin.toggle_visibility()
-            self.bonus_record[self.bonus_coin.power] += 1
-            self.timer.seconds = 66
-
-        # helper functions
-        def add_health():
-            if self.timer.return_on_frame(70):
-                self.bot.add_health()
-
-        def speed_up_monsters():
-            for monster in self.monsters:
-                monster.speed_up()
-
-        def toggle_cupcake(cupcake=True):
-            for monster in self.monsters:
-                monster.toggle_cupcake(cupcake)
-
-        def add_extra_monsters():
-            if self.timer.return_on_frame(70):
-                self.monster_count += 1
-                self.release_monsters()
-
-        # if coin is caught
-        if self.bonus_coin.caught:
-            power_dict = {
-                'freeze': self.freeze_monsters,
-                'speed up': speed_up_monsters,
-                'cupcake': toggle_cupcake,
-                'add monsters': add_extra_monsters,
-                'add health': add_health,
-                'take health': self.take_health,
-            }
-            # activate bonus ball power
-            if self.bonus_coin.power in power_dict:
-                power_dict[self.bonus_coin.power]()
-
-            # end bonus round
-            if self.timer.seconds == 72:
-                self.timer.clear_timer()
-                self.unfreeze_monsters()
-                toggle_cupcake(False)
-                self.bonus_coin = self.get_bonus_coin()
-
-        # bonus coin to window
-        self.window.blit(self.bonus_coin.image,
-                         (self.bonus_coin.x, self.bonus_coin.y))
-
-    def handle_bonus_text(self):
-        # new color every second
-        self.get_color()
-        if self.game_over:
-            self.random_color = (0, 0, 0)
-
-        # dividing line
-        pygame.draw.line(self.window, (204, 0, 204),
-                         (0, self.total_height-self.bonus_board), (self.width, self.total_height-self.bonus_board), 8)
-
-        # Info board rectangle
-        pygame.draw.rect(self.window, (self.random_color),
-                         (0, self.height+self.info_board, self.width, self.height + self.info_board))
-
-        # text when no ball / no active bonus
-        # bonus record text
-        line_one_height = self.total_height - self.bonus_board + 10
-        line_two_height = line_one_height+40
-        if ((self.bonus_coin.x < 0 and
-            not self.bonus_coin.caught) or
-                self.game_over):
-            # freeze count
-            game_text = self.get_text(
-                self.game_font, 'Freeze', self.bonus_record['freeze'], (0, 255, 0))
-            self.window.blit(
-                game_text, (25, line_one_height))
-            # cupcake count
-            game_text = self.get_text(
-                self.game_font, 'Cupcakes', self.bonus_record['cupcake'], (0, 255, 0))
-            self.window.blit(
-                game_text, (self.width*.5-(game_text.get_width()/2), line_one_height))
-            # add health count
-            game_text = self.get_text(
-                self.game_font, '+ Health', self.bonus_record['add health'], (0, 255, 0))
-            self.window.blit(
-                game_text, (self.width-(game_text.get_width()+25),
-                            line_one_height))
-            # speed count
-            game_text = self.get_text(
-                self.game_font, 'Fast', self.bonus_record['speed up'], (255, 0, 0))
-            self.window.blit(
-                game_text, (25, line_two_height))
-            # add monsters count
-            game_text = self.get_text(
-                self.game_font, '+ Monsters', self.bonus_record['add monsters'], (255, 0, 0))
-            self.window.blit(
-                game_text, (self.width*.5-(game_text.get_width()/2), line_two_height))
-            # take health count
-            game_text = self.get_text(
-                self.game_font, '- Health', self.bonus_record['take health'], (255, 0, 0))
-            self.window.blit(
-                game_text, (self.width-(game_text.get_width()+25),
-                            line_two_height))
-
-        # text when ball is on screen
-        game_text = self.heading_font.render(
-            "Trick or Treat???", True, (255, 255, 255))
-
-        # bonus board text if ball / bonus state is active
-        def blit_text():
-            return self.window.blit(game_text, (self.width*.5-(game_text.get_width()/2),
-                                                self.total_height-self.bonus_board*0.5-game_text.get_height()/2))
-
-        # background rectangle behind bonus board text
-        def blit_text_bg():
-            return pygame.draw.rect(self.window, (0, 0, 0),
-                                    (self.width/2-game_text.get_width()/2,
-                                     self.total_height-self.bonus_board*0.5-game_text.get_height()/2,
-                                     game_text.get_width(),
-                                     game_text.get_height()))
-
-        # if bonus ball is on screen, prompt user to catch it
-        if self.bonus_coin.x > -1:
-            if not self.game_over:
-                # rectangle behind bonus text
-                blit_text_bg()
-                # game text to window
-                blit_text()
-
-        # display user prompt based on bonus_coin.power
-        if self.bonus_coin.caught:
-            game_text = self.heading_font.render(
-                self.bonus_coin.user_prompt, True, (255, 255, 255))
-            if not self.game_over:
-                blit_text_bg()
-                blit_text()
-
-    # get text for variable
-    def get_text(self, font, text, variable, color: tuple):
-        return font.render(
-            f"{text}: {variable}", True, color)
-
-    # handle_bonus_text - helper function
-    def get_color(self):
-        colors = [(0, 0, 0), (0, 0, 0)]
-        if self.bonus_coin.x > 0 and not self.bonus_coin.caught:
-            colors = [(random.randint(
-                0, 255), random.randint(0, 255), random.randint(0, 255)), (0, 0, 0)]
-
-        if self.bonus_coin.caught:
-            if self.bonus_coin.power in ['cupcake', 'add health', 'freeze']:
-                colors = [(0, 255, 0), (0, 0, 255)]
-            else:
-                colors = [(255, 0, 0), (255, 188, 0)]
-
-        if self.timer.return_on_frame(30):
-            if self.timer.seconds % 2 == 0:
-                self.random_color = colors[0]
-            else:
-                self.random_color = colors[1]
 
     def toggle_game_over(self):
         if not self.game_over:
