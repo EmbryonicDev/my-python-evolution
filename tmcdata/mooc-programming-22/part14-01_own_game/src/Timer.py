@@ -1,10 +1,13 @@
+import random
+
+
 class Timer:
     def __init__(self):
         self.frame_counter = 0
         self.seconds = 55
 
     def clear_timer(self):
-        self.seconds = 55
+        self.seconds = random.randint(0, 55)
         self.frame_counter = 0
 
     def add_counter(self):
