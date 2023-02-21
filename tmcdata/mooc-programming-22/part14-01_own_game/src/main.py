@@ -277,6 +277,24 @@ class GetCoin:
             self.window.blit(self.door.image, (self.door.x, self.door.y))
 
         def handle_bonus_ball():
+            # helper functions
+            def add_health():
+                if self.timer.return_on_frame(70):
+                    self.bot.add_health()
+
+            def speed_up_monsters():
+                for monster in self.monsters:
+                    monster.speed_up()
+
+            def toggle_cupcake(cupcake=True):
+                for monster in self.monsters:
+                    monster.toggle_cupcake(cupcake)
+
+            def add_extra_monsters():
+                if self.timer.return_on_frame(70):
+                    self.monster_count += 1
+                    self.release_monsters()
+
             # bonus coin to screen
             if self.timer.seconds == 60:
                 self.bonus_coin.toggle_visibility()
@@ -298,24 +316,6 @@ class GetCoin:
                 self.bonus_coin.toggle_visibility()
                 self.bonus_record[self.bonus_coin.power] += 1
                 self.timer.seconds = 66
-
-            # helper functions
-            def add_health():
-                if self.timer.return_on_frame(70):
-                    self.bot.add_health()
-
-            def speed_up_monsters():
-                for monster in self.monsters:
-                    monster.speed_up()
-
-            def toggle_cupcake(cupcake=True):
-                for monster in self.monsters:
-                    monster.toggle_cupcake(cupcake)
-
-            def add_extra_monsters():
-                if self.timer.return_on_frame(70):
-                    self.monster_count += 1
-                    self.release_monsters()
 
             # if coin is caught
             if self.bonus_coin.caught:
