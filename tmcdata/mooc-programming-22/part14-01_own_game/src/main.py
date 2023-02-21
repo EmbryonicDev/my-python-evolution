@@ -189,6 +189,19 @@ class GetCoin:
             if self.game_over:
                 self.random_color = dark_grey
 
+            # bonus board text if ball / bonus state is active
+            def blit_text():
+                return self.window.blit(game_text, (self.width*.5-(game_text.get_width()/2),
+                                                    self.total_height-self.bonus_board*0.5-game_text.get_height()/2))
+
+            # background rectangle behind bonus board text
+            def blit_text_bg():
+                return pygame.draw.rect(self.window, (0, 0, 0),
+                                        (self.width/2-game_text.get_width()/2,
+                                        self.total_height-self.bonus_board*0.5-game_text.get_height()/2,
+                                        game_text.get_width(),
+                                        game_text.get_height()))
+
             # Info board rectangle
             pygame.draw.rect(self.window, (self.random_color),
                              (0, self.height+self.info_board+3, self.width, self.height + self.info_board+3))
@@ -236,19 +249,6 @@ class GetCoin:
             # text when ball is on screen
             game_text = self.heading_font.render(
                 "Trick or Treat???", True, (255, 255, 255))
-
-            # bonus board text if ball / bonus state is active
-            def blit_text():
-                return self.window.blit(game_text, (self.width*.5-(game_text.get_width()/2),
-                                                    self.total_height-self.bonus_board*0.5-game_text.get_height()/2))
-
-            # background rectangle behind bonus board text
-            def blit_text_bg():
-                return pygame.draw.rect(self.window, (0, 0, 0),
-                                        (self.width/2-game_text.get_width()/2,
-                                        self.total_height-self.bonus_board*0.5-game_text.get_height()/2,
-                                        game_text.get_width(),
-                                        game_text.get_height()))
 
             # if bonus ball is on screen, prompt user to catch it
             if self.bonus_coin.x > -1:
