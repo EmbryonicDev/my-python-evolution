@@ -79,6 +79,7 @@ class GetCoin:
 
     def draw_window(self):
         black = (0, 0, 0)
+        dark_grey = (64, 64, 64)
         red = (255, 0, 0)
         green = (0, 255, 0)
         blue = (0, 0, 255)
@@ -154,8 +155,6 @@ class GetCoin:
                                          self.height + (self.info_board*0.6)))
 
         def handle_bonus_text():
-            dark_grey = (64, 64, 64)
-
             # helper function
             def get_color():
                 colors = [dark_grey, dark_grey]
