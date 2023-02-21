@@ -342,7 +342,13 @@ class GetCoin:
             self.window.blit(self.bonus_coin.image,
                              (self.bonus_coin.x, self.bonus_coin.y))
 
-        self.window.fill((204, 255, 255))
+        # game window will be red to warn that bonus mode will end
+        window_color = (red if self.bonus_coin.caught
+                        and self.bonus_coin.flash_red
+                        and self.timer.seconds == 71
+                        else (204, 255, 255))
+
+        self.window.fill(window_color)
 
         # dividing lines
         get_dividing_lines()
