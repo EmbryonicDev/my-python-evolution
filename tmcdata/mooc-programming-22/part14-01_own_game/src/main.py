@@ -79,6 +79,7 @@ class GetCoin:
 
     def draw_window(self):
         black = (0, 0, 0)
+        white = (255, 255, 255)
         dark_grey = (64, 64, 64)
         red = (255, 0, 0)
         green = (0, 255, 0)
