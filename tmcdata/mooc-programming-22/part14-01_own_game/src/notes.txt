@@ -16,11 +16,12 @@
 *-Display bonus-board on game over / make sure bgc is black
 *change color of game over / game paused text     
 *move key commands above text for: points/level/health, + color = blue                   
+*-Flash red screen 1 second before bonus round is over
 
 Add lambda formulas where possible
 Add high score & save to text file
 use get_text() for draw window elements
--Flash red screen 1 second before bonus round is over
+- change bonus text background color to dark grey, and increase size
 
 Secret coin:
     *freeze monsters
