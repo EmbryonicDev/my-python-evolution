@@ -196,11 +196,11 @@ class GetCoin:
 
             # background rectangle behind bonus board text
             def blit_text_bg():
-                return pygame.draw.rect(self.window, (0, 0, 0),
+                return pygame.draw.rect(self.window, black,
                                         (self.width/2-game_text.get_width()/2,
-                                        self.total_height-self.bonus_board*0.5-game_text.get_height()/2,
-                                        game_text.get_width(),
-                                        game_text.get_height()))
+                                         self.total_height-self.bonus_board*0.5-game_text.get_height()/2,
+                                         game_text.get_width(),
+                                         game_text.get_height()))
 
             # Info board rectangle
             pygame.draw.rect(self.window, (self.random_color),
@@ -387,8 +387,8 @@ class GetCoin:
         self.bot.move_bot()
 
         if (self.bot.hit_door(self.door.footprint) and
-            all(i.caught == True for i in self.coins)
-            ):
+                    all(i.caught == True for i in self.coins)
+                ):
             self.level += 1
             self.monster_count += 1
             self.release_coins()
