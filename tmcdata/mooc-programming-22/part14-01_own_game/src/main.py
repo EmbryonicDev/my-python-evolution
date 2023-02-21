@@ -88,17 +88,21 @@ class GetCoin:
 
         # helper functions
         def handle_window_text():
-            # game over
+            # get game over text
             if self.game_over:
                 game_text = self.heading_font.render(
-                    'Game Over...', True, (255, 255, 255))
-                self.window.blit(game_text, (self.width/2-game_text.get_width() /
-                                             2, self.height/2-game_text.get_height()/2))
-            # game paused
+                    'Game Over...', True, white)
+            # get game paused text
             if self.game_paused:
                 game_text = self.heading_font.render(
-                    'Game Paused...', True, (255, 255, 255))
+                    'Game Paused...', True, white)
 
+            if self.game_paused or self.game_over:
+                # text background
+                pygame.draw.rect(self.window, dark_grey,
+                                 (self.width/2-game_text.get_width() / 2-8, self.height/2 -
+                                  game_text.get_height()/2-8, game_text.get_width()+8, game_text.get_height()+8))
+                # text
                 self.window.blit(game_text, (self.width/2-game_text.get_width() /
                                              2, self.height/2-game_text.get_height()/2))
 
