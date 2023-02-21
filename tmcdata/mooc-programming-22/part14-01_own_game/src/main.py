@@ -187,7 +187,7 @@ class GetCoin:
 
             # new color every second
             get_color()
-            if self.game_over:
+            if self.game_over or self.timer.seconds < 60:
                 self.random_color = dark_grey
 
             # bonus board text if ball / bonus state is active
