@@ -189,7 +189,7 @@ class GetCoin:
                 # make sure rectangle is dark grey before & after bonus
                 if (self.game_over or
                     self.timer.seconds <= 60 or
-                        self.timer.seconds == 72):
+                        self.timer.seconds in [66, 72]):
                     self.random_color = dark_grey
 
             # bonus board text if ball / bonus state is active
