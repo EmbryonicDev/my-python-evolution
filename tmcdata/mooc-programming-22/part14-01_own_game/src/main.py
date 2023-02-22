@@ -271,6 +271,11 @@ class GetCoin:
                     blit_text_bg()
                     blit_text()
 
+        def handle_luck_board():
+            # luck board black rectangle
+            pygame.draw.rect(self.window, black,
+                             (0, self.total_height-self.luck_board, self.width, self.luck_board))
+
         def handle_door():
             if all(i.caught == True for i in self.coins):
                 if self.door.x < 0:
@@ -361,6 +366,8 @@ class GetCoin:
 
         # # bonus mode info board
         handle_bonus_text()
+
+        handle_luck_board()
 
         # dividing lines
         get_dividing_lines()
