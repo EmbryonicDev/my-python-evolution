@@ -87,6 +87,10 @@ class GetCoin:
         yellow = (255, 255, 0)
         orange = (255, 153, 51)
 
+        # standard text render
+        def get_plain_text(font, text, color):
+            return font.render(text, True, color)
+
         # text render with variable
         def get_text_with_variable(font, text, variable, color: tuple):
             return font.render(
