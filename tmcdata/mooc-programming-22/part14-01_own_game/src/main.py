@@ -150,18 +150,18 @@ class GetCoin:
             pygame.draw.rect(self.window, red,
                              (0, self.height+self.info_board/2+3, self.width, self.info_board/2-3))
             # points
-            game_text = self.game_font.render(
-                f"Points: {self.bot.points} ", True, green)
+            game_text = get_text_with_variable(self.game_font, 'Points',
+                                               self.bot.points, green)
             self.window.blit(
                 game_text, (25, self.height + (self.info_board*0.6)))
             # level
-            game_text = self.game_font.render(
-                f"Level: {self.level} ", True, green)
+            game_text = get_text_with_variable(self.game_font, 'Level',
+                                               self.level, green)
             self.window.blit(game_text, (self.width*.5-(game_text.get_width()/2),
                                          self.height + (self.info_board*0.6)))
             # health
-            game_text = self.game_font.render(
-                f"Health: {self.bot.health} ", True, green)
+            game_text = get_text_with_variable(self.game_font, 'Health',
+                                               self.bot.health, green)
             self.window.blit(game_text, (self.width-(game_text.get_width()+25),
                                          self.height + (self.info_board*0.6)))
 
