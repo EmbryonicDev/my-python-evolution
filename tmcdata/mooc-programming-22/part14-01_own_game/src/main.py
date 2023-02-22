@@ -87,6 +87,11 @@ class GetCoin:
         yellow = (255, 255, 0)
         orange = (255, 153, 51)
 
+        # text render with variable
+        def get_text(font, text, variable, color: tuple):
+            return font.render(
+                f"{text}: {variable}", True, color)
+
         # helper functions
         def handle_window_text():
             # get game over text
@@ -179,11 +184,6 @@ class GetCoin:
                         self.random_color = colors[0]
                     else:
                         self.random_color = colors[1]
-
-            # get text for variable
-            def get_text(font, text, variable, color: tuple):
-                return font.render(
-                    f"{text}: {variable}", True, color)
 
             # new color every second
             get_color()
