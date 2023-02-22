@@ -392,8 +392,8 @@ class GetCoin:
         self.bot.move_bot()
 
         if (self.bot.hit_door(self.door.footprint) and
-                    all(i.caught == True for i in self.coins)
-                ):
+            all(i.caught == True for i in self.coins)
+            ):
             self.level += 1
             self.monster_count += 1
             self.release_coins()
