@@ -384,8 +384,6 @@ class GetCoin:
         # bonus mode info board
         handle_bonus_text()
 
-        handle_luck_board()
-
         # dividing lines
         get_dividing_lines()
 
@@ -398,6 +396,8 @@ class GetCoin:
 
         # bonus coin
         handle_bonus_ball()
+
+        handle_luck_board()
 
         # monsters
         for monster in self.monsters:
