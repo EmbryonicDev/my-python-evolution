@@ -22,6 +22,7 @@ Add lambda formulas where possible
 Add high score & save to text file
 use get_text() for draw window elements
 - change bonus text background color to dark grey, and increase size
+- increase padding around bonus text
 
 Secret coin:
     *freeze monsters
