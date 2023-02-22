@@ -23,6 +23,8 @@ Add high score & save to text file
 use get_text() for draw window elements
 - change bonus text background color to dark grey, and increase size
 - increase padding around bonus text
+-create line height variables for all board text
+-rename: handle_bonus_ball -> handle_bonus_coin
 
 Secret coin:
     *freeze monsters
