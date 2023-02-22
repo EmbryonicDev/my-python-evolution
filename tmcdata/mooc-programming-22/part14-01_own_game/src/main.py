@@ -88,7 +88,7 @@ class GetCoin:
         orange = (255, 153, 51)
 
         # text render with variable
-        def get_text(font, text, variable, color: tuple):
+        def get_text_with_variable(font, text, variable, color: tuple):
             return font.render(
                 f"{text}: {variable}", True, color)
 
@@ -219,33 +219,33 @@ class GetCoin:
                 not self.bonus_coin.caught) or
                     self.game_over):
                 # freeze count
-                game_text = get_text(
+                game_text = get_text_with_variable(
                     self.game_font, 'Freeze', self.bonus_record['freeze'], (0, 255, 0))
                 self.window.blit(
                     game_text, (25, line_one_height))
                 # cupcake count
-                game_text = get_text(
+                game_text = get_text_with_variable(
                     self.game_font, 'Cupcakes', self.bonus_record['cupcake'], (0, 255, 0))
                 self.window.blit(
                     game_text, (self.width*.5-(game_text.get_width()/2), line_one_height))
                 # add health count
-                game_text = get_text(
+                game_text = get_text_with_variable(
                     self.game_font, '+ Health', self.bonus_record['add health'], (0, 255, 0))
                 self.window.blit(
                     game_text, (self.width-(game_text.get_width()+25),
                                 line_one_height))
                 # speed count
-                game_text = get_text(
+                game_text = get_text_with_variable(
                     self.game_font, 'Fast', self.bonus_record['speed up'], red)
                 self.window.blit(
                     game_text, (25, line_two_height))
                 # add monsters count
-                game_text = get_text(
+                game_text = get_text_with_variable(
                     self.game_font, '+ Monsters', self.bonus_record['add monsters'], red)
                 self.window.blit(
                     game_text, (self.width*.5-(game_text.get_width()/2), line_two_height))
                 # take health count
-                game_text = get_text(
+                game_text = get_text_with_variable(
                     self.game_font, '- Health', self.bonus_record['take health'], red)
                 self.window.blit(
                     game_text, (self.width-(game_text.get_width()+25),
