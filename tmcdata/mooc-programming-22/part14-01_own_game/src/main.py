@@ -100,12 +100,12 @@ class GetCoin:
         def handle_window_text():
             # get game over text
             if self.game_over:
-                game_text = self.heading_font.render(
-                    'Game Over...', True, white)
+                game_text = get_plain_text(
+                    self.heading_font, 'Game Over...', white)
             # get game paused text
             if self.game_paused:
-                game_text = self.heading_font.render(
-                    'Game Paused...', True, white)
+                game_text = get_plain_text(
+                    self.heading_font, 'Game Paused...', white)
 
             if self.game_paused or self.game_over:
                 # text background
@@ -135,17 +135,14 @@ class GetCoin:
             pygame.draw.rect(self.window, orange,
                              (0, self.height+3, self.width, self.info_board/2-3))
             # new game
-            game_text = self.game_font.render(
-                "New Game - F2", True, blue)
+            game_text = get_plain_text(self.game_font, 'New Game', blue)
             self.window.blit(game_text, (25, self.height + 10))
             # pause game
-            game_text = self.game_font.render(
-                "Pause - Space", True, blue)
+            game_text = get_plain_text(self.game_font, 'Pause - Space', blue)
             self.window.blit(game_text, (self.width*.5-(game_text.get_width()/2),
                                          self.height + 10))
             # quit game
-            game_text = self.game_font.render(
-                "Quit - Esc", True, blue)
+            game_text = get_plain_text(self.game_font, 'Quit - Esc', blue)
             self.window.blit(game_text, (self.width-(game_text.get_width()+25),
                                          self.height + 10))
 
@@ -256,8 +253,8 @@ class GetCoin:
                                 line_two_height))
 
             # text when ball is on screen
-            game_text = self.heading_font.render(
-                "Trick or Treat???", True, white)
+            game_text = get_plain_text(
+                self.heading_font, 'Trick or Treat???', white)
 
             # if bonus ball is on screen, prompt user to catch it
             if self.bonus_coin.x > -1:
@@ -269,8 +266,8 @@ class GetCoin:
 
             # display user prompt based on bonus_coin.power
             if self.bonus_coin.caught:
-                game_text = self.heading_font.render(
-                    self.bonus_coin.user_prompt, True, white)
+                game_text = get_plain_text(
+                    self.heading_font, self.bonus_coin.user_prompt, white)
                 if not self.game_over:
                     blit_text_bg()
                     blit_text()
