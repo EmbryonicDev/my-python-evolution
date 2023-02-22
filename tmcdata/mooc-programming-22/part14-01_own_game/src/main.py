@@ -13,7 +13,8 @@ class GetCoin:
         self.height = 900
         self.info_board = 100
         self.bonus_board = 100
-        self.total_height = self.height+self.info_board+self.bonus_board
+        self.luck_board = 60
+        self.total_height = self.height+self.info_board+self.bonus_board+self.luck_board
         self.window_dimensions = (self.width, self.height)
         self.window = pygame.display.set_mode(
             (self.width, self.total_height))
@@ -195,13 +196,13 @@ class GetCoin:
             # bonus board text if ball / bonus state is active
             def blit_text():
                 return self.window.blit(game_text, (self.width*.5-(game_text.get_width()/2),
-                                                    self.total_height-self.bonus_board*0.5-game_text.get_height()/2))
+                                                    self.total_height-self.luck_board-self.bonus_board*0.5-game_text.get_height()/2))
 
             # background rectangle behind bonus board text
             def blit_text_bg():
                 return pygame.draw.rect(self.window, black,
                                         (self.width/2-game_text.get_width()/2,
-                                         self.total_height-self.bonus_board*0.5-game_text.get_height()/2,
+                                         self.total_height-self.luck_board-self.bonus_board*0.5-game_text.get_height()/2,
                                          game_text.get_width(),
                                          game_text.get_height()))
 
@@ -211,7 +212,7 @@ class GetCoin:
                              (0, self.height+self.info_board+3, self.width, self.height + self.info_board+3))
 
             # bonus record text
-            line_one_height = self.total_height - self.bonus_board + 10
+            line_one_height = self.total_height - self.bonus_board-self.luck_board + 10
             line_two_height = line_one_height+40
             # text when no ball / no active bonus
             if ((self.bonus_coin.x < 0 and
