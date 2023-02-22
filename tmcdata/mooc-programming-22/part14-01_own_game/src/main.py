@@ -355,15 +355,15 @@ class GetCoin:
 
         self.window.fill(window_color)
 
-        # dividing lines
-        get_dividing_lines()
-
         # Info board text
         get_shortcuts()
         get_bot_info()
 
         # # bonus mode info board
         handle_bonus_text()
+
+        # dividing lines
+        get_dividing_lines()
 
         # print door
         handle_door()
