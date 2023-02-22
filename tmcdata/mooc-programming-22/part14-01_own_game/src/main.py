@@ -307,6 +307,20 @@ class GetCoin:
                     self.monster_count += 1
                     self.release_monsters()
 
+            def update_luck(type_of_luck: str):
+                # update luck counts
+                self.luck_count[type_of_luck] += 1
+                self.luck_count['total count'] += 1
+                # update luck percentages
+                if self.luck_count['total count'] > 0:
+                    self.luck_count['good percentage'] = int((
+                        self.luck_count['good']/self.luck_count['total count'])*100)
+                    self.luck_count['bad percentage'] = int(100 -
+                                                            self.luck_count['good percentage'])
+
+                    print('good luck: ', self.luck_count['good percentage'])
+                    print('bad luck: ', self.luck_count['bad percentage'])
+
             # bonus coin to screen
             if self.timer.seconds == 60:
                 self.bonus_coin.toggle_visibility()
@@ -323,6 +337,7 @@ class GetCoin:
             # bonus coin caught by Robot
             if self.bonus_coin.hit_robot(self.bot.footprint):
                 print('caught bonus coin: ', self.bonus_coin.power)
+                update_luck(self.bonus_coin.dict['luck'])
                 # Hide coin when caught
                 self.bonus_coin.catch_coin()
                 self.bonus_coin.toggle_visibility()
