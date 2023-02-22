@@ -186,9 +186,6 @@ class GetCoin:
                     else:
                         self.random_color = colors[1]
 
-            # new color every second
-            get_color()
-
                 # make sure rectangle is dark grey before & after bonus
                 if (self.game_over or
                     self.timer.seconds <= 60 or
@@ -208,6 +205,7 @@ class GetCoin:
                                          game_text.get_width(),
                                          game_text.get_height()))
 
+            get_color()
             # Info board rectangle
             pygame.draw.rect(self.window, (self.random_color),
                              (0, self.height+self.info_board+3, self.width, self.height + self.info_board+3))
