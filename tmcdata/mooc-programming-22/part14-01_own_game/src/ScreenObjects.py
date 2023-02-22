@@ -88,16 +88,18 @@ class BonusCoin(MovingCoin):
         MovingCoin.__init__(self, screen_dimensions, image)
 
         self.dict = random.choice([
-            {'power': 'freeze', 'user_prompt': 'Ghosts are Frozen', 'flash red': True},
+            {'power': 'freeze', 'user_prompt': 'Ghosts are Frozen',
+                'flash red': True, 'luck': 'good'},
             {'power': 'speed up',
-                'user_prompt': 'Super Fast Ghosts! Be Careful!', 'flash red': True},
-            {'power': 'cupcake', 'user_prompt': 'Eat the Cupcakes!', 'flash red': True},
+                'user_prompt': 'Super Fast Ghosts! Be Careful!', 'flash red': True, 'luck': 'bad'},
+            {'power': 'cupcake', 'user_prompt': 'Eat the Cupcakes!',
+                'flash red': True, 'luck': 'good'},
             {'power': 'add monsters',
-                'user_prompt': 'Adding 5 Monsters', 'flash red': False},
+                'user_prompt': 'Adding 5 Monsters', 'flash red': False, 'luck': 'bad'},
             {'power': 'add health', 'user_prompt': 'Adding 10 Health Points',
-                'flash red': False},
+                'flash red': False, 'luck': 'good'},
             {'power': 'take health',
-                'user_prompt': 'Taking 10 Health Points', 'flash red': False},
+                'user_prompt': 'Taking 10 Health Points', 'flash red': False, 'luck': 'bad'},
         ])
         self.power = self.dict['power']
         self.user_prompt = self.dict['user_prompt']
