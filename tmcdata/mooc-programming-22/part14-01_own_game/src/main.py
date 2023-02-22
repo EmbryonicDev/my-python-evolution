@@ -118,18 +118,18 @@ class GetCoin:
                                              2, self.height/2-game_text.get_height()/2))
 
         def get_dividing_lines():
-            # Info board black rectangle
-            pygame.draw.rect(self.window, yellow,
-                             (0, self.height, self.width, self.info_board+self.bonus_board))
             # 1st dividing line
             pygame.draw.line(self.window, yellow,
                              (0, self.height), (self.width, self.height), 4)
             # 2nd dividing line
             pygame.draw.line(self.window, yellow,
-                             (0, self.total_height-self.bonus_board-self.info_board/2), (self.width, self.total_height-self.bonus_board-self.info_board/2), 4)
+                             (0, self.height+self.info_board/2), (self.width, self.height+self.info_board/2), 4)
             # 3rd dividing line
             pygame.draw.line(self.window, yellow,
-                             (0, self.total_height-self.bonus_board), (self.width, self.total_height-self.bonus_board), 4)
+                             (0, self.height+self.bonus_board), (self.width, self.height+self.bonus_board), 4)
+            # 4th dividing line
+            pygame.draw.line(self.window, yellow,
+                             (0, self.total_height-self.luck_board), (self.width, self.total_height-self.luck_board), 4)
 
         def get_shortcuts():
             # Info board orange rectangle
