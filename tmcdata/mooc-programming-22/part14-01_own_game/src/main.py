@@ -87,6 +87,7 @@ class GetCoin:
         yellow = (255, 255, 0)
         orange = (255, 153, 51)
 
+        # helper functions
         # standard text render
         def get_plain_text(font, text, color):
             return font.render(text, True, color)
@@ -96,7 +97,6 @@ class GetCoin:
             return font.render(
                 f"{text}: {variable}", True, color)
 
-        # helper functions
         def handle_window_text():
             # get game over text
             if self.game_over:
