@@ -7,7 +7,7 @@ class Timer:
         self.seconds = 55
 
     def clear_timer(self):
-        self.seconds = random.randint(0, 55)
+        self.seconds = random.randint(25, 55)
         self.frame_counter = 0
 
     def add_counter(self):
