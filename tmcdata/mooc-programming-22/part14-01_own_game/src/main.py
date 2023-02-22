@@ -210,10 +210,10 @@ class GetCoin:
             pygame.draw.rect(self.window, (self.random_color),
                              (0, self.height+self.info_board+3, self.width, self.height + self.info_board+3))
 
-            # text when no ball / no active bonus
             # bonus record text
             line_one_height = self.total_height - self.bonus_board + 10
             line_two_height = line_one_height+40
+            # text when no ball / no active bonus
             if ((self.bonus_coin.x < 0 and
                 not self.bonus_coin.caught) or
                     self.game_over):
