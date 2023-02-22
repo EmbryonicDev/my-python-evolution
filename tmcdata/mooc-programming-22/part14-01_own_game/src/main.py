@@ -364,7 +364,7 @@ class GetCoin:
         get_shortcuts()
         get_bot_info()
 
-        # # bonus mode info board
+        # bonus mode info board
         handle_bonus_text()
 
         handle_luck_board()
