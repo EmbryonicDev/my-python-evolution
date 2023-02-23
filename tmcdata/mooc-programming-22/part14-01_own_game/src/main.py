@@ -44,7 +44,7 @@ class GetCoin:
         self.bonus_coin = self.get_bonus_coin()
         self.bot = Robot(self.window_dimensions, 'robot')
         self.player = Player("DJ")
-        self.scores_list = HighScores()
+        self.high_scores = HighScores()
         self.release_coins()
         self.release_monsters()
 
@@ -536,6 +536,7 @@ class GetCoin:
         if self.game_over:
             self.player.points, self.player.level = self.bot.points, self.level
             self.scores_list.update_scores(self.player)
+            self.high_scores.update_scores(self.player)
 
 
 if __name__ == '__main__':
