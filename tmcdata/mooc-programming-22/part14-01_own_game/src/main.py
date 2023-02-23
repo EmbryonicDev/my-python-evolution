@@ -43,6 +43,8 @@ class GetCoin:
                            'good percentage': 0, 'bad percentage': 0}
         self.bonus_coin = self.get_bonus_coin()
         self.bot = Robot(self.window_dimensions, 'robot')
+        self.player = Player("DJ")
+        self.scores_list = HighScores()
         self.release_coins()
         self.release_monsters()
 
@@ -451,7 +453,7 @@ class GetCoin:
 
         if (self.bot.hit_door(self.door.footprint) and
                 all(i.caught == True for i in self.coins)
-                ):
+            ):
             self.level += 1
             self.monster_count += 1
             self.release_coins()
@@ -529,6 +531,11 @@ class GetCoin:
         if (self.bonus_coin.caught and
                 self.bonus_coin.power == 'freeze'):
             self.freeze_monsters()
+
+    def update_scores(self):
+        if self.game_over:
+            self.player.points, self.player.level = self.bot.points, self.level
+            self.scores_list.update_scores(self.player)
 
 
 if __name__ == '__main__':
