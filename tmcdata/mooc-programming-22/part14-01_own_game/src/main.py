@@ -483,7 +483,7 @@ class GetCoin:
                 else:
                     self.bot.take_health()
                     # End game when score hits 0
-                    if self.bot.health <= 0:
+                    if self.bot.health < 1:
                         self.bot.health = 0
                         self.game_over = True
                     self.release_monsters()
