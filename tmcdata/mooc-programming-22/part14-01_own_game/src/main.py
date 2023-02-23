@@ -211,7 +211,7 @@ class GetCoin:
             get_color()
             # Info board rectangle
             pygame.draw.rect(self.window, (self.random_color),
-                             (0, self.height+self.info_board+3, self.width, self.height + self.info_board+3))
+                             (0, self.height+self.info_board+3, self.width, self.bonus_board-3))
 
             # bonus record text
             line_one_height = self.total_height - self.bonus_board-self.luck_board + 10
