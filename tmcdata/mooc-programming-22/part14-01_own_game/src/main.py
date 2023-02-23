@@ -274,9 +274,39 @@ class GetCoin:
                     blit_text()
 
         def handle_luck_board():
-            # luck board black rectangle
-            pygame.draw.rect(self.window, black,
+            good_luck = self.luck_count['good percentage']/100
+            bad_luck = self.luck_count['bad percentage']/100
+
+            # luck board dark grey rectangle
+            pygame.draw.rect(self.window, dark_grey,
                              (0, self.total_height-self.luck_board, self.width, self.luck_board))
+            # green rect for good luck
+            pygame.draw.rect(self.window, green,
+                             (0, self.total_height-self.luck_board+2, self.width*good_luck, self.luck_board+2))
+            if good_luck + bad_luck > 0:
+                word = 'Lucky'
+                player_luck = good_luck
+                # red rect for bad luck
+                pygame.draw.rect(self.window, red,
+                                 (self.width*good_luck, self.total_height-self.luck_board+2, self.width, self.luck_board))
+                if good_luck >= bad_luck:
+                    word = 'Lucky'
+                    player_luck = good_luck
+                elif bad_luck > good_luck:
+                    word = 'Unlucky'
+                    player_luck = bad_luck
+
+                # luck board text - You are xx% [lucky / unlucky]
+                game_text = self.game_font.render(
+                    f"You are {int(player_luck*100)}% {word}!!", True, white)
+
+                # text background with padding
+                pygame.draw.rect(self.window, dark_grey,
+                                 (self.width/2-game_text.get_width() / 2-8, self.total_height-self.luck_board*.5 -
+                                  game_text.get_height()/2-8, game_text.get_width()+8, game_text.get_height()+16))
+                # text
+                self.window.blit(game_text, (self.width/2-game_text.get_width() /
+                                             2, self.total_height-self.luck_board*.5-game_text.get_height()/2))
 
         def handle_door():
             if all(i.caught == True for i in self.coins):
@@ -376,6 +406,7 @@ class GetCoin:
                         else (204, 255, 255))
 
         self.window.fill(window_color)
+        handle_luck_board()
 
         # Info board text
         get_shortcuts()
@@ -383,9 +414,6 @@ class GetCoin:
 
         # bonus mode info board
         handle_bonus_text()
-
-        # dividing lines
-        get_dividing_lines()
 
         # print door
         handle_door()
@@ -397,7 +425,8 @@ class GetCoin:
         # bonus coin
         handle_bonus_ball()
 
-        handle_luck_board()
+        # dividing lines
+        get_dividing_lines()
 
         # monsters
         for monster in self.monsters:
