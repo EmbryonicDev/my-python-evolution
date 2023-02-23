@@ -2,6 +2,7 @@ import pygame
 import random
 from Timer import Timer
 from ScreenObjects import ScreenObject, MovingObject, MovingMonster, MovingCoin, BonusCoin, Robot
+from ScoreTrack import Player, HighScores
 
 
 class GetCoin:
