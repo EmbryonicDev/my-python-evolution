@@ -535,7 +535,7 @@ class GetCoin:
     def update_scores(self):
         if self.game_over:
             self.player.points, self.player.level = self.bot.points, self.level
-            self.scores_list.update_scores(self.player)
+            self.player.update_player(self.bot.points, self.level)
             self.high_scores.update_scores(self.player)
 
 
