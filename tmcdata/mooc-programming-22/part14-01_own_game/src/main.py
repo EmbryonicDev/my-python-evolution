@@ -200,13 +200,14 @@ class GetCoin:
                 return self.window.blit(game_text, (self.width*.5-(game_text.get_width()/2),
                                                     self.total_height-self.luck_board-self.bonus_board*0.5-game_text.get_height()/2))
 
-            # background rectangle behind bonus board text
+            # background rectangle behind bonus board text with padding
             def blit_text_bg():
                 return pygame.draw.rect(self.window, black,
-                                        (self.width/2-game_text.get_width()/2,
-                                         self.total_height-self.luck_board-self.bonus_board*0.5-game_text.get_height()/2,
-                                         game_text.get_width(),
-                                         game_text.get_height()))
+                                        (self.width/2-game_text.get_width()/2-8,
+                                         self.total_height-self.luck_board-self.bonus_board*0.5-game_text.get_height() /
+                                         2-8,
+                                         game_text.get_width()+16,
+                                         game_text.get_height()+8))
 
             get_color()
             # Info board rectangle
@@ -302,8 +303,11 @@ class GetCoin:
 
                 # text background with padding
                 pygame.draw.rect(self.window, dark_grey,
-                                 (self.width/2-game_text.get_width() / 2-8, self.total_height-self.luck_board*.5 -
-                                  game_text.get_height()/2-8, game_text.get_width()+8, game_text.get_height()+16))
+                                 (self.width/2-game_text.get_width() / 2-8,
+                                  self.total_height-self.luck_board*.5 -
+                                  game_text.get_height()/2-8,
+                                  game_text.get_width()+8,
+                                  game_text.get_height()+16))
                 # text
                 self.window.blit(game_text, (self.width/2-game_text.get_width() /
                                              2, self.total_height-self.luck_board*.5-game_text.get_height()/2))
