@@ -13,7 +13,8 @@ class GetCoin:
         self.height = 900
         self.info_board = 100
         self.bonus_board = 100
-        self.total_height = self.height+self.info_board+self.bonus_board
+        self.luck_board = 80
+        self.total_height = self.height+self.info_board+self.bonus_board+self.luck_board
         self.window_dimensions = (self.width, self.height)
         self.window = pygame.display.set_mode(
             (self.width, self.total_height))
@@ -37,6 +38,8 @@ class GetCoin:
         self.monsters = []
         self.bonus_record = {'freeze': 0, 'speed up': 0, 'cupcake': 0,
                              'add monsters': 0, 'add health': 0, 'take health': 0}
+        self.luck_count = {'good': 0, 'bad': 0, 'total count': 0,
+                           'good percentage': 0, 'bad percentage': 0}
         self.bonus_coin = self.get_bonus_coin()
         self.bot = Robot(self.window_dimensions, 'robot')
         self.release_coins()
@@ -87,6 +90,7 @@ class GetCoin:
         yellow = (255, 255, 0)
         orange = (255, 153, 51)
 
+        # helper functions
         # standard text render
         def get_plain_text(font, text, color):
             return font.render(text, True, color)
@@ -96,7 +100,6 @@ class GetCoin:
             return font.render(
                 f"{text}: {variable}", True, color)
 
-        # helper functions
         def handle_window_text():
             # get game over text
             if self.game_over:
@@ -117,18 +120,18 @@ class GetCoin:
                                              2, self.height/2-game_text.get_height()/2))
 
         def get_dividing_lines():
-            # Info board black rectangle
-            pygame.draw.rect(self.window, yellow,
-                             (0, self.height, self.width, self.info_board+self.bonus_board))
             # 1st dividing line
             pygame.draw.line(self.window, yellow,
                              (0, self.height), (self.width, self.height), 4)
             # 2nd dividing line
             pygame.draw.line(self.window, yellow,
-                             (0, self.total_height-self.bonus_board-self.info_board/2), (self.width, self.total_height-self.bonus_board-self.info_board/2), 4)
+                             (0, self.height+self.info_board/2), (self.width, self.height+self.info_board/2), 4)
             # 3rd dividing line
             pygame.draw.line(self.window, yellow,
-                             (0, self.total_height-self.bonus_board), (self.width, self.total_height-self.bonus_board), 4)
+                             (0, self.height+self.bonus_board), (self.width, self.height+self.bonus_board), 4)
+            # 4th dividing line
+            pygame.draw.line(self.window, yellow,
+                             (0, self.total_height-self.luck_board), (self.width, self.total_height-self.luck_board), 4)
 
         def get_shortcuts():
             # Info board orange rectangle
@@ -189,29 +192,29 @@ class GetCoin:
                 # make sure rectangle is dark grey before & after bonus
                 if (self.game_over or
                     self.timer.seconds <= 60 or
-                        self.timer.seconds == 72):
+                        self.timer.seconds in [66, 72]):
                     self.random_color = dark_grey
 
             # bonus board text if ball / bonus state is active
             def blit_text():
                 return self.window.blit(game_text, (self.width*.5-(game_text.get_width()/2),
-                                                    self.total_height-self.bonus_board*0.5-game_text.get_height()/2))
+                                                    self.total_height-self.luck_board-self.bonus_board*0.5-game_text.get_height()/2))
 
             # background rectangle behind bonus board text
             def blit_text_bg():
                 return pygame.draw.rect(self.window, black,
                                         (self.width/2-game_text.get_width()/2,
-                                         self.total_height-self.bonus_board*0.5-game_text.get_height()/2,
+                                         self.total_height-self.luck_board-self.bonus_board*0.5-game_text.get_height()/2,
                                          game_text.get_width(),
                                          game_text.get_height()))
 
             get_color()
             # Info board rectangle
             pygame.draw.rect(self.window, (self.random_color),
-                             (0, self.height+self.info_board+3, self.width, self.height + self.info_board+3))
+                             (0, self.height+self.info_board+3, self.width, self.bonus_board-3))
 
             # bonus record text
-            line_one_height = self.total_height - self.bonus_board + 10
+            line_one_height = self.total_height - self.bonus_board-self.luck_board + 10
             line_two_height = line_one_height+40
             # text when no ball / no active bonus
             if ((self.bonus_coin.x < 0 and
@@ -270,6 +273,41 @@ class GetCoin:
                     blit_text_bg()
                     blit_text()
 
+        def handle_luck_board():
+            good_luck = self.luck_count['good percentage']/100
+            bad_luck = self.luck_count['bad percentage']/100
+
+            # luck board dark grey rectangle
+            pygame.draw.rect(self.window, dark_grey,
+                             (0, self.total_height-self.luck_board, self.width, self.luck_board))
+            # green rect for good luck
+            pygame.draw.rect(self.window, green,
+                             (0, self.total_height-self.luck_board+2, self.width*good_luck, self.luck_board+2))
+            if good_luck + bad_luck > 0:
+                word = 'Lucky'
+                player_luck = good_luck
+                # red rect for bad luck
+                pygame.draw.rect(self.window, red,
+                                 (self.width*good_luck, self.total_height-self.luck_board+2, self.width, self.luck_board))
+                if good_luck >= bad_luck:
+                    word = 'Lucky'
+                    player_luck = good_luck
+                elif bad_luck > good_luck:
+                    word = 'Unlucky'
+                    player_luck = bad_luck
+
+                # luck board text - You are xx% [lucky / unlucky]
+                game_text = self.game_font.render(
+                    f"You are {int(player_luck*100)}% {word}!!", True, white)
+
+                # text background with padding
+                pygame.draw.rect(self.window, dark_grey,
+                                 (self.width/2-game_text.get_width() / 2-8, self.total_height-self.luck_board*.5 -
+                                  game_text.get_height()/2-8, game_text.get_width()+8, game_text.get_height()+16))
+                # text
+                self.window.blit(game_text, (self.width/2-game_text.get_width() /
+                                             2, self.total_height-self.luck_board*.5-game_text.get_height()/2))
+
         def handle_door():
             if all(i.caught == True for i in self.coins):
                 if self.door.x < 0:
@@ -299,6 +337,20 @@ class GetCoin:
                     self.monster_count += 1
                     self.release_monsters()
 
+            def update_luck(type_of_luck: str):
+                # update luck counts
+                self.luck_count[type_of_luck] += 1
+                self.luck_count['total count'] += 1
+                # update luck percentages
+                if self.luck_count['total count'] > 0:
+                    self.luck_count['good percentage'] = int((
+                        self.luck_count['good']/self.luck_count['total count'])*100)
+                    self.luck_count['bad percentage'] = int(100 -
+                                                            self.luck_count['good percentage'])
+
+                    print('good luck: ', self.luck_count['good percentage'])
+                    print('bad luck: ', self.luck_count['bad percentage'])
+
             # bonus coin to screen
             if self.timer.seconds == 60:
                 self.bonus_coin.toggle_visibility()
@@ -315,6 +367,7 @@ class GetCoin:
             # bonus coin caught by Robot
             if self.bonus_coin.hit_robot(self.bot.footprint):
                 print('caught bonus coin: ', self.bonus_coin.power)
+                update_luck(self.bonus_coin.dict['luck'])
                 # Hide coin when caught
                 self.bonus_coin.catch_coin()
                 self.bonus_coin.toggle_visibility()
@@ -353,15 +406,13 @@ class GetCoin:
                         else (204, 255, 255))
 
         self.window.fill(window_color)
-
-        # dividing lines
-        get_dividing_lines()
+        handle_luck_board()
 
         # Info board text
         get_shortcuts()
         get_bot_info()
 
-        # # bonus mode info board
+        # bonus mode info board
         handle_bonus_text()
 
         # print door
@@ -373,6 +424,9 @@ class GetCoin:
 
         # bonus coin
         handle_bonus_ball()
+
+        # dividing lines
+        get_dividing_lines()
 
         # monsters
         for monster in self.monsters:
