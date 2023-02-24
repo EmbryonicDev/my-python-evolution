@@ -24,8 +24,13 @@ class HighScores:
                 player.name != None):
             return True
         return False
+
+    def get_new_game_scores(self):
         if self.file_exists():
             self.text_to_list()
+        if self.get_list_length() > 1:
+            self.sort_scores()
+            self.list_to_text()
 
         if self.player_count == 10:
             if Player.points > self.top_ten_scores[9].points:
