@@ -44,7 +44,7 @@ class GetCoin:
                            'good percentage': 0, 'bad percentage': 0}
         self.bonus_coin = self.get_bonus_coin()
         self.bot = Robot(self.window_dimensions, 'robot')
-        self.player = Player("DJ")
+        self.player = Player()
         self.high_scores = HighScores()
         self.release_coins()
         self.release_monsters()
