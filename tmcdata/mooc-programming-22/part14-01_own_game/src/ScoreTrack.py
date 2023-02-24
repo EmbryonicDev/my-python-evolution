@@ -4,8 +4,8 @@ class Player:
         self.points = 0
         self.level = 0
 
-    def update_player(self, points, level):
-        self.points, self.level = int(points), int(level)
+    def update_player(self, name, points, level):
+        self.name, self.points, self.level = name, int(points), int(level)
 
     def __repr__(self):
         return f"{self.name} - Points: {self.points} - Level: {self.level}"
