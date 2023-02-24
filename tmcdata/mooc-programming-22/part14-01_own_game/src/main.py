@@ -46,6 +46,7 @@ class GetCoin:
         self.bot = Robot(self.window_dimensions, 'robot')
         self.player = Player()
         self.high_scores = HighScores()
+        self.high_scores.get_new_game_scores()
         self.release_coins()
         self.release_monsters()
 
