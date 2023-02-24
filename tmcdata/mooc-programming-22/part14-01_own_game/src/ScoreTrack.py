@@ -36,13 +36,20 @@ class HighScores:
         for player in self.top_ten_scores:
             print(player)
 
-        if self.player_count >= 2:
-            self.sort_scores()
+    def update_scores(self, player):
+        if self.if_high_score(player):
+            self.top_ten_scores.append(player)
 
-        self.top_ten_scores.append(Player)
+        self.sort_scores()
+
+        if self.get_list_length() > 10:
+            self.top_ten_scores = self.top_ten_scores[0:10]
+
         self.list_to_text()
-        print(self.top_ten_scores)
-    
+
+        # For testing
+        self.print_players
+
     def text_to_list(self):
         with open('scores.txt', 'r') as file:
             for line in file:
