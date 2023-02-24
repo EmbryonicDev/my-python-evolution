@@ -18,7 +18,24 @@ class GetCoin:
         self.total_height = self.height+self.info_board+self.bonus_board+self.luck_board
         self.window_dimensions = (self.width, self.height)
         self.window = pygame.display.set_mode(
+                        self.window = pygame.display.set_mode(
             (self.width, self.total_height))
+
+        ###########################################################
+        
+        # experiment with this to 
+        # implement the layout and scale of the entire game,
+        # based on screen dimensions  
+        # +++ use the dimensions to create a 20% scaled down window
+
+        # self.window = pygame.display.set_mode((0,0),pygame.FULLSCREEN)
+        
+        # print(self.window.get_width(), 'Bam! the window width')
+        
+        ###########################################################
+        
+        
+        
         pygame.display.set_caption('Coin Chaser')
 
         self.game_font = pygame.font.SysFont('Arial', 36)
