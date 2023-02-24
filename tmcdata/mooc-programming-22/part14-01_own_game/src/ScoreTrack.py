@@ -1,6 +1,6 @@
 class Player:
-    def __init__(self, name: str):
-        self.name = name
+    def __init__(self):
+        self.name = None
         self.points = 0
         self.level = 0
 
