@@ -18,7 +18,12 @@ class HighScores:
     def get_list_length(self):
         return len(self.top_ten_scores)
 
-    def update_scores(self, Player):
+    def if_high_score(self, player):
+        if ((self.get_list_length() < 10 or
+                player.points > min(i.points for i in self.top_ten_scores)) and
+                player.name != None):
+            return True
+        return False
         if self.file_exists():
             self.text_to_list()
 
