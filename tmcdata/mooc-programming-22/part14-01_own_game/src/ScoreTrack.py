@@ -47,6 +47,7 @@ class HighScores:
 
         self.list_to_text()
 
+        print('update_scores() - executed like <<<< - Ted Bundy - >>>>')
         # For testing
         self.print_players
 
