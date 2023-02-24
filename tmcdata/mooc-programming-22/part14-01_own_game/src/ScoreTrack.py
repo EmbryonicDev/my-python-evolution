@@ -39,10 +39,10 @@ class HighScores:
                 if len(line) > 3:
                     line = line.replace('\n', '')
                     parts = line.split(';')
-                    player = Player(parts[0])
+                    player = Player()
                     print(parts)
-                    player.update_player(parts[1], parts[2])
-                    self.top_ten_scores.append(player)    
+                    player.update_player(parts[0], parts[1], parts[2])
+                    self.top_ten_scores.append(player)
 
     def sort_scores(self):
         if self.player_count > 0:
