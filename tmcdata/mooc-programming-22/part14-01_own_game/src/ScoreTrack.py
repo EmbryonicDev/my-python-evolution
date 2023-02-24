@@ -14,8 +14,10 @@ class Player:
 class HighScores:
     def __init__(self):
         self.top_ten_scores = []
-        self.player_count = len(self.top_ten_scores)
-        
+
+    def get_list_length(self):
+        return len(self.top_ten_scores)
+
     def update_scores(self, Player):
         if self.file_exists():
             self.text_to_list()
