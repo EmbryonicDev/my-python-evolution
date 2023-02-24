@@ -84,14 +84,8 @@ class GetCoin:
 
             if event.type == pygame.QUIT:
                 exit()
-        
-            '''
-            # if game_over -> if safe_mode -> self.update_scores() &
-            safe_mode = False
-            # safe_mode = True on new game
-            This is a multiline
-            comment.
-            '''        
+
+        self.update_scores()
 
     def draw_window(self):
         black = (0, 0, 0)
