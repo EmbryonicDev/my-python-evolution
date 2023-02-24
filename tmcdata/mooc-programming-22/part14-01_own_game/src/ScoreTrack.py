@@ -79,5 +79,6 @@ class HighScores:
     def list_to_text(self):
         with open('scores.txt', 'w') as file:
             for player in self.top_ten_scores:
-                file.write(
-                    f"{player.name};{player.points};{player.level}\n")
+                if player.name != None:
+                    file.write(
+                        f"{player.name};{player.points};{player.level}\n")
