@@ -32,10 +32,10 @@ class HighScores:
             self.sort_scores()
             self.list_to_text()
 
-        if self.player_count == 10:
-            if Player.points > self.top_ten_scores[9].points:
-                self.top_ten_scores.pop(9)
-                
+    def print_players(self):
+        for player in self.top_ten_scores:
+            print(player)
+
         if self.player_count >= 2:
             self.sort_scores()
 
