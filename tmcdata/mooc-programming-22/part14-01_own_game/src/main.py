@@ -453,6 +453,11 @@ class GetCoin:
         self.clock.tick(60)
 
     def move_bot(self):
+        # End game when score hits 0
+        if self.bot.health < 1:
+            self.bot.health = 0
+            self.game_over = True
+
         self.bot.move_bot()
 
         if (self.bot.hit_door(self.door.footprint) and
@@ -486,10 +491,6 @@ class GetCoin:
                     self.monster_count -= 1
                 else:
                     self.bot.take_health()
-                    # End game when score hits 0
-                    if self.bot.health < 1:
-                        self.bot.health = 0
-                        self.game_over = True
                     self.release_monsters()
 
     def take_health(self):
