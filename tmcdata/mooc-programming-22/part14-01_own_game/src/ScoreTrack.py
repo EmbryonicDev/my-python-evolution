@@ -2,11 +2,14 @@ class Player:
     def __init__(self, name: str):
         self.name = name
         self.points = 0
-        self.level = 0  
-        
+        self.level = 0
+
     def update_player(self, points, level):
-        self.points, self.level = points, level
-        
+        self.points, self.level = int(points), int(level)
+
+    def __repr__(self):
+        return f"{self.name} - Points: {self.points} - Level: {self.level}"
+
 
 class HighScores:
     def __init__(self):
