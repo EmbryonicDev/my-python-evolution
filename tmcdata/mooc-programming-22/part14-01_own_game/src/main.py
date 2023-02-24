@@ -70,6 +70,7 @@ class GetCoin:
             pygame.K_ESCAPE:  exit
         }
 
+        # handle key_dict
         for event in pygame.event.get():
             if event.type == pygame.KEYDOWN:
                 if event.key in key_dict:
