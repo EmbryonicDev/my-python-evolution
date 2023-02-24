@@ -34,6 +34,7 @@ class GetCoin:
             0, 255), random.randint(0, 255), random.randint(0, 255))
         self.game_over = False
         self.game_paused = False
+        self.safe_mode = True
         self.level = 1
         self.monster_count = 1
         self.monsters = []
@@ -542,10 +543,10 @@ class GetCoin:
             self.freeze_monsters()
 
     def update_scores(self):
-        if self.game_over:
-            self.player.points, self.player.level = self.bot.points, self.level
+        if self.game_over and self.safe_mode:
             self.player.update_player(self.bot.points, self.level)
             self.high_scores.update_scores(self.player)
+            self.safe_mode = False
 
 
 if __name__ == '__main__':
