@@ -3,6 +3,7 @@ import math
 import random
 from datetime import datetime
 
+    # solid red circle
 width, height = 2000, 2000
 center = width/2, height/2
 radius = center[1]
