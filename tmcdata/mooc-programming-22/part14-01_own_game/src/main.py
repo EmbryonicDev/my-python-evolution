@@ -1,5 +1,6 @@
 import pygame
 import random
+import math
 from Timer import Timer
 from ScreenObjects import ScreenObject, MovingObject, MovingMonster, MovingCoin, BonusCoin, Robot
 from ScoreTrack import Player, HighScores
@@ -11,35 +12,43 @@ class GetCoin:
 
         # Window
         self.width = 1000
-        self.height = 900
-        self.info_board = 100
-        self.bonus_board = 100
-        self.luck_board = 80
+        self.height = 600
+        self.info_board = self.height * 0.14
+        self.bonus_board = self.height * 0.14
+        self.luck_board = self.height * 0.12
         self.total_height = self.height+self.info_board+self.bonus_board+self.luck_board
         self.window_dimensions = (self.width, self.height)
         self.window = pygame.display.set_mode(
-                        self.window = pygame.display.set_mode(
             (self.width, self.total_height))
-
         ###########################################################
-        
-        # experiment with this to 
+
+        # experiment with this to
         # implement the layout and scale of the entire game,
-        # based on screen dimensions  
+        # based on screen dimensions
         # +++ use the dimensions to create a 20% scaled down window
 
-        # self.window = pygame.display.set_mode((0,0),pygame.FULLSCREEN)
-        
-        # print(self.window.get_width(), 'Bam! the window width')
-        
+        # set the width / height the same as screen dimensions
+        # self.width, self.height = pygame.display.get_surface().get_size() # option 1
+        # self.infoObject = pygame.display.Info() # option 2
+
+        # self.info_board = 100
+        # self.bonus_board = 100
+        # self.luck_board = 80
+        # self.height -= 480
+        # self.total_height = self.height+self.info_board+self.bonus_board+self.luck_board
+        # self.window_dimensions = (self.width, self.height)
+
+        # self.window = pygame.display.set_mode(
+        #     (self.width, self.total_height))
+
         ###########################################################
-        
-        
-        
+
         pygame.display.set_caption('Coin Chaser')
 
-        self.game_font = pygame.font.SysFont('Arial', 36)
-        self.heading_font = pygame.font.SysFont('Arial', 72)
+        self.game_font = pygame.font.SysFont(
+            'Arial', math.floor(self.height*0.045))
+        self.heading_font = pygame.font.SysFont(
+            'Arial', math.floor(self.height*0.085))
         self.door = ScreenObject(self.window_dimensions, 'door')
         self.clock = pygame.time.Clock()
         self.new_game()
