@@ -1,6 +1,6 @@
 class Player:
     def __init__(self):
-        self.name = None
+        self.name = ""
         self.points = 0
         self.level = 0
 
@@ -80,6 +80,6 @@ class HighScores:
     def list_to_text(self):
         with open('scores.txt', 'w') as file:
             for player in self.top_ten_scores:
-                if player.name != None:
+                if player.name != "":
                     file.write(
                         f"{player.name};{player.points};{player.level}\n")
