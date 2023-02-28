@@ -112,8 +112,6 @@ class GetCoin:
             if event.type == pygame.QUIT:
                 exit()
 
-        self.update_scores()
-
     def draw_window(self):
         black = (0, 0, 0)
         white = (255, 255, 255)
