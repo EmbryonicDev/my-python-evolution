@@ -10,7 +10,6 @@ class Player:
     def update_name(self, char):
         if len(self.name) < 12:
             self.name += char
-            print(self.name)
 
     def pop_name(self):
         if len(self.name) > 0:
