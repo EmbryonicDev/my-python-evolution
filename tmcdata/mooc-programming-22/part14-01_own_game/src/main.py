@@ -142,23 +142,38 @@ class GetCoin:
                 f"{text}: {variable}", True, color)
 
         def handle_window_text():
+            high_score_color = (random.randint(0, 255), random.randint(
+                0, 255), random.randint(0, 255))
             # get game over text
             if self.game_over:
                 game_text = get_plain_text(
                     self.heading_font, 'Game Over...', white)
-            # get game paused text
+
             if self.game_paused:
                 game_text = get_plain_text(
                     self.heading_font, 'Game Paused...', white)
 
             if self.game_paused or self.game_over:
-                # text background
+                # text background - game paused / over
                 pygame.draw.rect(self.window, dark_grey,
-                                 (self.width/2-game_text.get_width() / 2-8, self.height/2 -
-                                  game_text.get_height()/2-8, game_text.get_width()+8, game_text.get_height()+8))
-                # text
+                                 (self.width/2-game_text.get_width() / 2-8, self.height*0.1, game_text.get_width()+8, game_text.get_height()+8))
+                # paused / game over text
                 self.window.blit(game_text, (self.width/2-game_text.get_width() /
-                                             2, self.height/2-game_text.get_height()/2))
+                                             2, self.height*0.1))
+                # high score text
+                game_text = get_plain_text(
+                    self.heading_font, "New High Score! Enter your Name: ", high_score_color)
+                game_text2 = get_plain_text(
+                    self.heading_font, self.player.name, high_score_color)
+                # text background - high score
+                pygame.draw.rect(self.window, dark_grey,
+                                 (self.width/2-game_text.get_width() / 2-8, self.height*0.25, game_text.get_width()+8, (game_text.get_height()*2)+8))
+                # high score user prompt
+                self.window.blit(game_text, (self.width/2-game_text.get_width() /
+                                             2, self.height*.25))
+                # user input
+                self.window.blit(game_text2, (self.width/2-game_text2.get_width() /
+                                              2, self.height*.25+game_text.get_height()+6))
 
         def get_dividing_lines():
             # 1st dividing line
