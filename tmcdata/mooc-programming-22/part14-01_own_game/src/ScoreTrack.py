@@ -7,6 +7,15 @@ class Player:
     def update_player(self, name, points, level):
         self.name, self.points, self.level = name, int(points), int(level)
 
+    def update_name(self, char):
+        if len(self.name) < 12:
+            self.name += char
+            print(self.name)
+
+    def pop_name(self):
+        if len(self.name) > 0:
+            self.name = self.name[:-1]
+
     def __repr__(self):
         return f"{self.name} - Points: {self.points} - Level: {self.level}"
 
