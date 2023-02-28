@@ -98,12 +98,21 @@ class GetCoin:
             pygame.K_ESCAPE:  exit
         }
 
-        # handle key_dict
         for event in pygame.event.get():
             if event.type == pygame.KEYDOWN:
+                # get high score name
+                if self.game_over and self.safe_mode:
+                    if event.key == pygame.K_BACKSPACE:
+                        self.player.pop_name()
+                        print(self.player.name)
+                    else:
+                        self.player.update_name(event.dict['unicode'])
+
+                # handle normal game play & shortcuts
                 if event.key in key_dict:
                     key_dict[event.key]()
 
+            # handle normal game play & shortcuts
             if event.type == pygame.KEYUP:
                 if (event.key in key_dict and
                         event.key != pygame.K_SPACE):
