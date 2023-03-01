@@ -188,6 +188,9 @@ class GetCoin:
                 # user input
                 self.window.blit(game_text2, (self.width/2-game_text2.get_width() /
                                               2, self.height*.25+game_text.get_height()+6))
+                # save icon
+                self.window.blit(self.save_icon.image,
+                                 self.save_icon.footprint)
 
         def get_dividing_lines():
             # 1st dividing line
