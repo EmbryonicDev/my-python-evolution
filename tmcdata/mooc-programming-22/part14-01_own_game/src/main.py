@@ -174,7 +174,14 @@ class GetCoin:
                 # paused / game over text
                 self.window.blit(game_text, (self.width/2-game_text.get_width() /
                                              2, self.height*0.1))
-                # high score text
+
+            # handle high score user prompt / input
+            if (
+                self.game_over
+                and self.safe_mode
+                and self.high_scores.if_high_score(self.player)
+            ):
+                # high score user prompt text
                 game_text = get_plain_text(
                     self.heading_font, "New High Score! Enter your Name: ", high_score_color)
                 game_text2 = get_plain_text(
