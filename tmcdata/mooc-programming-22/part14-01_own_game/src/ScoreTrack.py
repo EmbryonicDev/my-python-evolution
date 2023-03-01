@@ -70,7 +70,8 @@ class HighScores:
                     parts = line.split(';')
                     player = Player()
                     print(parts)
-                    player.update_player(parts[0], parts[1], parts[2])
+                    player.set_name(parts[0])
+                    player.update_player(parts[1], parts[2])
                     self.top_ten_scores.append(player)
 
     def sort_scores(self):
