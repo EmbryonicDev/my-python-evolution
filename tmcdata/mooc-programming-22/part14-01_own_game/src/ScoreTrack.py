@@ -7,6 +7,9 @@ class Player:
     def update_player(self, points, level):
         self.points, self.level = int(points), int(level)
 
+    def set_name(self, name):
+        self.name = name
+
     def update_name(self, char):
         if len(self.name) < 12:
             self.name += char
