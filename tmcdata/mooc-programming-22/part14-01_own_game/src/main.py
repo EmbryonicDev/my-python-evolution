@@ -102,16 +102,8 @@ class GetCoin:
         }
 
         for event in pygame.event.get():
+            # handle normal game play & shortcuts
             if event.type == pygame.KEYDOWN:
-                # get high score name
-                if self.game_over and self.safe_mode:
-                    if event.key == pygame.K_BACKSPACE:
-                        self.player.pop_name()
-                        print(self.player.name)
-                    else:
-                        self.player.update_name(event.dict['unicode'])
-
-                # handle normal game play & shortcuts
                 if event.key in key_dict:
                     key_dict[event.key]()
 
@@ -120,6 +112,25 @@ class GetCoin:
                 if (event.key in key_dict and
                         event.key != pygame.K_SPACE):
                     key_dict[event.key]()
+
+            # handle user input for high score
+            if (self.game_over
+                    and self.safe_mode
+                    and self.high_scores.if_high_score(self.player)
+                ):
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    x, y = event.pos
+                    if self.save_icon.is_clicked(x, y):
+                        self.update_scores(self.player.name)
+
+                if event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_BACKSPACE:
+                        self.player.pop_name()
+                    elif event.key == pygame.K_RETURN:
+                        self.update_scores(self.player.name)
+                    else:
+                        # append name with user input
+                        self.player.update_name(event.dict['unicode'])
 
             if event.type == pygame.QUIT:
                 exit()
