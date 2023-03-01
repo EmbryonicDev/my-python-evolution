@@ -589,14 +589,10 @@ class GetCoin:
                 self.bonus_coin.power == 'freeze'):
             self.freeze_monsters()
 
-    def update_scores(self):
-        if self.game_over and self.safe_mode:
-            self.player.update_player(
-                'Dummy Name', self.bot.points, self.level)
-            print(self.player.name)
-            if self.high_scores.if_high_score(self.player):
-                self.high_scores.update_scores(self.player)
-            self.safe_mode = False
+    def update_scores(self, player_name):
+        self.player.update_player(self.bot.points, self.level)
+        self.high_scores.update_scores(self.player)
+        self.safe_mode = False
 
 
 if __name__ == '__main__':
