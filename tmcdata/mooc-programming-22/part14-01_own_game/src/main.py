@@ -2,7 +2,7 @@ import pygame
 import random
 import math
 from Timer import Timer
-from ScreenObjects import ScreenObject, MovingObject, MovingMonster, MovingCoin, BonusCoin, Robot
+from ScreenObjects import ScreenObject, MovingObject, MovingMonster, MovingCoin, BonusCoin, Robot, SaveIcon
 from ScoreTrack import Player, HighScores
 
 
@@ -50,6 +50,9 @@ class GetCoin:
         self.heading_font = pygame.font.SysFont(
             'Arial', math.floor(self.height*0.085))
         self.door = ScreenObject(self.window_dimensions, 'door')
+        self.save_icon = SaveIcon(self.window_dimensions, 'save')
+        self.save_icon.update_coords(self.width/2-self.save_icon.width /
+                                     2, self.height*.45)
         self.clock = pygame.time.Clock()
         self.new_game()
         self.main_loop()
