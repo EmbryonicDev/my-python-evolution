@@ -123,12 +123,15 @@ class GetCoin:
                     x, y = event.pos
                     if self.save_icon.is_clicked(x, y):
                         self.update_scores(self.player.name)
+                        self.high_scores.show_high_scores = True
 
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_BACKSPACE:
                         self.player.pop_name()
                     elif event.key == pygame.K_RETURN:
                         self.update_scores(self.player.name)
+                        self.high_scores.show_high_scores = True
+
                     else:
                         # append name with user input
                         self.player.update_name(event.dict['unicode'])
