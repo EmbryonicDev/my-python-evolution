@@ -19,7 +19,7 @@ class Player:
             self.name = self.name[:-1]
 
     def __repr__(self):
-        return f"{self.name} - Points: {self.points} - Level: {self.level}"
+        return f"{'{:15}'.format(self.name)}{'{:<8}'.format(self.level)}{'{:<8}'.format(self.points)}"
 
 
 class HighScores:
