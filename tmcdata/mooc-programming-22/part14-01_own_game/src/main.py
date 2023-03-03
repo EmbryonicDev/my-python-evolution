@@ -114,6 +114,11 @@ class GetCoin:
                         event.key != pygame.K_SPACE):
                     key_dict[event.key]()
 
+            def submit_score():
+                self.update_scores(self.player.name)
+                self.high_scores.show_high_scores = True
+                self.player.inputting_name = False
+
             # handle user input for high score
             if (self.game_over
                 and self.safe_mode
@@ -122,15 +127,13 @@ class GetCoin:
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     x, y = event.pos
                     if self.save_icon.is_clicked(x, y):
-                        self.update_scores(self.player.name)
-                        self.high_scores.show_high_scores = True
+                        submit_score()
 
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_BACKSPACE:
                         self.player.pop_name()
                     elif event.key == pygame.K_RETURN:
-                        self.update_scores(self.player.name)
-                        self.high_scores.show_high_scores = True
+                        submit_score()
 
                     else:
                         # append name with user input
