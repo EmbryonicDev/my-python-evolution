@@ -30,10 +30,9 @@ class HighScores:
     def get_list_length(self):
         return len(self.top_ten_scores)
 
-    def if_high_score(self, player):
+    def if_high_score(self, points):
         if ((self.get_list_length() < 10 or
-                player.points > min(i.points for i in self.top_ten_scores)) and
-                player.name != None):
+                points > min(int(i.points) for i in self.top_ten_scores))):
             return True
         return False
 
