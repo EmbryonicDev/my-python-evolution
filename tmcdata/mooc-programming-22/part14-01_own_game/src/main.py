@@ -121,9 +121,10 @@ class GetCoin:
 
             # handle user input for high score
             if (self.game_over
-                and self.safe_mode
-                and self.high_scores.if_high_score(self.bot.points)
-                ):
+                    and self.safe_mode
+                    and self.high_scores.if_high_score(self.bot.points)
+                    ):
+                self.player.inputting_name = True
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     x, y = event.pos
                     if self.save_icon.is_clicked(x, y):
