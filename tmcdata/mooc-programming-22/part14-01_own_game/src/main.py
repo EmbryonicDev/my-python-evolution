@@ -618,6 +618,7 @@ class GetCoin:
         self.player.update_player(self.bot.points, self.level)
         self.high_scores.update_scores(self.player)
         self.safe_mode = False
+        self.high_scores.show_high_scores = True
 
 
 if __name__ == '__main__':
