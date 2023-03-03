@@ -160,8 +160,8 @@ class GetCoin:
                 f"{text}: {variable}", True, color)
 
         def handle_window_text():
-            high_score_color = (random.randint(0, 255), random.randint(
-                0, 255), random.randint(0, 255))
+            high_score_color = white
+
             # get game over text
             if self.game_over:
                 game_text = get_plain_text(
