@@ -3,6 +3,7 @@ class Player:
         self.name = ""
         self.points = 0
         self.level = 0
+        self.inputting_name = False
 
     def update_player(self, points, level):
         self.points, self.level = int(points), int(level)
