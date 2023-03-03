@@ -67,8 +67,6 @@ class GetCoin:
         self.level = 1
         self.monster_count = 1
         self.monsters = []
-        self.bonus_record = {'freeze': 0, 'speed up': 0, 'cupcake': 0,
-                             'add monsters': 0, 'add health': 0, 'take health': 0}
         self.luck_count = {'good': 0, 'bad': 0, 'total count': 0,
                            'good percentage': 0, 'bad percentage': 0}
         self.bonus_coin = self.get_bonus_coin()
@@ -311,33 +309,33 @@ class GetCoin:
                     self.game_over):
                 # freeze count
                 game_text = get_text_with_variable(
-                    self.game_font, 'Freeze', self.bonus_record['freeze'], (0, 255, 0))
+                    self.game_font, 'Freeze', self.player.bonus_record['freeze'], (0, 255, 0))
                 self.window.blit(
                     game_text, (25, line_one_height))
                 # cupcake count
                 game_text = get_text_with_variable(
-                    self.game_font, 'Cupcakes', self.bonus_record['cupcake'], (0, 255, 0))
+                    self.game_font, 'Cupcakes', self.player.bonus_record['cupcake'], (0, 255, 0))
                 self.window.blit(
                     game_text, (self.width*.5-(game_text.get_width()/2), line_one_height))
                 # add health count
                 game_text = get_text_with_variable(
-                    self.game_font, '+ Health', self.bonus_record['add health'], (0, 255, 0))
+                    self.game_font, '+ Health', self.player.bonus_record['add health'], (0, 255, 0))
                 self.window.blit(
                     game_text, (self.width-(game_text.get_width()+25),
                                 line_one_height))
                 # speed count
                 game_text = get_text_with_variable(
-                    self.game_font, 'Fast', self.bonus_record['speed up'], red)
+                    self.game_font, 'Fast', self.player.bonus_record['speed up'], red)
                 self.window.blit(
                     game_text, (25, line_two_height))
                 # add monsters count
                 game_text = get_text_with_variable(
-                    self.game_font, '+ Monsters', self.bonus_record['add monsters'], red)
+                    self.game_font, '+ Monsters', self.player.bonus_record['add monsters'], red)
                 self.window.blit(
                     game_text, (self.width*.5-(game_text.get_width()/2), line_two_height))
                 # take health count
                 game_text = get_text_with_variable(
-                    self.game_font, '- Health', self.bonus_record['take health'], red)
+                    self.game_font, '- Health', self.player.bonus_record['take health'], red)
                 self.window.blit(
                     game_text, (self.width-(game_text.get_width()+25),
                                 line_two_height))
@@ -463,7 +461,7 @@ class GetCoin:
                 # Hide coin when caught
                 self.bonus_coin.catch_coin()
                 self.bonus_coin.toggle_visibility()
-                self.bonus_record[self.bonus_coin.power] += 1
+                self.player.bonus_record[self.bonus_coin.power] += 1
                 self.timer.seconds = 66
 
             # if coin is caught

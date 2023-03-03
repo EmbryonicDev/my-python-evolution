@@ -4,6 +4,8 @@ class Player:
         self.points = 0
         self.level = 0
         self.inputting_name = False
+        self.bonus_record = {'freeze': 0, 'speed up': 0, 'cupcake': 0,
+                             'add monsters': 0, 'add health': 0, 'take health': 0}
 
     def update_player(self, points, level):
         self.points, self.level = int(points), int(level)
