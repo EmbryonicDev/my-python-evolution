@@ -187,7 +187,7 @@ class GetCoin:
             if (
                 self.game_over
                 and self.safe_mode
-                and self.high_scores.if_high_score(self.player)
+                and self.high_scores.if_high_score(self.bot.points)
             ):
                 # high score user prompt text
                 game_text = get_plain_text(
