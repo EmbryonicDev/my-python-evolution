@@ -25,6 +25,7 @@ class Player:
 class HighScores:
     def __init__(self):
         self.top_ten_scores = []
+        self.show_high_scores = False
 
     def get_list_length(self):
         return len(self.top_ten_scores)
