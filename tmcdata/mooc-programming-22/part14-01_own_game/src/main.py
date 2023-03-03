@@ -67,8 +67,6 @@ class GetCoin:
         self.level = 1
         self.monster_count = 1
         self.monsters = []
-        self.luck_count = {'good': 0, 'bad': 0, 'total count': 0,
-                           'good percentage': 0, 'bad percentage': 0}
         self.bonus_coin = self.get_bonus_coin()
         self.bot = Robot(self.window_dimensions, 'robot')
         self.player = Player()
@@ -361,8 +359,8 @@ class GetCoin:
                     blit_text()
 
         def handle_luck_board():
-            good_luck = self.luck_count['good percentage']/100
-            bad_luck = self.luck_count['bad percentage']/100
+            good_luck = self.player.luck_count['good percentage']/100
+            bad_luck = self.player.luck_count['bad percentage']/100
 
             # luck board dark grey rectangle
             pygame.draw.rect(self.window, dark_grey,
@@ -429,17 +427,19 @@ class GetCoin:
 
             def update_luck(type_of_luck: str):
                 # update luck counts
-                self.luck_count[type_of_luck] += 1
-                self.luck_count['total count'] += 1
+                self.player.luck_count[type_of_luck] += 1
+                self.player.luck_count['total count'] += 1
                 # update luck percentages
-                if self.luck_count['total count'] > 0:
-                    self.luck_count['good percentage'] = int((
-                        self.luck_count['good']/self.luck_count['total count'])*100)
-                    self.luck_count['bad percentage'] = int(100 -
-                                                            self.luck_count['good percentage'])
+                if self.player.luck_count['total count'] > 0:
+                    self.player.luck_count['good percentage'] = int((
+                        self.player.luck_count['good']/self.player.luck_count['total count'])*100)
+                    self.player.luck_count['bad percentage'] = int(100 -
+                                                                   self.player.luck_count['good percentage'])
 
-                    print('good luck: ', self.luck_count['good percentage'])
-                    print('bad luck: ', self.luck_count['bad percentage'])
+                    print('good luck: ',
+                          self.player.luck_count['good percentage'])
+                    print('bad luck: ',
+                          self.player.luck_count['bad percentage'])
 
             # bonus coin to screen
             if self.timer.seconds == 60:

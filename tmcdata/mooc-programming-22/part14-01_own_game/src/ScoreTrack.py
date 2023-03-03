@@ -6,6 +6,8 @@ class Player:
         self.inputting_name = False
         self.bonus_record = {'freeze': 0, 'speed up': 0, 'cupcake': 0,
                              'add monsters': 0, 'add health': 0, 'take health': 0}
+        self.luck_count = {'good': 0, 'bad': 0, 'total count': 0,
+                           'good percentage': 0, 'bad percentage': 0}
 
     def update_player(self, points, level):
         self.points, self.level = int(points), int(level)
