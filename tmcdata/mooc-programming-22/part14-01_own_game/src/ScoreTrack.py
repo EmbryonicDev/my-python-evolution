@@ -48,7 +48,7 @@ class HighScores:
             print(player)
 
     def update_scores(self, player):
-        if self.if_high_score(player):
+        if self.if_high_score(player.points):
             self.top_ten_scores.append(player)
 
         self.sort_scores()
