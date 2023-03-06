@@ -652,7 +652,8 @@ class GetCoin:
             self.freeze_monsters()
 
     def update_scores(self, player_name):
-        self.player.update_player(self.bot.points, self.level)
+        self.player.update_player(
+            self.bot.points, self.level, self.player.luck_count['good percentage'])
         self.high_scores.update_scores(self.player)
         self.safe_mode = False
         self.high_scores.show_high_scores = True
