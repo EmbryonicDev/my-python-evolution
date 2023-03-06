@@ -43,8 +43,6 @@ class GetCoin:
 
         ###########################################################
 
-        pygame.display.set_caption('Coin Chaser')
-
         self.game_font = pygame.font.SysFont(
             'Arial', math.floor(self.height*0.045))
         self.heading_font = pygame.font.SysFont(
@@ -56,6 +54,8 @@ class GetCoin:
         self.clock = pygame.time.Clock()
         self.new_game()
         self.main_loop()
+
+        pygame.display.set_caption('Coin Chaser')
 
     def new_game(self):
         self.timer = Timer()
