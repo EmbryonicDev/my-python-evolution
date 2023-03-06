@@ -98,7 +98,6 @@ class HighScores:
                     line = line.replace('\n', '')
                     parts = line.split(';')
                     player = Player()
-                    print(parts)
                     player.set_name(parts[0])
                     player.update_player(parts[1], parts[2], parts[3])
                     self.top_ten_scores.append(player)
