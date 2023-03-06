@@ -23,6 +23,28 @@ class Player:
         if len(self.name) > 0:
             self.name = self.name[:-1]
 
+    def update_luck(self, type_of_luck):
+        self.luck_count['luck']: self.luck_count['good percentage']
+        self.luck_count[type_of_luck] += 1
+        self.luck_count['total count'] += 1
+
+        # update luck percentages
+        if self.luck_count['total count'] > 0:
+            self.luck_count['good percentage'] = int((
+                self.luck_count['good']/self.luck_count['total count'])*100)
+            self.luck_count['bad percentage'] = int(100 -
+                                                    self.luck_count['good percentage'])
+
+            if self.luck_count['bad'] > self.luck_count['good']:
+                self.luck_count['word'] = 'Unlucky'
+                self.luck_count['luck'] = self.luck_count['bad percentage']
+            else:
+                self.luck_count['word'] = 'Lucky'
+                self.luck_count['luck'] = self.luck_count['good percentage']
+
+    def update_bonus_record(self, power):
+        self.bonus_record[power] += 1
+
     def __repr__(self):
         return f"{'{:15}'.format(self.name)}{'{:<8}'.format(self.level)}{'{:<8}'.format(self.points)}"
 

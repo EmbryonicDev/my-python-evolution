@@ -359,31 +359,21 @@ class GetCoin:
                     blit_text()
 
         def handle_luck_board():
-            good_luck = self.player.luck_count['good percentage']/100
-            bad_luck = self.player.luck_count['bad percentage']/100
-
             # luck board dark grey rectangle
             pygame.draw.rect(self.window, dark_grey,
                              (0, self.total_height-self.luck_board, self.width, self.luck_board))
-            # green rect for good luck
-            pygame.draw.rect(self.window, green,
-                             (0, self.total_height-self.luck_board+2, self.width*good_luck, self.luck_board+2))
-            if good_luck + bad_luck > 0:
-                word = 'Lucky'
-                player_luck = good_luck
+
+            if self.player.luck_count['total count'] > 0:
+                # green rect for good luck
+                pygame.draw.rect(self.window, green,
+                                 (0, self.total_height-self.luck_board+2, self.width*self.player.luck_count['good percentage']/100, self.luck_board+2))
                 # red rect for bad luck
                 pygame.draw.rect(self.window, red,
-                                 (self.width*good_luck, self.total_height-self.luck_board+2, self.width, self.luck_board))
-                if good_luck >= bad_luck:
-                    word = 'Lucky'
-                    player_luck = good_luck
-                elif bad_luck > good_luck:
-                    word = 'Unlucky'
-                    player_luck = bad_luck
+                                 (self.width*self.player.luck_count['good percentage']/100, self.total_height-self.luck_board+2, self.width, self.luck_board))
 
                 # luck board text - You are xx% [lucky / unlucky]
                 game_text = self.game_font.render(
-                    f"You are {int(player_luck*100)}% {word}!!", True, white)
+                    f"You are {int(self.player.luck_count['luck'])}% {self.player.luck_count['word']}!!", True, white)
 
                 # text background with padding
                 pygame.draw.rect(self.window, dark_grey,
@@ -426,20 +416,7 @@ class GetCoin:
                     self.release_monsters()
 
             def update_luck(type_of_luck: str):
-                # update luck counts
-                self.player.luck_count[type_of_luck] += 1
-                self.player.luck_count['total count'] += 1
-                # update luck percentages
-                if self.player.luck_count['total count'] > 0:
-                    self.player.luck_count['good percentage'] = int((
-                        self.player.luck_count['good']/self.player.luck_count['total count'])*100)
-                    self.player.luck_count['bad percentage'] = int(100 -
-                                                                   self.player.luck_count['good percentage'])
-
-                    print('good luck: ',
-                          self.player.luck_count['good percentage'])
-                    print('bad luck: ',
-                          self.player.luck_count['bad percentage'])
+                self.player.update_luck(type_of_luck)
 
             # bonus coin to screen
             if self.timer.seconds == 60:
@@ -461,7 +438,8 @@ class GetCoin:
                 # Hide coin when caught
                 self.bonus_coin.catch_coin()
                 self.bonus_coin.toggle_visibility()
-                self.player.bonus_record[self.bonus_coin.power] += 1
+                self.player.update_bonus_record(
+                    self.bonus_coin.power)
                 self.timer.seconds = 66
 
             # if coin is caught
