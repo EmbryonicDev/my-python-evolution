@@ -33,6 +33,18 @@ class ScreenObject:
         return pygame.image.load(image+'.png')
 
 
+class SaveIcon(ScreenObject):
+    def __init__(self, screen_dimensions: list, image: str):
+        ScreenObject.__init__(self, screen_dimensions, image)
+
+    def update_coords(self, x, y):
+        self.x, self.y = x, y
+        self.update_footprint()
+
+    def is_clicked(self, x, y):
+        return self.footprint.collidepoint(x, y)
+
+
 class MovingObject(ScreenObject):
     def __init__(self, screen_dimensions: list, image: str):
         ScreenObject.__init__(self, screen_dimensions, image)
@@ -112,7 +124,7 @@ class BonusCoin(MovingCoin):
 class Robot(ScreenObject):
     def __init__(self, screen_dimensions, image):
         ScreenObject.__init__(self, screen_dimensions, image)
-        self.health = 100
+        self.health = 1
         self.speed = 8
         self.points = 0
         self.to_left = False
