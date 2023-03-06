@@ -160,7 +160,63 @@ class GetCoin:
                 f"{text}: {variable}", True, color)
 
         def handle_window_text():
-            high_score_color = white
+            high_score_color = black
+            high_score_bgc = (56, 189, 248)
+
+            def show_scores():
+                bold_text = pygame.font.SysFont(
+                    'Arial', math.floor(self.height*0.045), bold=True)
+                high_score_titles = f"{'{:<20}'.format('Name')}{'{:<9}'.format('Points')}{'{:<8}'.format('Level')}{'{:<9}'.format('Luck')}"
+                titles = get_plain_text(
+                    bold_text, high_score_titles, high_score_color)
+                # text background - high scores
+                pygame.draw.rect(self.window, high_score_bgc,
+                                 (self.width/2-titles.get_width() / 2-16, self.height*0.2, titles.get_width()+8, self.height*0.75))
+                # high score heading
+                high_score_heading = get_plain_text(
+                    self.heading_font, "High Scores", high_score_color)
+                self.window.blit(high_score_heading, (self.width/2-high_score_heading.get_width() /
+                                                      2-8, self.height*.2))
+                # Line under heading
+                pygame.draw.line(self.window, black,
+                                 (self.width/2-titles.get_width() /
+                                     2-16, self.height*.3+titles.get_height()), (self.width/2-titles.get_width() /
+                                                                                 2-16+titles.get_width()+8, self.height*.3+titles.get_height()), 4)
+                # high score titles
+                self.window.blit(titles, (self.width/2-titles.get_width() /
+                                          2, self.height*.3))
+
+                game_text_height_with_padding = self.height*0.3+titles.get_height()+4
+                for player in self.high_scores.top_ten_scores:
+                    # name
+                    game_text = get_plain_text(
+                        self.game_font,
+                        player.name,
+                        high_score_color)
+                    self.window.blit(
+                        game_text, (self.width/2-titles.get_width() / 2-8, game_text_height_with_padding))
+                    # points
+                    game_text = get_plain_text(
+                        self.game_font,
+                        "| "+str(player.points),
+                        high_score_color)
+                    self.window.blit(
+                        game_text, (self.width/2-titles.get_width() / 2-8 + self.width*0.2, game_text_height_with_padding))
+                    # level
+                    game_text = get_plain_text(
+                        self.game_font,
+                        "| "+str(player.level),
+                        high_score_color)
+                    self.window.blit(
+                        game_text, (self.width/2-titles.get_width() / 2-8 + self.width*0.3, game_text_height_with_padding))
+                    # luck
+                    game_text = get_plain_text(
+                        self.game_font,
+                        "| "+str(player.luck_count['luck'])+'%',
+                        high_score_color)
+                    self.window.blit(
+                        game_text, (self.width/2-titles.get_width() / 2-8 + self.width*0.4, game_text_height_with_padding))
+                    game_text_height_with_padding += game_text.get_height() + 4
 
             # get game over / paused text
             if self.game_over:
@@ -171,12 +227,14 @@ class GetCoin:
                     self.heading_font, 'Game Paused...', white)
 
             if self.game_paused or self.game_over:
+                if not self.player.inputting_name:
+                    show_scores()
                 # text background - game paused / over
                 pygame.draw.rect(self.window, dark_grey,
-                                 (self.width/2-game_text.get_width() / 2-8, self.height*0.1, game_text.get_width()+8, game_text.get_height()+8))
+                                 (self.width/2-game_text.get_width() / 2-8, self.height*0.05, game_text.get_width()+8, game_text.get_height()+8))
                 # paused / game over text
                 self.window.blit(game_text, (self.width/2-game_text.get_width() /
-                                             2, self.height*0.1))
+                                             2, self.height*0.05))
 
             # handle high score user prompt / input
             if (
@@ -190,7 +248,7 @@ class GetCoin:
                 game_text2 = get_plain_text(
                     self.heading_font, self.player.name, high_score_color)
                 # text background - high score
-                pygame.draw.rect(self.window, dark_grey,
+                pygame.draw.rect(self.window, high_score_bgc,
                                  (self.width/2-game_text.get_width() / 2-8, self.height*0.25, game_text.get_width()+8, (game_text.get_height()*2)+8))
                 # high score user prompt
                 self.window.blit(game_text, (self.width/2-game_text.get_width() /
