@@ -100,7 +100,7 @@ class HighScores:
                     player = Player()
                     print(parts)
                     player.set_name(parts[0])
-                    player.update_player(parts[1], parts[2])
+                    player.update_player(parts[1], parts[2], parts[3])
                     self.top_ten_scores.append(player)
 
     def sort_scores(self):
@@ -123,4 +123,4 @@ class HighScores:
             for player in self.top_ten_scores:
                 if player.name != "":
                     file.write(
-                        f"{player.name};{player.points};{player.level}\n")
+                        f"{player.name};{player.points};{player.level};{player.luck_count['luck']}\n")
