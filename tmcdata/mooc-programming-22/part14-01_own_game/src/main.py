@@ -162,11 +162,10 @@ class GetCoin:
         def handle_window_text():
             high_score_color = white
 
-            # get game over text
+            # get game over / paused text
             if self.game_over:
                 game_text = get_plain_text(
                     self.heading_font, 'Game Over...', white)
-
             if self.game_paused:
                 game_text = get_plain_text(
                     self.heading_font, 'Game Paused...', white)
