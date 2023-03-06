@@ -105,6 +105,7 @@ class HighScores:
     def sort_scores(self):
         self.top_ten_scores.sort(key=lambda x: x.points, reverse=True)
         print('scores were sorted')
+        self.print_players()
 
     def file_exists(self):
         file = 'scores.txt'
