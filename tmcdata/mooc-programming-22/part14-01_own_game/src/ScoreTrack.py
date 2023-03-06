@@ -10,8 +10,9 @@ class Player:
                            'good percentage': 0, 'bad percentage': 0,
                            'word': 'Lucky', 'luck': 0}
 
-    def update_player(self, points, level):
-        self.points, self.level = int(points), int(level)
+    def update_player(self, points, level, luck):
+        self.points, self.level, self.luck_count['luck'] = int(
+            points), int(level), luck
 
     def set_name(self, name):
         self.name = name
