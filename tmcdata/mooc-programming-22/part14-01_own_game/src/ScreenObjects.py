@@ -124,7 +124,7 @@ class BonusCoin(MovingCoin):
 class Robot(ScreenObject):
     def __init__(self, screen_dimensions, image):
         ScreenObject.__init__(self, screen_dimensions, image)
-        self.health = 1
+        self.health = 100
         self.speed = 8
         self.points = 0
         self.to_left = False
