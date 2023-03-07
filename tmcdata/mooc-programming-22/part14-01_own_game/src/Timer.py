@@ -16,7 +16,6 @@ class Timer:
             self.update_seconds()
 
     def update_seconds(self):
-        print(self.seconds)
         self.seconds += 1
         if self.seconds == 73:
             self.clear_timer()
