@@ -101,21 +101,20 @@ class BonusCoin(MovingCoin):
 
         self.dict = random.choice([
             {'power': 'freeze', 'user_prompt': 'Ghosts are Frozen',
-                'flash red': True, 'luck': 'good'},
+                'color': (255, 0, 0), 'luck': 'good'},
             {'power': 'speed up',
-                'user_prompt': 'Super Fast Ghosts! Be Careful!', 'flash red': True, 'luck': 'bad'},
+                'user_prompt': 'Super Fast Ghosts! Be Careful!', 'color': (255, 0, 0), 'luck': 'bad'},
             {'power': 'cupcake', 'user_prompt': 'Eat the Cupcakes!',
-                'flash red': True, 'luck': 'good'},
+                'color': (255, 0, 0), 'luck': 'good'},
             {'power': 'add monsters',
-                'user_prompt': 'Adding 5 Monsters', 'flash red': False, 'luck': 'bad'},
+                'user_prompt': 'Adding 5 Monsters', 'color': (0, 255, 0), 'luck': 'bad'},
             {'power': 'add health', 'user_prompt': 'Adding 10 Health Points',
-                'flash red': False, 'luck': 'good'},
+                'color': (0, 255, 0), 'luck': 'good'},
             {'power': 'take health',
-                'user_prompt': 'Taking 10 Health Points', 'flash red': False, 'luck': 'bad'},
+                'user_prompt': 'Taking 10 Health Points', 'color': (0, 255, 0), 'luck': 'bad'},
         ])
         self.power = self.dict['power']
         self.user_prompt = self.dict['user_prompt']
-        self.flash_red = self.dict['flash red']
         self.freeze()
         self.toggle_visibility()
         print(self.power)
