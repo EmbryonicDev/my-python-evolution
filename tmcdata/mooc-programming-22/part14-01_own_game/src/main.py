@@ -525,8 +525,7 @@ class GetCoin:
                              (self.bonus_coin.x, self.bonus_coin.y))
 
         # game window will be red to warn that bonus mode will end
-        window_color = (red if self.bonus_coin.caught
-                        and self.bonus_coin.flash_red
+        window_color = (self.bonus_coin.dict['color'] if self.bonus_coin.caught
                         and self.timer.seconds == 71
                         else (204, 255, 255))
 
