@@ -73,8 +73,12 @@ class HighScores:
             self.list_to_text()
 
     def print_players(self):
+        titles = f"{'{:<15}'.format('Name')}{'{:<8}'.format('Points')}{'{:<8}'.format('Level')}{'{:<8}'.format('Luck')}"
+        print(f"\n{titles}")
+        print("-"*len(titles))
         for player in self.top_ten_scores:
             print(player)
+        print()
 
     def update_scores(self, player):
         if self.if_high_score(player.points):
