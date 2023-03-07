@@ -117,7 +117,6 @@ class BonusCoin(MovingCoin):
         self.user_prompt = self.dict['user_prompt']
         self.freeze()
         self.toggle_visibility()
-        print(self.power)
 
 
 class Robot(ScreenObject):
