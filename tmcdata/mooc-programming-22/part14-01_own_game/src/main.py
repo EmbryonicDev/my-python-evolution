@@ -20,42 +20,23 @@ class GetCoin:
         self.window_dimensions = (self.width, self.height)
         self.window = pygame.display.set_mode(
             (self.width, self.total_height))
-        ###########################################################
 
-        # experiment with this to
-        # implement the layout and scale of the entire game,
-        # based on screen dimensions
-        # +++ use the dimensions to create a 20% scaled down window
-
-        # set the width / height the same as screen dimensions
-        # self.width, self.height = pygame.display.get_surface().get_size() # option 1
-        # self.infoObject = pygame.display.Info() # option 2
-
-        # self.info_board = 100
-        # self.bonus_board = 100
-        # self.luck_board = 80
-        # self.height -= 480
-        # self.total_height = self.height+self.info_board+self.bonus_board+self.luck_board
-        # self.window_dimensions = (self.width, self.height)
-
-        # self.window = pygame.display.set_mode(
-        #     (self.width, self.total_height))
-
-        ###########################################################
-
+        # fonts
         self.game_font = pygame.font.SysFont(
             'Arial', math.floor(self.height*0.045))
         self.heading_font = pygame.font.SysFont(
             'Arial', math.floor(self.height*0.085))
+
+        # screen objects / images
         self.door = ScreenObject(self.window_dimensions, 'door')
         self.save_icon = SaveIcon(self.window_dimensions, 'save')
         self.save_icon.update_coords(self.width/2-self.save_icon.width /
                                      2, self.height*.45)
+
+        pygame.display.set_caption('Coin Chaser')
         self.clock = pygame.time.Clock()
         self.new_game()
         self.main_loop()
-
-        pygame.display.set_caption('Coin Chaser')
 
     def new_game(self):
         self.timer = Timer()
@@ -117,9 +98,9 @@ class GetCoin:
 
             # handle user input for high score
             if (self.game_over
-                        and self.safe_mode
-                        and self.high_scores.if_high_score(self.bot.points)
-                    ):
+                and self.safe_mode
+                and self.high_scores.if_high_score(self.bot.points)
+                ):
                 self.player.inputting_name = True
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     x, y = event.pos
@@ -490,7 +471,6 @@ class GetCoin:
 
             # bonus coin caught by Robot
             if self.bonus_coin.hit_robot(self.bot.footprint):
-                print('caught bonus coin: ', self.bonus_coin.power)
                 update_luck(self.bonus_coin.dict['luck'])
                 # Hide coin when caught
                 self.bonus_coin.catch_coin()
@@ -574,8 +554,8 @@ class GetCoin:
         self.bot.move_bot()
 
         if (self.bot.hit_door(self.door.footprint) and
-                    all(i.caught == True for i in self.coins)
-                ):
+            all(i.caught == True for i in self.coins)
+            ):
             self.level += 1
             self.monster_count += 1
             self.release_coins()
